@@ -395,72 +395,6 @@ return $res;
 /* PARA Archivos */
 
 
-/* PARA Clientes */
-
-function insertarClientes($cuit,$apellido,$nombre,$direccion,$telefono,$celular,$email) { 
-$sql = "insert into dbclientes(idcliente,cuit,apellido,nombre,direccion,telefono,celular,email) 
-values ('','".($cuit)."','".($apellido)."','".($nombre)."','".($direccion)."','".($telefono)."','".($celular)."','".($email)."')"; 
-$res = $this->query($sql,1); 
-return $res; 
-} 
-
-
-function modificarClientes($id,$cuit,$apellido,$nombre,$direccion,$telefono,$celular,$email) { 
-$sql = "update dbclientes 
-set 
-cuit = '".($cuit)."',apellido = '".($apellido)."',nombre = '".($nombre)."',direccion = '".($direccion)."',telefono = '".($telefono)."',celular = '".($celular)."',email = '".($email)."' 
-where idcliente =".$id; 
-$res = $this->query($sql,0); 
-return $res; 
-} 
-
-
-function modificarClientePorCliente($id,$cuit,$apellido,$nombre,$direccion,$telefono,$celular) { 
-$sql = "update dbclientes 
-set 
-cuit = '".($cuit)."',apellido = '".($apellido)."',nombre = '".($nombre)."',direccion = '".($direccion)."',telefono = '".($telefono)."',celular = '".($celular)."'
-where idcliente =".$id; 
-$res = $this->query($sql,0); 
-return $res; 
-} 
-
-
-function eliminarClientes($id) { 
-$sql = "delete from dbclientes where idcliente =".$id; 
-$res = $this->query($sql,0); 
-return $res; 
-} 
-
-
-function traerClientes() { 
-$sql = "select 
-c.idcliente,
-c.cuit,
-c.apellido,
-c.nombre,
-c.direccion,
-c.telefono,
-c.celular,
-c.email
-from dbclientes c 
-order by 1"; 
-$res = $this->query($sql,0); 
-return $res; 
-} 
-
-
-function traerClientesPorId($id) { 
-$sql = "select idcliente,cuit,apellido,nombre,direccion,telefono,celular,email from dbclientes where idcliente =".$id; 
-$res = $this->query($sql,0); 
-return $res; 
-} 
-
-/* Fin */
-/* PARA Clientes */
-
-
-
-
 /* PARA Images */
 
 function insertarImages($refproyecto,$refuser,$imagen,$type,$principal) { 
@@ -531,18 +465,18 @@ return $res;
 
 /* PARA Usuarios */
 
-function insertarUsuarios($usuario,$password,$refroles,$email,$nombrecompleto,$activo,$refclientes) { 
-$sql = "insert into dbusuarios(idusuario,usuario,password,refroles,email,nombrecompleto,activo,refclientes) 
-values ('','".($usuario)."','".($password)."',".$refroles.",'".($email)."','".($nombrecompleto)."',".$activo.",".$refclientes.")"; 
+function insertarUsuarios($usuario,$password,$refroles,$email,$nombrecompleto,$activo) { 
+$sql = "insert into dbusuarios(idusuario,usuario,password,refroles,email,nombrecompleto,activo) 
+values ('','".($usuario)."','".($password)."',".$refroles.",'".($email)."','".($nombrecompleto)."',".$activo.")"; 
 $res = $this->query($sql,1); 
 return $res; 
 } 
 
 
-function modificarUsuarios($id,$usuario,$password,$refroles,$email,$nombrecompleto,$activo,$refclientes) { 
+function modificarUsuarios($id,$usuario,$password,$refroles,$email,$nombrecompleto,$activo) { 
 $sql = "update dbusuarios 
 set 
-usuario = '".($usuario)."',password = '".($password)."',refroles = ".$refroles.",email = '".($email)."',nombrecompleto = '".($nombrecompleto)."',activo = ".$activo." ,refclientes = ".($refclientes)." 
+usuario = '".($usuario)."',password = '".($password)."',refroles = ".$refroles.",email = '".($email)."',nombrecompleto = '".($nombrecompleto)."',activo = ".$activo."
 where idusuario =".$id; 
 $res = $this->query($sql,0); 
 return $res; 
@@ -563,8 +497,7 @@ u.usuario,
 u.password,
 u.refroles,
 u.email,
-u.nombrecompleto,
-u.refpersonal
+u.nombrecompleto
 from dbusuarios u 
 inner join tbroles rol ON rol.idrol = u.refroles 
 order by 1"; 
@@ -574,7 +507,7 @@ return $res;
 
 
 function traerUsuariosPorId($id) { 
-$sql = "select idusuario,usuario,password,refroles,email,nombrecompleto,(case when activo = 1 then 'Si' else 'No' end) as activo,refclientes from dbusuarios where idusuario =".$id; 
+$sql = "select idusuario,usuario,password,refroles,email,nombrecompleto,(case when activo = 1 then 'Si' else 'No' end) as activo from dbusuarios where idusuario =".$id; 
 $res = $this->query($sql,0); 
 return $res; 
 } 
@@ -689,6 +622,201 @@ return $res;
 
 
 
+
+
+
+
+/* PARA Declaracionjuradacabecera */
+
+function insertarDeclaracionjuradacabecera($fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios) { 
+$sql = "insert into dbdeclaracionjuradacabecera(iddeclaracionjuradacabecera,fecharecepcion,primerapellido,segundoapellido,nombres,curp,homoclave,emailinstitucional,emailalterno,refestadocivil,refregimenmatrimonial,paisnacimiento,nacionalidad,entidadnacimiento,numerocelular,lugarubica,domicilioparticular,localidad,municipio,telefono,entidadfederativa,codigopostal,lada,sexo,estudios,cedulaprofesional,refusuarios) 
+values ('','".($fecharecepcion)."','".($primerapellido)."','".($segundoapellido)."','".($nombres)."','".($curp)."','".($homoclave)."','".($emailinstitucional)."','".($emailalterno)."',".$refestadocivil.",".$refregimenmatrimonial.",'".($paisnacimiento)."','".($nacionalidad)."','".($entidadnacimiento)."','".($numerocelular)."',".$lugarubica.",'".($domicilioparticular)."','".($localidad)."','".($municipio)."','".($telefono)."','".($entidadfederativa)."','".($codigopostal)."','".($lada)."',".$sexo.",'".($estudios)."','".($cedulaprofesional)."',".$refusuarios.")"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarDeclaracionjuradacabecera($id,$fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios) { 
+$sql = "update dbdeclaracionjuradacabecera 
+set 
+fecharecepcion = '".($fecharecepcion)."',primerapellido = '".($primerapellido)."',segundoapellido = '".($segundoapellido)."',nombres = '".($nombres)."',curp = '".($curp)."',homoclave = '".($homoclave)."',emailinstitucional = '".($emailinstitucional)."',emailalterno = '".($emailalterno)."',refestadocivil = ".$refestadocivil.",refregimenmatrimonial = ".$refregimenmatrimonial.",paisnacimiento = '".($paisnacimiento)."',nacionalidad = '".($nacionalidad)."',entidadnacimiento = '".($entidadnacimiento)."',numerocelular = '".($numerocelular)."',lugarubica = ".$lugarubica.",domicilioparticular = '".($domicilioparticular)."',localidad = '".($localidad)."',municipio = '".($municipio)."',telefono = '".($telefono)."',entidadfederativa = '".($entidadfederativa)."',codigopostal = '".($codigopostal)."',lada = '".($lada)."',sexo = ".$sexo.",estudios = '".($estudios)."',cedulaprofesional = '".($cedulaprofesional)."',refusuarios = ".$refusuarios." 
+where iddeclaracionjuradacabecera =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarDeclaracionjuradacabecera($id) { 
+$sql = "delete from dbdeclaracionjuradacabecera where iddeclaracionjuradacabecera =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+function traerDeclaracionjuradacabeceraGrilla() {
+	$sql = "select 
+				d.iddeclaracionjuradacabecera,
+				concat(d.primerapellido, ' ', d.segundoapellido) as apellidos,
+				d.nombres,
+				d.curp,
+				d.fecharecepcion,
+				d.telefono,
+				d.emailinstitucional
+			from dbdeclaracionjuradacabecera d 
+			inner join tbestadocivil est ON est.idestadocivil = d.refestadocivil 
+			inner join tbregimenmatrimonial reg ON reg.idregimenmatrimonial = d.refregimenmatrimonial 
+			inner join dbusuarios usu ON usu.idusuario = d.refusuarios 
+			inner join tbroles ro ON ro.idrol = usu.refroles 
+			order by 1"; 
+	$res = $this->query($sql,0); 
+	return $res; 
+}
+
+
+function traerDeclaracionjuradacabecera() { 
+$sql = "select 
+d.iddeclaracionjuradacabecera,
+d.fecharecepcion,
+d.primerapellido,
+d.segundoapellido,
+d.nombres,
+d.curp,
+d.homoclave,
+d.emailinstitucional,
+d.emailalterno,
+d.refestadocivil,
+d.refregimenmatrimonial,
+d.paisnacimiento,
+d.nacionalidad,
+d.entidadnacimiento,
+d.numerocelular,
+d.lugarubica,
+d.domicilioparticular,
+d.localidad,
+d.municipio,
+d.telefono,
+d.entidadfederativa,
+d.codigopostal,
+d.lada,
+d.sexo,
+d.estudios,
+d.cedulaprofesional,
+d.refusuarios
+from dbdeclaracionjuradacabecera d 
+inner join tbestadocivil est ON est.idestadocivil = d.refestadocivil 
+inner join tbregimenmatrimonial reg ON reg.idregimenmatrimonial = d.refregimenmatrimonial 
+inner join dbusuarios usu ON usu.idusuario = d.refusuarios 
+inner join tbroles ro ON ro.idrol = usu.refroles 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerDeclaracionjuradacabeceraPorId($id) { 
+$sql = "select iddeclaracionjuradacabecera,fecharecepcion,primerapellido,segundoapellido,nombres,curp,homoclave,emailinstitucional,emailalterno,refestadocivil,refregimenmatrimonial,paisnacimiento,nacionalidad,entidadnacimiento,numerocelular,lugarubica,domicilioparticular,localidad,municipio,telefono,entidadfederativa,codigopostal,lada,sexo,estudios,cedulaprofesional,refusuarios from dbdeclaracionjuradacabecera where iddeclaracionjuradacabecera =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: dbdeclaracionjuradacabecera*/
+
+
+
+/* PARA Estadocivil */
+
+function insertarEstadocivil($estadocivil) { 
+$sql = "insert into tbestadocivil(idestadocivil,estadocivil) 
+values ('','".($estadocivil)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarEstadocivil($id,$estadocivil) { 
+$sql = "update tbestadocivil 
+set 
+estadocivil = '".($estadocivil)."' 
+where idestadocivil =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarEstadocivil($id) { 
+$sql = "delete from tbestadocivil where idestadocivil =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerEstadocivil() { 
+$sql = "select 
+e.idestadocivil,
+e.estadocivil
+from tbestadocivil e 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerEstadocivilPorId($id) { 
+$sql = "select idestadocivil,estadocivil from tbestadocivil where idestadocivil =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: tbestadocivil*/
+
+
+/* PARA Regimenmatrimonial */
+
+function insertarRegimenmatrimonial($regimenmatrimonial) { 
+$sql = "insert into tbregimenmatrimonial(idregimenmatrimonial,regimenmatrimonial) 
+values ('','".($regimenmatrimonial)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarRegimenmatrimonial($id,$regimenmatrimonial) { 
+$sql = "update tbregimenmatrimonial 
+set 
+regimenmatrimonial = '".($regimenmatrimonial)."' 
+where idregimenmatrimonial =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarRegimenmatrimonial($id) { 
+$sql = "delete from tbregimenmatrimonial where idregimenmatrimonial =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerRegimenmatrimonial() { 
+$sql = "select 
+r.idregimenmatrimonial,
+r.regimenmatrimonial
+from tbregimenmatrimonial r 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerRegimenmatrimonialPorId($id) { 
+$sql = "select idregimenmatrimonial,regimenmatrimonial from tbregimenmatrimonial where idregimenmatrimonial =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: tbregimenmatrimonial*/
 
 
 

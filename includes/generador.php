@@ -35,26 +35,32 @@ function query($sql,$accion) {
 
 
 
-$tablasAr	= array("clientes"        => "dbclientes",                
+$tablasAr	= array("declaracionjuradacabecera"        => "dbdeclaracionjuradacabecera",                
 "usuarios"        => "dbusuarios",  
 "archivos"		  => "dbarchivos",      
 "predio_menu"     => "predio_menu",       
-"roles"           => "tbroles");
+"roles"           => "tbroles",
+"estadocivil"     => "tbestadocivil",
+"regimenmatrimonial" => "tbregimenmatrimonial");
 
 
 function recursiveTablas($ar, $tabla, $aliasTablaMadre) {
 	
-	$tablasArAux2	= array("clientes"        => "dbclientes",                
+	$tablasArAux2	= array("declaracionjuradacabecera" => "dbdeclaracionjuradacabecera",                
 "usuarios"        => "dbusuarios",  
 "archivos"		  => "dbarchivos",              
 "predio_menu"     => "predio_menu",                     
-"roles"           => "tbroles");
+"roles"           => "tbroles",
+"estadocivil"     => "tbestadocivil",
+"regimenmatrimonial" => "tbregimenmatrimonial");
 
-	$tablasArAux	= array("clientes"        => 1,                
+	$tablasArAux	= array("declaracionjuradacabecera"        => 3,                
 "usuarios"        => 2,  
 "archivos"		  => 1,               
 "predio_menu"     => 1,                       
-"roles"           => 1);
+"roles"           => 1,
+"estadocivil"     => 1,
+"regimenmatrimonial" => 1);
 	
 	$inner= '';
 	$sql	=	"show columns from ".$tabla;
@@ -84,7 +90,7 @@ $ajaxFuncionesController = '';
 
 $servicios	= "Referencias";
 
-$sqlMapaer	= "SHOW FULL TABLES FROM estudiocontable";
+$sqlMapaer	= "SHOW FULL TABLES FROM declaracionjurada";
 $resMapeo 	=	query($sqlMapaer,0);
 
 $aliasTablaMadre = '';
@@ -166,26 +172,26 @@ if ($res == false) {
 			switch ($row[1]) {
 				case "date":
 					$cuerpoVariablePOST 	= $cuerpoVariablePOST."$".$row[0]." = "."$"."_POST['".$row[0]."']; <br>";
-					$cuerpoVariable 		= $cuerpoVariable."'".'".utf8_decode($'.$row[0].')."'."',";
+					$cuerpoVariable 		= $cuerpoVariable."'".'".($'.$row[0].')."'."',";
 					$cuerpoVariableComunes	= $cuerpoVariableComunes."$".$row[0].",";
 					$cuerpoSQL 				= $cuerpoSQL.$row[0].",";
 					
-					$cuerpoVariableUpdate = $cuerpoVariableUpdate.$row[0].' = '."'".'".utf8_decode($'.$row[0].')."'."',";
+					$cuerpoVariableUpdate = $cuerpoVariableUpdate.$row[0].' = '."'".'".($'.$row[0].')."'."',";
 					break;
 				case "datetime":
 					$cuerpoVariablePOST 	= $cuerpoVariablePOST."$".$row[0]." = "."$"."_POST['".$row[0]."']; <br>";
-					$cuerpoVariable = $cuerpoVariable."'".'".utf8_decode($'.$row[0].')."'."',";
+					$cuerpoVariable = $cuerpoVariable."'".'".($'.$row[0].')."'."',";
 					$cuerpoVariableComunes = $cuerpoVariableComunes."$".$row[0].",";
 					$cuerpoSQL = $cuerpoSQL.$row[0].",";
-					$cuerpoVariableUpdate = $cuerpoVariableUpdate.$row[0].' = '."'".'".utf8_decode($'.$row[0].')."'."',";
+					$cuerpoVariableUpdate = $cuerpoVariableUpdate.$row[0].' = '."'".'".($'.$row[0].')."'."',";
 					break;
 				default:
 					if (strpos($row[1],"varchar") !== false) {
 						$cuerpoVariablePOST 	= $cuerpoVariablePOST."$".$row[0]." = "."$"."_POST['".$row[0]."']; <br>";
-						$cuerpoVariable = $cuerpoVariable."'".'".utf8_decode($'.$row[0].')."'."',";
+						$cuerpoVariable = $cuerpoVariable."'".'".($'.$row[0].')."'."',";
 						$cuerpoVariableComunes = $cuerpoVariableComunes."$".$row[0].",";
 						$cuerpoSQL = $cuerpoSQL.$row[0].",";
-						$cuerpoVariableUpdate = $cuerpoVariableUpdate.$row[0].' = '."'".'".utf8_decode($'.$row[0].')."'."',";	
+						$cuerpoVariableUpdate = $cuerpoVariableUpdate.$row[0].' = '."'".'".($'.$row[0].')."'."',";	
 					} else {
 						if (strpos($row[1],"bit") !== false) {
 							$cuerpoVariablePOST 	= $cuerpoVariablePOST."
@@ -313,9 +319,9 @@ if ($res == false) {
 	
 
 	
-	echo "<br><br>/*   PARA ".$nombre." */<br><br>".$includes."<br>/* Fin */<br>/*   PARA ".$nombre." */<br>".$ajaxFunciones."<br>/* Fin */<br><br>/*   PARA ".$nombre." */<br>".$ajaxFuncionesController."<br>/* Fin */";
+	//echo "<br><br>/*   PARA ".$nombre." */<br><br>".$includes."<br>/* Fin */<br>/*   PARA ".$nombre." */<br>".$ajaxFunciones."<br>/* Fin */<br><br>/*   PARA ".$nombre." */<br>".$ajaxFuncionesController."<br>/* Fin */";
 	
-	//echo "<br><br>/*   PARA ".$nombre." */<br><br>".$includes."<br>/* Fin */<br>/*";
+	echo "<br><br>/*   PARA ".$nombre." */<br><br>".$includes."<br>/* Fin */<br>/*";
 	
 }
 	

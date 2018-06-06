@@ -52,7 +52,7 @@ function login($usuario,$pass) {
 			$idUsua = mysql_result($respusu,0,0);
 
 			
-			$sqlpass = "select nombrecompleto,email,usuario,r.descripcion, r.idrol, u.refclientes from dbusuarios u inner join tbroles r on r.idrol = u.refroles where password = '".$pass."' and idusuario = ".$idUsua;
+			$sqlpass = "select nombrecompleto,email,usuario,r.descripcion, r.idrol from dbusuarios u inner join tbroles r on r.idrol = u.refroles where password = '".$pass."' and idusuario = ".$idUsua;
 		
 			$resppass = $this->query($sqlpass,0);
 			
@@ -78,7 +78,7 @@ function login($usuario,$pass) {
 			$_SESSION['idroll_predio'] = mysql_result($resppass,0,4);
 			$_SESSION['refroll_predio'] = mysql_result($resppass,0,3);
 
-			$_SESSION['idcliente'] = mysql_result($resppass,0,'refclientes');
+			$_SESSION['idusuario'] = $idUsua;
 			
 			return '';
 		}

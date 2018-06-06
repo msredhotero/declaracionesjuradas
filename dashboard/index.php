@@ -24,10 +24,6 @@ $fecha = date('Y-m-d');
 $resMenu = $serviciosHTML->menu($_SESSION['nombre_predio'],"Dashboard",$_SESSION['refroll_predio'],'');
 
 
-if ($_SESSION['idroll_predio'] == 2) {
-	$idcliente = $_SESSION['idcliente'];
-	$resCliente = $serviciosReferencias->traerClientesPorId($idcliente);
-}
 
 ?>
 
@@ -42,7 +38,7 @@ if ($_SESSION['idroll_predio'] == 2) {
 
 
 
-<title>Gesti&oacute;n: Estudio Contable</title>
+<title>Gesti&oacute;n: Declaraciones Juradas</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
@@ -104,9 +100,9 @@ if ($_SESSION['idroll_predio'] == 2) {
 	<div class="boxInfoLargo">
         <div id="headBoxInfo">
         	<?php if ($_SESSION['idroll_predio'] == 1) { ?>
-        	<p style="color: #fff; font-size:18px; height:16px;">Buscar Clientes</p>
+        	<p style="color: #fff; font-size:18px; height:16px;">Buscar Agentes</p>
         	<?php } else { ?>
-        	<p style="color: #fff; font-size:18px; height:16px;">Cliente</p>
+        	<p style="color: #fff; font-size:18px; height:16px;">Agente</p>
 
         	<?php } ?>
         </div>
@@ -116,7 +112,7 @@ if ($_SESSION['idroll_predio'] == 2) {
         	<div class="col-md-12">	
         		<?php if ($_SESSION['idroll_predio'] == 1) { ?>
 	        	<div class="form-group col-md-12">
-                     <h4>Busqueda por Nombre Completo o CUIT</h4>
+                     <h4>Busqueda por Nombre Completo o CURP</h4>
                     
 						
 					<input id="lstjugadores" style="width:75%;">
@@ -162,26 +158,7 @@ if ($_SESSION['idroll_predio'] == 2) {
 
             </div>
             
-            <?php if ($_SESSION['idroll_predio'] == 1) { ?>
-            <div class='row' style="margin-left:25px; margin-right:25px;">
-                <div class='alert alerta'>
-                
-                </div>
-                <div id='load'>
-                
-                </div>
-            </div>
             
-            <div class="row">
-                <div class="col-md-12">
-                <ul class="list-inline" style="margin-top:15px;">
-                    <li>
-                        <button type="button" class="btn btn-primary" id="cargar" style="margin-left:0px;">Guardar</button>
-                    </li>
-                </ul>
-                </div>
-            </div>
-            <?php } ?>
             </form>
     	</div>
     </div>

@@ -46,18 +46,35 @@ case 'eliminarUsuarios':
 eliminarUsuarios($serviciosReferencias); 
 break; 
 
-case 'insertarClientes': 
-insertarClientes($serviciosReferencias); 
+case 'insertarDeclaracionjuradacabecera': 
+insertarDeclaracionjuradacabecera($serviciosReferencias); 
 break; 
-case 'modificarClientes': 
-modificarClientes($serviciosReferencias); 
+case 'modificarDeclaracionjuradacabecera': 
+modificarDeclaracionjuradacabecera($serviciosReferencias); 
 break; 
-case 'modificarClientePorCliente':
-	modificarClientePorCliente($serviciosReferencias);
-	break;
-case 'eliminarClientes': 
-eliminarClientes($serviciosReferencias); 
+case 'eliminarDeclaracionjuradacabecera': 
+eliminarDeclaracionjuradacabecera($serviciosReferencias); 
 break; 
+
+case 'insertarEstadocivil': 
+insertarEstadocivil($serviciosReferencias); 
+break; 
+case 'modificarEstadocivil': 
+modificarEstadocivil($serviciosReferencias); 
+break; 
+case 'eliminarEstadocivil': 
+eliminarEstadocivil($serviciosReferencias); 
+break; 
+case 'insertarRegimenmatrimonial': 
+insertarRegimenmatrimonial($serviciosReferencias); 
+break; 
+case 'modificarRegimenmatrimonial': 
+modificarRegimenmatrimonial($serviciosReferencias); 
+break; 
+case 'eliminarRegimenmatrimonial': 
+eliminarRegimenmatrimonial($serviciosReferencias); 
+break; 
+
 
 
 case 'insertarArchivos': 
@@ -165,17 +182,35 @@ function eliminarArchivos($serviciosReferencias) {
 } 
 
 
-/* PARA Clientes */
-function insertarClientes($serviciosReferencias) { 
-	$cuit = $_POST['cuit']; 
-	$apellido = $_POST['apellido']; 
-	$nombre = $_POST['nombre']; 
-	$direccion = $_POST['direccion']; 
+function insertarDeclaracionjuradacabecera($serviciosReferencias) { 
+	$fecharecepcion = $_POST['fecharecepcion']; 
+	$primerapellido = $_POST['primerapellido']; 
+	$segundoapellido = $_POST['segundoapellido']; 
+	$nombres = $_POST['nombres']; 
+	$curp = $_POST['curp']; 
+	$homoclave = $_POST['homoclave']; 
+	$emailinstitucional = $_POST['emailinstitucional']; 
+	$emailalterno = $_POST['emailalterno']; 
+	$refestadocivil = $_POST['refestadocivil']; 
+	$refregimenmatrimonial = $_POST['refregimenmatrimonial']; 
+	$paisnacimiento = $_POST['paisnacimiento']; 
+	$nacionalidad = $_POST['nacionalidad']; 
+	$entidadnacimiento = $_POST['entidadnacimiento']; 
+	$numerocelular = $_POST['numerocelular']; 
+	$lugarubica = $_POST['lugarubica']; 
+	$domicilioparticular = $_POST['domicilioparticular']; 
+	$localidad = $_POST['localidad']; 
+	$municipio = $_POST['municipio']; 
 	$telefono = $_POST['telefono']; 
-	$celular = $_POST['celular']; 
-	$email = $_POST['email']; 
+	$entidadfederativa = $_POST['entidadfederativa']; 
+	$codigopostal = $_POST['codigopostal']; 
+	$lada = $_POST['lada']; 
+	$sexo = $_POST['sexo']; 
+	$estudios = $_POST['estudios']; 
+	$cedulaprofesional = $_POST['cedulaprofesional']; 
+	$refusuarios = $_POST['refusuarios']; 
 	
-	$res = $serviciosReferencias->insertarClientes($cuit,$apellido,$nombre,$direccion,$telefono,$celular,$email); 
+	$res = $serviciosReferencias->insertarDeclaracionjuradacabecera($fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios); 
 	
 	if ((integer)$res > 0) { 
 		echo ''; 
@@ -185,17 +220,36 @@ function insertarClientes($serviciosReferencias) {
 } 
 
 
-function modificarClientes($serviciosReferencias) { 
+function modificarDeclaracionjuradacabecera($serviciosReferencias) { 
 	$id = $_POST['id']; 
-	$cuit = $_POST['cuit']; 
-	$apellido = $_POST['apellido']; 
-	$nombre = $_POST['nombre']; 
-	$direccion = $_POST['direccion']; 
+	$fecharecepcion = $_POST['fecharecepcion']; 
+	$primerapellido = $_POST['primerapellido']; 
+	$segundoapellido = $_POST['segundoapellido']; 
+	$nombres = $_POST['nombres']; 
+	$curp = $_POST['curp']; 
+	$homoclave = $_POST['homoclave']; 
+	$emailinstitucional = $_POST['emailinstitucional']; 
+	$emailalterno = $_POST['emailalterno']; 
+	$refestadocivil = $_POST['refestadocivil']; 
+	$refregimenmatrimonial = $_POST['refregimenmatrimonial']; 
+	$paisnacimiento = $_POST['paisnacimiento']; 
+	$nacionalidad = $_POST['nacionalidad']; 
+	$entidadnacimiento = $_POST['entidadnacimiento']; 
+	$numerocelular = $_POST['numerocelular']; 
+	$lugarubica = $_POST['lugarubica']; 
+	$domicilioparticular = $_POST['domicilioparticular']; 
+	$localidad = $_POST['localidad']; 
+	$municipio = $_POST['municipio']; 
 	$telefono = $_POST['telefono']; 
-	$celular = $_POST['celular']; 
-	$email = $_POST['email']; 
+	$entidadfederativa = $_POST['entidadfederativa']; 
+	$codigopostal = $_POST['codigopostal']; 
+	$lada = $_POST['lada']; 
+	$sexo = $_POST['sexo']; 
+	$estudios = $_POST['estudios']; 
+	$cedulaprofesional = $_POST['cedulaprofesional']; 
+	$refusuarios = $_POST['refusuarios']; 
 	
-	$res = $serviciosReferencias->modificarClientes($id,$cuit,$apellido,$nombre,$direccion,$telefono,$celular,$email); 
+	$res = $serviciosReferencias->modificarDeclaracionjuradacabecera($id,$fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios); 
 	
 	if ($res == true) { 
 		echo ''; 
@@ -205,35 +259,69 @@ function modificarClientes($serviciosReferencias) {
 } 
 
 
-function modificarClientePorCliente($serviciosReferencias) { 
+function eliminarDeclaracionjuradacabecera($serviciosReferencias) { 
 	$id = $_POST['id']; 
-	$cuit = $_POST['cuit']; 
-	$apellido = $_POST['apellido']; 
-	$nombre = $_POST['nombre']; 
-	$direccion = $_POST['direccion']; 
-	$telefono = $_POST['telefono']; 
-	$celular = $_POST['celular']; 
-	
-	if (($apellido == '') || ($nombre == '') || ($cuit == '')) {
-		echo 'Hubo un error al modificar datos, los campos Apellido, Nombre y CUIT son obligatorios'; 
-	} else {
-		$res = $serviciosReferencias->modificarClientePorCliente($id,$cuit,$apellido,$nombre,$direccion,$telefono,$celular); 
-		
-		if ($res == true) { 
-			echo ''; 
-		} else { 
-			echo 'Hubo un error al modificar datos'; 
-		} 
-	}
-} 
-
-function eliminarClientes($serviciosReferencias) { 
-	$id = $_POST['id']; 
-	$res = $serviciosReferencias->eliminarClientes($id); 
+	$res = $serviciosReferencias->eliminarDeclaracionjuradacabecera($id); 
 	echo $res; 
 } 
 
-/* Fin */ /* Fin de la Tabla: dbclientes*/
+
+
+
+
+
+
+function insertarEstadocivil($serviciosReferencias) { 
+$estadocivil = $_POST['estadocivil']; 
+$res = $serviciosReferencias->insertarEstadocivil($estadocivil); 
+if ((integer)$res > 0) { 
+echo ''; 
+} else { 
+echo 'Hubo un error al insertar datos';	 
+} 
+} 
+function modificarEstadocivil($serviciosReferencias) { 
+$id = $_POST['id']; 
+$estadocivil = $_POST['estadocivil']; 
+$res = $serviciosReferencias->modificarEstadocivil($id,$estadocivil); 
+if ($res == true) { 
+echo ''; 
+} else { 
+echo 'Hubo un error al modificar datos'; 
+} 
+} 
+function eliminarEstadocivil($serviciosReferencias) { 
+$id = $_POST['id']; 
+$res = $serviciosReferencias->eliminarEstadocivil($id); 
+echo $res; 
+} 
+function insertarRegimenmatrimonial($serviciosReferencias) { 
+$regimenmatrimonial = $_POST['regimenmatrimonial']; 
+$res = $serviciosReferencias->insertarRegimenmatrimonial($regimenmatrimonial); 
+if ((integer)$res > 0) { 
+echo ''; 
+} else { 
+echo 'Hubo un error al insertar datos';	 
+} 
+} 
+function modificarRegimenmatrimonial($serviciosReferencias) { 
+$id = $_POST['id']; 
+$regimenmatrimonial = $_POST['regimenmatrimonial']; 
+$res = $serviciosReferencias->modificarRegimenmatrimonial($id,$regimenmatrimonial); 
+if ($res == true) { 
+echo ''; 
+} else { 
+echo 'Hubo un error al modificar datos'; 
+} 
+} 
+function eliminarRegimenmatrimonial($serviciosReferencias) { 
+$id = $_POST['id']; 
+$res = $serviciosReferencias->eliminarRegimenmatrimonial($id); 
+echo $res; 
+} 
+
+
+
 ////////////////////////// FIN DE TRAER DATOS ////////////////////////////////////////////////////////////
 
 //////////////////////////  BASICO  /////////////////////////////////////////////////////////////////////////

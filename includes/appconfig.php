@@ -7,7 +7,7 @@ class appconfig {
 function conexion() {
 		/*
 		$hostname = "localhost";
-		$database = "estudiocontable";
+		$database = "declaracionjurada";
 		$username = "root";
 		$password = "";
 		*/
@@ -15,8 +15,8 @@ function conexion() {
 		//$hostname = "185.28.21.241"; //para conexiones remotas
 		
 		$hostname = "localhost";
-		$database = "u235498999_estud";
-		$username = "u235498999_estud";
+		$database = "u235498999_ddjj";
+		$username = "u235498999_ddjj";
 		$password = "rhcp7575";
 		
 		//u235498999_kike usuario
