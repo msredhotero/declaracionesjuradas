@@ -26,15 +26,15 @@ $resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Declara
 
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
-$singular = "Declaracion Jurada";
+$singular = "Declaracion Patrimonial";
 
-$plural = "Declaraciones Juradas";
+$plural = "Declaraciones Patrimoniales";
 
 $eliminar = "eliminarDeclaracionjuradacabecera";
 
 $insertar = "insertarDeclaracionjuradacabecera";
 
-$tituloWeb = "Gestión: Declaraciones Juradas";
+$tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 

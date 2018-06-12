@@ -38,7 +38,7 @@ function recuperar($email) {
 }
 function login($usuario,$pass) {
 	
-	$sqlusu = "select * from dbusuarios where email = '".$usuario."' and activo = '1'";
+	$sqlusu = "select empleado_id from loginreal where curp = '".$usuario."'";
 
 	$error = '';
 
@@ -52,7 +52,7 @@ function login($usuario,$pass) {
 			$idUsua = mysql_result($respusu,0,0);
 
 			
-			$sqlpass = "select nombrecompleto,email,usuario,r.descripcion, r.idrol from dbusuarios u inner join tbroles r on r.idrol = u.refroles where password = '".$pass."' and idusuario = ".$idUsua;
+			$sqlpass = "select nombre,email, id_perfil from loginreal where pass_user = '".$pass."' and empleado_id = ".$idUsua;
 		
 			$resppass = $this->query($sqlpass,0);
 			
@@ -75,8 +75,8 @@ function login($usuario,$pass) {
 			$_SESSION['usua_predio'] = $usuario;
 			$_SESSION['nombre_predio'] = mysql_result($resppass,0,0);
 			$_SESSION['email_predio'] = mysql_result($resppass,0,1);
-			$_SESSION['idroll_predio'] = mysql_result($resppass,0,4);
-			$_SESSION['refroll_predio'] = mysql_result($resppass,0,3);
+			$_SESSION['idroll_predio'] = mysql_result($resppass,0,2);
+			$_SESSION['refroll_predio'] = 'Administrador';
 
 			$_SESSION['idusuario'] = $idUsua;
 			

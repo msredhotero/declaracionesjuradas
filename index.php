@@ -23,7 +23,7 @@ $servicios = new Servicios();
 
 
 
-<title>Acceso Restringido: Estudio Contable</title>
+<title>Acceso Restringido: Declaraciones Patrimoniales</title>
 
 
 
@@ -51,14 +51,14 @@ $servicios = new Servicios();
 				
 					$("#email").click(function(event) {
         			$("#email").removeClass("alert alert-danger");
-					$("#email").attr('placeholder','Ingrese el email');
+					$("#email").attr('placeholder','Ingrese el CURP');
 					$("#error").removeClass("alert alert-danger");
 					$("#error").text('');
         			});
 
         			$("#email").change(function(event) {
         			$("#email").removeClass("alert alert-danger");
-        			$("#email").attr('placeholder','Ingrese el email');
+        			$("#email").attr('placeholder','Ingrese el CURP');
         			});
 					
 					
@@ -74,41 +74,7 @@ $servicios = new Servicios();
 					
 
 					
-				
-				function validador(){
-
-        				$error = "";
-		
-        				if ($("#email").val() == "") {
-        					$error = "Es obligatorio el campo E-Mail.";
-
-        					$("#error").addClass("alert alert-danger");
-        					$("#error").attr('placeholder',$error);
-        				}
-						
-						if ($("#pass").val() == "") {
-        					$error = "Es obligatorio el campo Password.";
-
-        					$("#pass").addClass("alert alert-danger");
-        					$("#pass").attr('placeholder',$error);
-        				}
-						
-
-						
-
-						
-						
-						var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
-						
-						if( !emailReg.test( $("#email").val() ) ) {
-							$error = "El E-Mail ingresado es inválido.";
-
-        					$("#error").addClass("alert alert-danger");
-        					$("#error").text($error);
-						  }
-
-        				return $error;
-        		}
+			
 				
 				$('body').keyup(function(e) {
 					if(e.keyCode == 13) {
@@ -119,36 +85,35 @@ $servicios = new Servicios();
 				
 				$("#login").click(function(event) {
         			
-						if (validador() == "")
-        				{
-        						$.ajax({
-                                data:  {email:		$("#email").val(),
-										pass:		$("#pass").val(),
-										accion:		'login'},
-                                url:   'ajax/ajax.php',
-                                type:  'post',
-                                beforeSend: function () {
-                                        $("#load").html('<img src="imagenes/load13.gif" width="50" height="50" />');
-                                },
-                                success:  function (response) {
-      									
-                                        if (response != '') {
-                                            
-                                            $("#error").removeClass("alert alert-danger");
 
-                                            $("#error").addClass("alert alert-danger");
-                                            $("#error").html('<strong>Error!</strong> '+response);
-                                            $("#load").html('');
+						$.ajax({
+                        data:  {email:		$("#email").val(),
+						pass:		$("#pass").val(),
+						accion:		'login'},
+                        url:   'ajax/ajax.php',
+                        type:  'post',
+                        beforeSend: function () {
+                                $("#load").html('<img src="imagenes/load13.gif" width="50" height="50" />');
+                        },
+                        success:  function (response) {
+								
+                                if (response != '') {
+                                    
+                                    $("#error").removeClass("alert alert-danger");
 
-                                        } else {
-											url = "dashboard/";
-											$(location).attr('href',url);
-										}
-                                        
-                                }
-                        });
-        				}
-        		});
+                                    $("#error").addClass("alert alert-danger");
+                                    $("#error").html('<strong>Error!</strong> '+response);
+                                    $("#load").html('');
+
+                                } else {
+							url = "dashboard/";
+							$(location).attr('href',url);
+						}
+                                
+                        }
+            });
+        				
+        });
 				
 			});/* fin del document ready */
 		
@@ -191,12 +156,12 @@ background-color: #ffffff; border:1px solid #101010; box-shadow: 2px 2px 3px #33
               
 
               <div class="form-group">
-                <label for="usuario" class="col-md-2 control-label" style="color:#363636;text-align:left;">E-Mail</label>
+                <label for="usuario" class="col-md-2 control-label" style="color:#363636;text-align:left;">CURP</label>
                 <div class="col-lg-7">
                 <div class="input-group">
                   <span class="input-group-addon"><span class="glyphicon glyphicon-user"></span></span>
-                  <input type="email" class="form-control" id="email" name="email" 
-                         placeholder="E-Mail">
+                  <input type="text" class="form-control" id="email" name="email" 
+                         placeholder="CURP">
                 </div>
                 </div>
               </div>

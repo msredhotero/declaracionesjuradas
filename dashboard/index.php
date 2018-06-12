@@ -38,7 +38,7 @@ $resMenu = $serviciosHTML->menu($_SESSION['nombre_predio'],"Dashboard",$_SESSION
 
 
 
-<title>Gesti&oacute;n: Declaraciones Juradas</title>
+<title>Gesti&oacute;n: Declaraciones Patrimoniales</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 

@@ -41,7 +41,7 @@ $modificar = "modificarEstadocivil";
 
 $idTabla = "idestadocivil";
 
-$tituloWeb = "Gestión: Declaraciones Juradas";
+$tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 

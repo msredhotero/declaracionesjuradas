@@ -34,7 +34,7 @@ $eliminar = "eliminarEstadocivil";
 
 $insertar = "insertarEstadocivil";
 
-$tituloWeb = "Gestión: Declaraciones Juradas";
+$tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 

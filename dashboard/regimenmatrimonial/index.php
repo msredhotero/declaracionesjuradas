@@ -34,7 +34,7 @@ $eliminar = "eliminarRegimenmatrimonial";
 
 $insertar = "insertarRegimenmatrimonial";
 
-$tituloWeb = "Gestión: Declaraciones Juradas";
+$tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 

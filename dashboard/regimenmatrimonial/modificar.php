@@ -41,7 +41,7 @@ $modificar = "modificarRegimenmatrimonial";
 
 $idTabla = "idregimenmatrimonial";
 
-$tituloWeb = "Gestión: Declaraciones Juradas";
+$tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 
