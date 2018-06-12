@@ -90,9 +90,433 @@ break;
 case 'traerArchivosPorCliente':
 	traerArchivosPorCliente($serviciosReferencias);
 	break;
+
+	case 'insertarDeclaracionanualinteres': 
+		insertarDeclaracionanualinteres($serviciosReferencias); 
+	break; 
+	case 'modificarDeclaracionanualinteres': 
+		modificarDeclaracionanualinteres($serviciosReferencias); 
+	break; 
+	case 'eliminarDeclaracionanualinteres': 
+		eliminarDeclaracionanualinteres($serviciosReferencias); 
+	break; 
+
+
+	case 'insertarDependienteseconomicos': 
+		insertarDependienteseconomicos($serviciosReferencias); 
+	break; 
+	case 'modificarDependienteseconomicos': 
+		modificarDependienteseconomicos($serviciosReferencias); 
+	break; 
+	case 'eliminarDependienteseconomicos': 
+		eliminarDependienteseconomicos($serviciosReferencias); 
+	break; 
+	case 'insertarIngresosanuales': 
+		insertarIngresosanuales($serviciosReferencias); 
+	break; 
+	case 'modificarIngresosanuales': 
+		modificarIngresosanuales($serviciosReferencias); 
+	break; 
+	case 'eliminarIngresosanuales': 
+		eliminarIngresosanuales($serviciosReferencias); 
+	break; 
+	case 'insertarPublicacion': 
+		insertarPublicacion($serviciosReferencias); 
+	break; 
+	case 'modificarPublicacion': 
+		modificarPublicacion($serviciosReferencias); 
+	break; 
+	case 'eliminarPublicacion': 
+		eliminarPublicacion($serviciosReferencias); 
+	break; 
+
+
+	case 'insertarPoder': 
+		insertarPoder($serviciosReferencias); 
+	break; 
+	case 'modificarPoder': 
+		modificarPoder($serviciosReferencias); 
+	break; 
+	case 'eliminarPoder': 
+		eliminarPoder($serviciosReferencias); 
+	break; 
+
+
+	case 'insertarTipoparentesco': 
+		insertarTipoparentesco($serviciosReferencias); 
+	break; 
+	case 'modificarTipoparentesco': 
+		modificarTipoparentesco($serviciosReferencias); 
+	break; 
+	case 'eliminarTipoparentesco': 
+		eliminarTipoparentesco($serviciosReferencias); 
+	break; 
+
 }
 
 /* Fin */
+
+
+
+	function insertarDeclaracionanualinteres($serviciosReferencias) { 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		
+		if (isset($_POST['essecretario'])) { 
+			$essecretario	= 1; 
+		} else { 
+			$essecretario = 0; 
+		} 
+
+		if (isset($_POST['esauditor'])) { 
+			$esauditor	= 1; 
+		} else { 
+			$esauditor = 0; 
+		} 
+
+		$ejercicio = $_POST['ejercicio']; 
+		
+		if (isset($_POST['espublico'])) { 
+			$espublico	= 1; 
+		} else { 
+			$espublico = 0; 
+		} 
+
+		$refpoder = $_POST['refpoder']; 
+		$registrofederalcontribuyente = $_POST['registrofederalcontribuyente']; 
+		$fechadeclaracionanterior = $_POST['fechadeclaracionanterior']; 
+		$fechatomaposesion = $_POST['fechatomaposesion']; 
+		$cargoactual = $_POST['cargoactual']; 
+		$cargoanterior = $_POST['cargoanterior']; 
+		$areaadquisicion = $_POST['areaadquisicion']; 
+		$areaadquisicionanterior = $_POST['areaadquisicionanterior']; 
+		$dependencia = $_POST['dependencia']; 
+		$dependenciaanterior = $_POST['dependenciaanterior']; 
+		
+		$res = $serviciosReferencias->insertarDeclaracionanualinteres($refdeclaracionjuradacabecera,$essecretario,$esauditor,$ejercicio,$espublico,$refpoder,$registrofederalcontribuyente,$fechadeclaracionanterior,$fechatomaposesion,$cargoactual,$cargoanterior,$areaadquisicion,$areaadquisicionanterior,$dependencia,$dependenciaanterior); 
+		
+		if ((integer)$res > 0) { 
+			echo ''; 
+		} else { 
+			echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+	function modificarDeclaracionanualinteres($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		
+		if (isset($_POST['essecretario'])) { 
+			$essecretario	= 1; 
+		} else { 
+			$essecretario = 0; 
+		} 
+
+		if (isset($_POST['esauditor'])) { 
+			$esauditor	= 1; 
+		} else { 
+			$esauditor = 0; 
+		} 
+
+		$ejercicio = $_POST['ejercicio']; 
+		
+		if (isset($_POST['espublico'])) { 
+			$espublico	= 1; 
+		} else { 
+			$espublico = 0; 
+		} 
+
+		$refpoder = $_POST['refpoder']; 
+		$registrofederalcontribuyente = $_POST['registrofederalcontribuyente']; 
+		$fechadeclaracionanterior = $_POST['fechadeclaracionanterior']; 
+		$fechatomaposesion = $_POST['fechatomaposesion']; 
+		$cargoactual = $_POST['cargoactual']; 
+		$cargoanterior = $_POST['cargoanterior']; 
+		$areaadquisicion = $_POST['areaadquisicion']; 
+		$areaadquisicionanterior = $_POST['areaadquisicionanterior']; 
+		$dependencia = $_POST['dependencia']; 
+		$dependenciaanterior = $_POST['dependenciaanterior']; 
+		
+		$res = $serviciosReferencias->modificarDeclaracionanualinteres($id,$refdeclaracionjuradacabecera,$essecretario,$esauditor,$ejercicio,$espublico,$refpoder,$registrofederalcontribuyente,$fechadeclaracionanterior,$fechatomaposesion,$cargoactual,$cargoanterior,$areaadquisicion,$areaadquisicionanterior,$dependencia,$dependenciaanterior); 
+		
+		if ($res == true) { 
+			echo ''; 
+		} else { 
+			echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+	function eliminarDeclaracionanualinteres($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarDeclaracionanualinteres($id); 
+		echo $res; 
+	} 
+
+
+
+
+	function insertarDependienteseconomicos($serviciosReferencias) { 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		if (isset($_POST['tiene'])) { 
+		$tiene	= 1; 
+		} else { 
+		$tiene = 0; 
+		} 
+		$nombre = $_POST['nombre']; 
+		$edad = $_POST['edad']; 
+		$reftipoparentesco = $_POST['reftipoparentesco']; 
+		$res = $serviciosReferencias->insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$nombre,$edad,$reftipoparentesco); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+	function modificarDependienteseconomicos($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		if (isset($_POST['tiene'])) { 
+		$tiene	= 1; 
+		} else { 
+		$tiene = 0; 
+		} 
+		$nombre = $_POST['nombre']; 
+		$edad = $_POST['edad']; 
+		$reftipoparentesco = $_POST['reftipoparentesco']; 
+		$res = $serviciosReferencias->modificarDependienteseconomicos($id,$refdeclaracionjuradacabecera,$tiene,$nombre,$edad,$reftipoparentesco); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+	function eliminarDependienteseconomicos($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarDependienteseconomicos($id); 
+		echo $res; 
+	} 
+
+	function insertarIngresosanuales($serviciosReferencias) { 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$remuneracionanualneta = $_POST['remuneracionanualneta']; 
+		$actividadindustrial = $_POST['actividadindustrial']; 
+		$razonsocialactividadindustrial = $_POST['razonsocialactividadindustrial']; 
+		$actividadfinanciera = $_POST['actividadfinanciera']; 
+		$razonsocialactividadfinanciera = $_POST['razonsocialactividadfinanciera']; 
+		$actividadprofesional = $_POST['actividadprofesional']; 
+		$descripcionactividadprofesional = $_POST['descripcionactividadprofesional']; 
+		$otros = $_POST['otros']; 
+		$especifiqueotros = $_POST['especifiqueotros']; 
+		$ingresoanualconyuge = $_POST['ingresoanualconyuge']; 
+		$especifiqueingresosconyuge = $_POST['especifiqueingresosconyuge']; 
+		if (isset($_POST['fueservidorpublico'])) { 
+		$fueservidorpublico	= 1; 
+		} else { 
+		$fueservidorpublico = 0; 
+		} 
+		$vigenciadesde = $_POST['vigenciadesde']; 
+		$vigenciahasta = $_POST['vigenciahasta']; 
+		$res = $serviciosReferencias->insertarIngresosanuales($refdeclaracionjuradacabecera,$remuneracionanualneta,$actividadindustrial,$razonsocialactividadindustrial,$actividadfinanciera,$razonsocialactividadfinanciera,$actividadprofesional,$descripcionactividadprofesional,$otros,$especifiqueotros,$ingresoanualconyuge,$especifiqueingresosconyuge,$fueservidorpublico,$vigenciadesde,$vigenciahasta); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+	function modificarIngresosanuales($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$remuneracionanualneta = $_POST['remuneracionanualneta']; 
+		$actividadindustrial = $_POST['actividadindustrial']; 
+		$razonsocialactividadindustrial = $_POST['razonsocialactividadindustrial']; 
+		$actividadfinanciera = $_POST['actividadfinanciera']; 
+		$razonsocialactividadfinanciera = $_POST['razonsocialactividadfinanciera']; 
+		$actividadprofesional = $_POST['actividadprofesional']; 
+		$descripcionactividadprofesional = $_POST['descripcionactividadprofesional']; 
+		$otros = $_POST['otros']; 
+		$especifiqueotros = $_POST['especifiqueotros']; 
+		$ingresoanualconyuge = $_POST['ingresoanualconyuge']; 
+		$especifiqueingresosconyuge = $_POST['especifiqueingresosconyuge']; 
+		if (isset($_POST['fueservidorpublico'])) { 
+		$fueservidorpublico	= 1; 
+		} else { 
+		$fueservidorpublico = 0; 
+		} 
+		$vigenciadesde = $_POST['vigenciadesde']; 
+		$vigenciahasta = $_POST['vigenciahasta']; 
+		$res = $serviciosReferencias->modificarIngresosanuales($id,$refdeclaracionjuradacabecera,$remuneracionanualneta,$actividadindustrial,$razonsocialactividadindustrial,$actividadfinanciera,$razonsocialactividadfinanciera,$actividadprofesional,$descripcionactividadprofesional,$otros,$especifiqueotros,$ingresoanualconyuge,$especifiqueingresosconyuge,$fueservidorpublico,$vigenciadesde,$vigenciahasta); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+
+	function eliminarIngresosanuales($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarIngresosanuales($id); 
+		echo $res; 
+	} 
+
+	function insertarPublicacion($serviciosReferencias) { 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		if (isset($_POST['estadeacuerdo'])) { 
+		$estadeacuerdo	= 1; 
+		} else { 
+		$estadeacuerdo = 0; 
+		} 
+		if (isset($_POST['eningresosnetos'])) { 
+		$eningresosnetos	= 1; 
+		} else { 
+		$eningresosnetos = 0; 
+		} 
+		if (isset($_POST['enbienesinmuebles'])) { 
+		$enbienesinmuebles	= 1; 
+		} else { 
+		$enbienesinmuebles = 0; 
+		} 
+		if (isset($_POST['enbienesmuebles'])) { 
+		$enbienesmuebles	= 1; 
+		} else { 
+		$enbienesmuebles = 0; 
+		} 
+		if (isset($_POST['envehiculos'])) { 
+		$envehiculos	= 1; 
+		} else { 
+		$envehiculos = 0; 
+		} 
+		if (isset($_POST['eninversiones'])) { 
+		$eninversiones	= 1; 
+		} else { 
+		$eninversiones = 0; 
+		} 
+		if (isset($_POST['enadeudos'])) { 
+		$enadeudos	= 1; 
+		} else { 
+		$enadeudos = 0; 
+		} 
+		$res = $serviciosReferencias->insertarPublicacion($refdeclaracionjuradacabecera,$estadeacuerdo,$eningresosnetos,$enbienesinmuebles,$enbienesmuebles,$envehiculos,$eninversiones,$enadeudos); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+	function modificarPublicacion($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		if (isset($_POST['estadeacuerdo'])) { 
+		$estadeacuerdo	= 1; 
+		} else { 
+		$estadeacuerdo = 0; 
+		} 
+		if (isset($_POST['eningresosnetos'])) { 
+		$eningresosnetos	= 1; 
+		} else { 
+		$eningresosnetos = 0; 
+		} 
+		if (isset($_POST['enbienesinmuebles'])) { 
+		$enbienesinmuebles	= 1; 
+		} else { 
+		$enbienesinmuebles = 0; 
+		} 
+		if (isset($_POST['enbienesmuebles'])) { 
+		$enbienesmuebles	= 1; 
+		} else { 
+		$enbienesmuebles = 0; 
+		} 
+		if (isset($_POST['envehiculos'])) { 
+		$envehiculos	= 1; 
+		} else { 
+		$envehiculos = 0; 
+		} 
+		if (isset($_POST['eninversiones'])) { 
+		$eninversiones	= 1; 
+		} else { 
+		$eninversiones = 0; 
+		} 
+		if (isset($_POST['enadeudos'])) { 
+		$enadeudos	= 1; 
+		} else { 
+		$enadeudos = 0; 
+		} 
+		$res = $serviciosReferencias->modificarPublicacion($id,$refdeclaracionjuradacabecera,$estadeacuerdo,$eningresosnetos,$enbienesinmuebles,$enbienesmuebles,$envehiculos,$eninversiones,$enadeudos); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+
+	function eliminarPublicacion($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarPublicacion($id); 
+		echo $res; 
+	} 
+
+
+
+	function insertarPoder($serviciosReferencias) { 
+		$poder = $_POST['poder']; 
+		$res = $serviciosReferencias->insertarPoder($poder); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+	function modificarPoder($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$poder = $_POST['poder']; 
+		$res = $serviciosReferencias->modificarPoder($id,$poder); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+	function eliminarPoder($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarPoder($id); 
+		echo $res; 
+	} 
+
+
+	function insertarTipoparentesco($serviciosReferencias) { 
+		$tipoparentesco = $_POST['tipoparentesco']; 
+		$res = $serviciosReferencias->insertarTipoparentesco($tipoparentesco); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+	function modificarTipoparentesco($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$tipoparentesco = $_POST['tipoparentesco']; 
+		$res = $serviciosReferencias->modificarTipoparentesco($id,$tipoparentesco); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+	function eliminarTipoparentesco($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarTipoparentesco($id); 
+		echo $res; 
+	} 
+
+
 
 function traerArchivosPorCliente($serviciosReferencias) {
 	$id = $_POST['id'];

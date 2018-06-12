@@ -622,6 +622,344 @@ return $res;
 
 
 
+/* PARA Declaracionanualinteres */
+
+function insertarDeclaracionanualinteres($refdeclaracionjuradacabecera,$essecretario,$esauditor,$ejercicio,$espublico,$refpoder,$registrofederalcontribuyente,$fechadeclaracionanterior,$fechatomaposesion,$cargoactual,$cargoanterior,$areaadquisicion,$areaadquisicionanterior,$dependencia,$dependenciaanterior) { 
+	$sql = "insert into dbdeclaracionanualinteres(iddeclaracionanualinteres,refdeclaracionjuradacabecera,essecretario,esauditor,ejercicio,espublico,refpoder,registrofederalcontribuyente,fechadeclaracionanterior,fechatomaposesion,cargoactual,cargoanterior,areaadquisicion,areaadquisicionanterior,dependencia,dependenciaanterior) 
+	values ('',".$refdeclaracionjuradacabecera.",".$essecretario.",".$esauditor.",".$ejercicio.",".$espublico.",".$refpoder.",'".($registrofederalcontribuyente)."','".($fechadeclaracionanterior)."','".($fechatomaposesion)."','".($cargoactual)."','".($cargoanterior)."','".($areaadquisicion)."','".($areaadquisicionanterior)."','".($dependencia)."','".($dependenciaanterior)."')"; 
+	$res = $this->query($sql,1); 
+	return $res; 
+	} 
+	
+	
+	function modificarDeclaracionanualinteres($id,$refdeclaracionjuradacabecera,$essecretario,$esauditor,$ejercicio,$espublico,$refpoder,$registrofederalcontribuyente,$fechadeclaracionanterior,$fechatomaposesion,$cargoactual,$cargoanterior,$areaadquisicion,$areaadquisicionanterior,$dependencia,$dependenciaanterior) { 
+	$sql = "update dbdeclaracionanualinteres 
+	set 
+	refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",essecretario = ".$essecretario.",esauditor = ".$esauditor.",ejercicio = ".$ejercicio.",espublico = ".$espublico.",refpoder = ".$refpoder.",registrofederalcontribuyente = '".($registrofederalcontribuyente)."',fechadeclaracionanterior = '".($fechadeclaracionanterior)."',fechatomaposesion = '".($fechatomaposesion)."',cargoactual = '".($cargoactual)."',cargoanterior = '".($cargoanterior)."',areaadquisicion = '".($areaadquisicion)."',areaadquisicionanterior = '".($areaadquisicionanterior)."',dependencia = '".($dependencia)."',dependenciaanterior = '".($dependenciaanterior)."' 
+	where iddeclaracionanualinteres =".$id; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	
+	function eliminarDeclaracionanualinteres($id) { 
+	$sql = "delete from dbdeclaracionanualinteres where iddeclaracionanualinteres =".$id; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	
+	function traerDeclaracionanualinteres() { 
+	$sql = "select 
+	d.iddeclaracionanualinteres,
+	d.refdeclaracionjuradacabecera,
+	d.essecretario,
+	d.esauditor,
+	d.ejercicio,
+	d.espublico,
+	d.refpoder,
+	d.registrofederalcontribuyente,
+	d.fechadeclaracionanterior,
+	d.fechatomaposesion,
+	d.cargoactual,
+	d.cargoanterior,
+	d.areaadquisicion,
+	d.areaadquisicionanterior,
+	d.dependencia,
+	d.dependenciaanterior
+	from dbdeclaracionanualinteres d 
+	inner join tbpoder pod ON pod.idpoder = d.refpoder 
+	order by 1"; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	
+	function traerDeclaracionanualinteresPorId($id) { 
+	$sql = "select iddeclaracionanualinteres,refdeclaracionjuradacabecera,essecretario,esauditor,ejercicio,espublico,refpoder,registrofederalcontribuyente,fechadeclaracionanterior,fechatomaposesion,cargoactual,cargoanterior,areaadquisicion,areaadquisicionanterior,dependencia,dependenciaanterior from dbdeclaracionanualinteres where iddeclaracionanualinteres =".$id; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	/* Fin */
+	/* /* Fin de la Tabla: dbdeclaracionanualinteres*/
+
+
+
+	
+/* PARA Dependienteseconomicos */
+
+function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$nombre,$edad,$reftipoparentesco) { 
+	$sql = "insert into dbdependienteseconomicos(iddependienteeconomico,refdeclaracionjuradacabecera,tiene,nombre,edad,reftipoparentesco) 
+	values ('',".$refdeclaracionjuradacabecera.",".$tiene.",'".($nombre)."',".$edad.",".$reftipoparentesco.")"; 
+	$res = $this->query($sql,1); 
+	return $res; 
+	} 
+	
+	
+	function modificarDependienteseconomicos($id,$refdeclaracionjuradacabecera,$tiene,$nombre,$edad,$reftipoparentesco) { 
+	$sql = "update dbdependienteseconomicos 
+	set 
+	refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",tiene = ".$tiene.",nombre = '".($nombre)."',edad = ".$edad.",reftipoparentesco = ".$reftipoparentesco." 
+	where iddependienteeconomico =".$id; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	
+	function eliminarDependienteseconomicos($id) { 
+	$sql = "delete from dbdependienteseconomicos where iddependienteeconomico =".$id; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	
+	function traerDependienteseconomicos() { 
+	$sql = "select 
+	d.iddependienteeconomico,
+	d.refdeclaracionjuradacabecera,
+	d.tiene,
+	d.nombre,
+	d.edad,
+	d.reftipoparentesco
+	from dbdependienteseconomicos d 
+	inner join dbdeclaracionjuradacabecera dec ON dec.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera 
+	inner join tbestadocivil es ON es.idestadocivil = dec.refestadocivil 
+	inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dec.refregimenmatrimonial 
+	inner join dbusuarios us ON us.idusuario = dec.refusuarios 
+	inner join tbtipoparentesco tip ON tip.idtipoparentesco = d.reftipoparentesco 
+	order by 1"; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	
+	function traerDependienteseconomicosPorId($id) { 
+	$sql = "select iddependienteeconomico,refdeclaracionjuradacabecera,tiene,nombre,edad,reftipoparentesco from dbdependienteseconomicos where iddependienteeconomico =".$id; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	/* Fin */
+	/* /* Fin de la Tabla: dbdependienteseconomicos*/
+	
+	
+	/* PARA Ingresosanuales */
+	
+	function insertarIngresosanuales($refdeclaracionjuradacabecera,$remuneracionanualneta,$actividadindustrial,$razonsocialactividadindustrial,$actividadfinanciera,$razonsocialactividadfinanciera,$actividadprofesional,$descripcionactividadprofesional,$otros,$especifiqueotros,$ingresoanualconyuge,$especifiqueingresosconyuge,$fueservidorpublico,$vigenciadesde,$vigenciahasta) { 
+	$sql = "insert into dbingresosanuales(idingresoanual,refdeclaracionjuradacabecera,remuneracionanualneta,actividadindustrial,razonsocialactividadindustrial,actividadfinanciera,razonsocialactividadfinanciera,actividadprofesional,descripcionactividadprofesional,otros,especifiqueotros,ingresoanualconyuge,especifiqueingresosconyuge,fueservidorpublico,vigenciadesde,vigenciahasta) 
+	values ('',".$refdeclaracionjuradacabecera.",".$remuneracionanualneta.",".$actividadindustrial.",'".($razonsocialactividadindustrial)."',".$actividadfinanciera.",'".($razonsocialactividadfinanciera)."',".$actividadprofesional.",'".($descripcionactividadprofesional)."',".$otros.",'".($especifiqueotros)."',".$ingresoanualconyuge.",'".($especifiqueingresosconyuge)."',".$fueservidorpublico.",'".($vigenciadesde)."','".($vigenciahasta)."')"; 
+	$res = $this->query($sql,1); 
+	return $res; 
+	} 
+	
+	
+	function modificarIngresosanuales($id,$refdeclaracionjuradacabecera,$remuneracionanualneta,$actividadindustrial,$razonsocialactividadindustrial,$actividadfinanciera,$razonsocialactividadfinanciera,$actividadprofesional,$descripcionactividadprofesional,$otros,$especifiqueotros,$ingresoanualconyuge,$especifiqueingresosconyuge,$fueservidorpublico,$vigenciadesde,$vigenciahasta) { 
+	$sql = "update dbingresosanuales 
+	set 
+	refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",remuneracionanualneta = ".$remuneracionanualneta.",actividadindustrial = ".$actividadindustrial.",razonsocialactividadindustrial = '".($razonsocialactividadindustrial)."',actividadfinanciera = ".$actividadfinanciera.",razonsocialactividadfinanciera = '".($razonsocialactividadfinanciera)."',actividadprofesional = ".$actividadprofesional.",descripcionactividadprofesional = '".($descripcionactividadprofesional)."',otros = ".$otros.",especifiqueotros = '".($especifiqueotros)."',ingresoanualconyuge = ".$ingresoanualconyuge.",especifiqueingresosconyuge = '".($especifiqueingresosconyuge)."',fueservidorpublico = ".$fueservidorpublico.",vigenciadesde = '".($vigenciadesde)."',vigenciahasta = '".($vigenciahasta)."' 
+	where idingresoanual =".$id; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	
+	function eliminarIngresosanuales($id) { 
+	$sql = "delete from dbingresosanuales where idingresoanual =".$id; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	
+	function traerIngresosanuales() { 
+	$sql = "select 
+	i.idingresoanual,
+	i.refdeclaracionjuradacabecera,
+	i.remuneracionanualneta,
+	i.actividadindustrial,
+	i.razonsocialactividadindustrial,
+	i.actividadfinanciera,
+	i.razonsocialactividadfinanciera,
+	i.actividadprofesional,
+	i.descripcionactividadprofesional,
+	i.otros,
+	i.especifiqueotros,
+	i.ingresoanualconyuge,
+	i.especifiqueingresosconyuge,
+	i.fueservidorpublico,
+	i.vigenciadesde,
+	i.vigenciahasta
+	from dbingresosanuales i 
+	order by 1"; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	
+	function traerIngresosanualesPorId($id) { 
+	$sql = "select idingresoanual,refdeclaracionjuradacabecera,remuneracionanualneta,actividadindustrial,razonsocialactividadindustrial,actividadfinanciera,razonsocialactividadfinanciera,actividadprofesional,descripcionactividadprofesional,otros,especifiqueotros,ingresoanualconyuge,especifiqueingresosconyuge,fueservidorpublico,vigenciadesde,vigenciahasta from dbingresosanuales where idingresoanual =".$id; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	/* Fin */
+	/* /* Fin de la Tabla: dbingresosanuales*/
+	
+	
+	/* PARA Publicacion */
+	
+	function insertarPublicacion($refdeclaracionjuradacabecera,$estadeacuerdo,$eningresosnetos,$enbienesinmuebles,$enbienesmuebles,$envehiculos,$eninversiones,$enadeudos) { 
+	$sql = "insert into dbpublicacion(idpublicacion,refdeclaracionjuradacabecera,estadeacuerdo,eningresosnetos,enbienesinmuebles,enbienesmuebles,envehiculos,eninversiones,enadeudos) 
+	values ('',".$refdeclaracionjuradacabecera.",".$estadeacuerdo.",".$eningresosnetos.",".$enbienesinmuebles.",".$enbienesmuebles.",".$envehiculos.",".$eninversiones.",".$enadeudos.")"; 
+	$res = $this->query($sql,1); 
+	return $res; 
+	} 
+	
+	
+	function modificarPublicacion($id,$refdeclaracionjuradacabecera,$estadeacuerdo,$eningresosnetos,$enbienesinmuebles,$enbienesmuebles,$envehiculos,$eninversiones,$enadeudos) { 
+	$sql = "update dbpublicacion 
+	set 
+	refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",estadeacuerdo = ".$estadeacuerdo.",eningresosnetos = ".$eningresosnetos.",enbienesinmuebles = ".$enbienesinmuebles.",enbienesmuebles = ".$enbienesmuebles.",envehiculos = ".$envehiculos.",eninversiones = ".$eninversiones.",enadeudos = ".$enadeudos." 
+	where idpublicacion =".$id; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	
+	function eliminarPublicacion($id) { 
+	$sql = "delete from dbpublicacion where idpublicacion =".$id; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	
+	function traerPublicacion() { 
+	$sql = "select 
+	p.idpublicacion,
+	p.refdeclaracionjuradacabecera,
+	p.estadeacuerdo,
+	p.eningresosnetos,
+	p.enbienesinmuebles,
+	p.enbienesmuebles,
+	p.envehiculos,
+	p.eninversiones,
+	p.enadeudos
+	from dbpublicacion p 
+	order by 1"; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	
+	function traerPublicacionPorId($id) { 
+	$sql = "select idpublicacion,refdeclaracionjuradacabecera,estadeacuerdo,eningresosnetos,enbienesinmuebles,enbienesmuebles,envehiculos,eninversiones,enadeudos from dbpublicacion where idpublicacion =".$id; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	/* Fin */
+	/* /* Fin de la Tabla: dbpublicacion*/
+
+
+
+	
+/* PARA Poder */
+
+function insertarPoder($poder) { 
+	$sql = "insert into tbpoder(idpoder,poder) 
+	values ('','".($poder)."')"; 
+	$res = $this->query($sql,1); 
+	return $res; 
+	} 
+	
+	
+	function modificarPoder($id,$poder) { 
+	$sql = "update tbpoder 
+	set 
+	poder = '".($poder)."' 
+	where idpoder =".$id; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	
+	function eliminarPoder($id) { 
+	$sql = "delete from tbpoder where idpoder =".$id; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	
+	function traerPoder() { 
+	$sql = "select 
+	p.idpoder,
+	p.poder
+	from tbpoder p 
+	order by 1"; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	
+	function traerPoderPorId($id) { 
+	$sql = "select idpoder,poder from tbpoder where idpoder =".$id; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	/* Fin */
+	/* /* Fin de la Tabla: tbpoder*/
+
+
+
+	
+/* PARA Tipoparentesco */
+
+function insertarTipoparentesco($tipoparentesco) { 
+	$sql = "insert into tbtipoparentesco(idtipoparentesco,tipoparentesco) 
+	values ('','".($tipoparentesco)."')"; 
+	$res = $this->query($sql,1); 
+	return $res; 
+	} 
+	
+	
+	function modificarTipoparentesco($id,$tipoparentesco) { 
+	$sql = "update tbtipoparentesco 
+	set 
+	tipoparentesco = '".($tipoparentesco)."' 
+	where idtipoparentesco =".$id; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	
+	function eliminarTipoparentesco($id) { 
+	$sql = "delete from tbtipoparentesco where idtipoparentesco =".$id; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	
+	function traerTipoparentesco() { 
+	$sql = "select 
+	t.idtipoparentesco,
+	t.tipoparentesco
+	from tbtipoparentesco t 
+	order by 1"; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	
+	function traerTipoparentescoPorId($id) { 
+	$sql = "select idtipoparentesco,tipoparentesco from tbtipoparentesco where idtipoparentesco =".$id; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
+	/* Fin */
+	/* /* Fin de la Tabla: tbtipoparentesco*/
+
 
 
 

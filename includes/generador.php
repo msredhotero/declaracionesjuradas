@@ -36,30 +36,48 @@ function query($sql,$accion) {
 
 
 $tablasAr	= array("declaracionjuradacabecera"        => "dbdeclaracionjuradacabecera",                
-"usuarios"        => "dbusuarios",  
-"archivos"		  => "dbarchivos",      
-"predio_menu"     => "predio_menu",       
-"roles"           => "tbroles",
-"estadocivil"     => "tbestadocivil",
-"regimenmatrimonial" => "tbregimenmatrimonial");
+"usuarios"        			=> "dbusuarios",  
+"archivos"		  			=> "dbarchivos",
+"publicacion"		  		=> "dbpublicacion",
+"ingresosanuales"		  	=> "dbingresosanuales",
+"dependienteseconomicos"	=> "dbdependienteseconomicos",
+"declaracionanualinteres"	=> "dbdeclaracionanualinteres",      
+"predio_menu"     			=> "predio_menu",       
+"roles"           			=> "tbroles",
+"estadocivil"     			=> "tbestadocivil",
+"tipoparentesco"  			=> "tbtipoparentesco",
+"poder"			  			=> "tbpoder",
+"regimenmatrimonial" 		=> "tbregimenmatrimonial");
 
 
 function recursiveTablas($ar, $tabla, $aliasTablaMadre) {
 	
-	$tablasArAux2	= array("declaracionjuradacabecera" => "dbdeclaracionjuradacabecera",                
-"usuarios"        => "dbusuarios",  
-"archivos"		  => "dbarchivos",              
-"predio_menu"     => "predio_menu",                     
-"roles"           => "tbroles",
-"estadocivil"     => "tbestadocivil",
-"regimenmatrimonial" => "tbregimenmatrimonial");
+	$tablasArAux2	= array("declaracionjuradacabecera"        => "dbdeclaracionjuradacabecera",                
+	"usuarios"        			=> "dbusuarios",  
+	"archivos"		  			=> "dbarchivos",
+	"publicacion"		  		=> "dbpublicacion",
+	"ingresosanuales"		  	=> "dbingresosanuales",
+	"dependienteseconomicos"	=> "dbdependienteseconomicos",
+	"declaracionanualinteres"	=> "dbdeclaracionanualinteres",      
+	"predio_menu"     			=> "predio_menu",       
+	"roles"           			=> "tbroles",
+	"estadocivil"     			=> "tbestadocivil",
+	"tipoparentesco"  			=> "tbtipoparentesco",
+	"poder"			  			=> "tbpoder",
+	"regimenmatrimonial" 		=> "tbregimenmatrimonial");
 
 	$tablasArAux	= array("declaracionjuradacabecera"        => 3,                
 "usuarios"        => 2,  
-"archivos"		  => 1,               
+"archivos"		  => 1,  
+"publicacion"		  		=> 2,
+"ingresosanuales"		  	=> 2,
+"dependienteseconomicos"	=> 3,
+"declaracionanualinteres"	=> 3,               
 "predio_menu"     => 1,                       
 "roles"           => 1,
 "estadocivil"     => 1,
+"tipoparentesco"  => 1,
+"poder"			  => 1,
 "regimenmatrimonial" => 1);
 	
 	$inner= '';
@@ -90,7 +108,7 @@ $ajaxFuncionesController = '';
 
 $servicios	= "Referencias";
 
-$sqlMapaer	= "SHOW FULL TABLES FROM declaracionjurada";
+$sqlMapaer	= "SHOW FULL TABLES FROM remolques";
 $resMapeo 	=	query($sqlMapaer,0);
 
 $aliasTablaMadre = '';
