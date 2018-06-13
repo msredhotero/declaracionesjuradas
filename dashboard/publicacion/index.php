@@ -22,99 +22,66 @@ $serviciosReferencias 	= new ServiciosReferencias();
 $fecha = date('Y-m-d');
 
 //$resProductos = $serviciosProductos->traerProductosLimite(6);
-$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Declaracion Jurada",$_SESSION['refroll_predio'],'');
+$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Datos Publicos",$_SESSION['refroll_predio'],'');
 
+
+///////////////////////   id de la cabecera de la declaracion /////////////////////////
+$id = 1;
+///////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
-$singular = "Declaracion Patrimonial";
+$singular = "Datos Publicos";
 
-$plural = "Declaraciones Patrimoniales";
+$plural = "Datos Publicos";
 
-$eliminar = "eliminarDeclaracionjuradacabecera";
+$eliminar = "eliminarPublicacion";
 
-$insertar = "insertarDeclaracionjuradacabecera";
+$insertar = "insertarPublicacion";
 
 $tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
-$tabla 			= "dbdeclaracionjuradacabecera";
+$tabla 			= "dbpublicacion";
 
-$lblCambio	 	= array('fecharecepcion',
-						'primerapellido',
-						'segundoapellido',
-						'curp',
-						'homoclave',
-						'emailinstitucional',
-						'emailalterno',
-						'refestadocivil',
-						'refregimenmatrimonial',
-						'paisnacimiento',
-						'nacionalidad',
-						'entidadnacimiento',
-						'numerocelular',
-						'lugarubica',
-						'domicilioparticular',
-						'localidad',
-						'municipio',
-						'telefono',
-						'entidadfederativa',
-						'codigopostal',
-						'estudios',
-						'cedulaprofesional',
-						'refusuarios');
-$lblreemplazo	= array('Fecha de Recepción',
-						'Primer Apellido',
-						'Segundo Apellido',
-						'CURP',
-						'RFC / Homoclave',
-						'Correo Electrónico Inst.',
-						'Correo Electrónico Alterno',
-						'Estado Civil',
-						'Regimen Matrimonial',
-						'País donde nació',
-						'Nacionalidad',
-						'Entidad donde nació',
-						'Nro de Celular',
-						'Lugar donde se ubica',
-						'Domicilio Particular',
-						'Localidad o colonia',
-						'Municipio o Alcaldía',
-						'Teléfono',
-						'Entidad Federativa',
-						'Codigo Postal',
-						'Grado Max. de estudios/Especialidad',
-						'Nro de cédula profesional',
-						'Usuario');
+$lblCambio	 	= array("refdeclaracionjuradacabecera",
+						"estadeacuerdo",
+						"eningresosnetos",
+						"enbienesinmuebles",
+						"enbienesmuebles",
+						"envehiculos",
+						"eninversiones",
+						"enadeudos");
+$lblreemplazo	= array('Declaración Patrimonial Cabecera',
+						'¿Esta de acuerdo en hacer publicos sus datos personales?',
+						'En ingresos netos, los correspondientes a los recibidos por actividad industrial y/o comercial, financiera y otros, asi como el monto total de los ingresos considerados a los antes citados',
+						'En bienes inmuebles, el valor de la contraprestación y moneda',
+						'En bienes muebles, el valor de la contraprestación y moneda',
+						'En vehiculos, el valor de la contraprestación y moneda',
+						'En inversiones, cuentas bancarias y otros tipos de valores, el saldo',
+						'En adeudos, el monto original, el saldo y el monto de los pagos realizados');
 
 
-$resEstadoCivil = $serviciosReferencias->traerEstadocivil();
-$cadRef = $serviciosFunciones->devolverSelectBoxObligatorio($resEstadoCivil,array(1),'');
+$resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
+$cadRef = $serviciosFunciones->devolverSelectBoxObligatorio($resVar1,array(2,3,4),' ');
 
-$refRM = $serviciosReferencias->traerRegimenmatrimonial();
-$cadRef2 = $serviciosFunciones->devolverSelectBoxObligatorio($refRM,array(1),' ');
-
-$refUsuarios = $serviciosReferencias->traerUsuarios();
-$cadRef3 = $serviciosFunciones->devolverSelectBoxObligatorio($refUsuarios,array(1),' ');
-
-$cadRef4 = "<option value='1'>México</option><option value='2'>Extranjero</option>";
-$cadRef5 = "<option value='1'>Femenino</option><option value='2'>Masculino</option>";
-
-$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3,3=>$cadRef4,4=>$cadRef5);
-$refCampo 	=  array("refestadocivil","refregimenmatrimonial","refusuarios","lugarubica","sexo"); 
+$refdescripcion = array(0 => $cadRef);
+$refCampo 	=  array("refdeclaracionjuradacabecera"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
 
 
 /////////////////////// Opciones para la creacion del view  apellido,nombre,nrodocumento,fechanacimiento,direccion,telefono,email/////////////////////
-$cabeceras 		= "	<th>Apellidos</th>
-					<th>Nombres</th>
-					<th>CURP</th>
-					<th>Fecha DDJJ</th>
-					<th>Teléfono</th>
-					<th>Email Particular</th>";
+$cabeceras 		= "	<th>Decl. Patri. Cab.</th>
+					<th>Datos Publicos</th>
+					<th>Ingresos Netos</th>
+					<th>Bienes Inmuebles</th>
+					<th>Bienes Muebles</th>
+					<th>Vehiculos</th>
+					<th>Inversiones</th>
+					<th>Adeudos</th>";
 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
@@ -123,7 +90,7 @@ $cabeceras 		= "	<th>Apellidos</th>
 
 $formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
-$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerDeclaracionjuradacabeceraGrilla(),6);
+$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerPublicacionGrillaPorUsuario($_SESSION['idusuario']),8);
 
 
 
@@ -189,8 +156,6 @@ if ($_SESSION['refroll_predio'] != 1) {
  <?php echo $resMenu; ?>
 
 <div id="content">
-
-<h3><?php echo $plural; ?></h3>
 
     <div class="boxInfoLargo">
         <div id="headBoxInfo">

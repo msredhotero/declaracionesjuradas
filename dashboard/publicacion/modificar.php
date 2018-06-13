@@ -22,40 +22,55 @@ $serviciosReferencias 	= new ServiciosReferencias();
 $fecha = date('Y-m-d');
 
 //$resProductos = $serviciosProductos->traerProductosLimite(6);
-$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Clientes",$_SESSION['refroll_predio'],'');
+$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Datos Publicos",$_SESSION['refroll_predio'],'');
 
 
 $id = $_GET['id'];
 
-$resResultado = $serviciosReferencias->traerClientesPorId($id);
+$resResultado = $serviciosReferencias->traerPublicacionPorId($id);
 
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
-$singular = "Cliente";
+$singular = "Datos Publicos";
 
-$plural = "Clientes";
+$plural = "Datos Publicos";
 
-$eliminar = "eliminarClientes";
+$eliminar = "eliminarPublicacion";
 
-$modificar = "modificarClientes";
+$modificar = "modificarPublicacion";
 
-$idTabla = "idcliente";
+$idTabla = "idpublicacion";
 
-$tituloWeb = "Gestión: Estudio Contable";
+$tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
-$tabla 			= "dbclientes";
+$tabla 			= "dbpublicacion";
 
-$lblCambio	 	= array("telefono","direccion");
-$lblreemplazo	= array("Teléfono","dirección");
+$lblCambio	 	= array("refdeclaracionjuradacabecera",
+						"estadeacuerdo",
+						"eningresosnetos",
+						"enbienesinmuebles",
+						"enbienesmuebles",
+						"envehiculos",
+						"eninversiones",
+						"enadeudos");
+$lblreemplazo	= array('Declaración Patrimonial Cabecera',
+						'¿Esta de acuerdo en hacer publicos sus datos personales?',
+						'En ingresos netos, los correspondientes a los recibidos por actividad industrial y/o comercial, financiera y otros, asi como el monto total de los ingresos considerados a los antes citados',
+						'En bienes inmuebles, el valor de la contraprestación y moneda',
+						'En bienes muebles, el valor de la contraprestación y moneda',
+						'En vehiculos, el valor de la contraprestación y moneda',
+						'En inversiones, cuentas bancarias y otros tipos de valores, el saldo',
+						'En adeudos, el monto original, el saldo y el monto de los pagos realizados');
 
 
-$cadRef 	= '';
+$resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
+$cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(2,3,4),' ', mysql_result($resResultado,0,'refdeclaracionjuradacabecera'));
 
-$refdescripcion = array();
-$refCampo 	=  array();
+$refdescripcion = array(0 => $cadRef);
+$refCampo 	=  array("refdeclaracionjuradacabecera"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
@@ -199,6 +214,46 @@ $(document).ready(function(){
 		url = "index.php";
 		$(location).attr('href',url);
 	});//fin del boton modificar
+
+	if ('<?php echo mysql_result($resResultado,0,'eningresosnetos'); ?>'  == 'Si') {
+		$('#eningresosnetos').prop("checked",true);
+	} else {
+		$('#eningresosnetos').prop("checked",false);
+	}
+
+	if ('<?php echo mysql_result($resResultado,0,'enbienesinmuebles'); ?>'  == 'Si') {
+		$('#enbienesinmuebles').prop("checked",true);
+	} else {
+		$('#enbienesinmuebles').prop("checked",false);
+	}
+
+
+	if ('<?php echo mysql_result($resResultado,0,'enbienesmuebles'); ?>'  == 'Si') {
+		$('#enbienesmuebles').prop("checked",true);
+	} else {
+		$('#enbienesmuebles').prop("checked",false);
+	}
+
+
+	if ('<?php echo mysql_result($resResultado,0,'envehiculos'); ?>'  == 'Si') {
+		$('#envehiculos').prop("checked",true);
+	} else {
+		$('#envehiculos').prop("checked",false);
+	}
+
+
+	if ('<?php echo mysql_result($resResultado,0,'eninversiones'); ?>'  == 'Si') {
+		$('#eninversiones').prop("checked",true);
+	} else {
+		$('#eninversiones').prop("checked",false);
+	}
+
+
+	if ('<?php echo mysql_result($resResultado,0,'enadeudos'); ?>'  == 'Si') {
+		$('#enadeudos').prop("checked",true);
+	} else {
+		$('#enadeudos').prop("checked",false);
+	}
 	
 	$('.varborrar').click(function(event){
 		  usersid =  $(this).attr("id");

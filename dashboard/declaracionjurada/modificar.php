@@ -22,40 +22,105 @@ $serviciosReferencias 	= new ServiciosReferencias();
 $fecha = date('Y-m-d');
 
 //$resProductos = $serviciosProductos->traerProductosLimite(6);
-$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Clientes",$_SESSION['refroll_predio'],'');
+$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Declaracion Patrimonial",$_SESSION['refroll_predio'],'');
 
 
 $id = $_GET['id'];
 
-$resResultado = $serviciosReferencias->traerClientesPorId($id);
+$resResultado = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
 
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
-$singular = "Cliente";
+$singular = "Declaracion Patrimonial";
 
-$plural = "Clientes";
+$plural = "Declaraciones Patrimoniales";
 
-$eliminar = "eliminarClientes";
+$eliminar = "eliminarDeclaracionjuradacabecera";
 
-$modificar = "modificarClientes";
+$modificar = "modificarDeclaracionjuradacabecera";
 
-$idTabla = "idcliente";
+$idTabla = "iddeclaracionjuradacabecera";
 
-$tituloWeb = "Gestión: Estudio Contable";
+$tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
-$tabla 			= "dbclientes";
+$tabla 			= "dbdeclaracionjuradacabecera";
 
-$lblCambio	 	= array("telefono","direccion");
-$lblreemplazo	= array("Teléfono","dirección");
+$lblCambio	 	= array('fecharecepcion',
+						'primerapellido',
+						'segundoapellido',
+						'curp',
+						'homoclave',
+						'emailinstitucional',
+						'emailalterno',
+						'refestadocivil',
+						'refregimenmatrimonial',
+						'paisnacimiento',
+						'nacionalidad',
+						'entidadnacimiento',
+						'numerocelular',
+						'lugarubica',
+						'domicilioparticular',
+						'localidad',
+						'municipio',
+						'telefono',
+						'entidadfederativa',
+						'codigopostal',
+						'estudios',
+						'cedulaprofesional',
+						'refusuarios');
+$lblreemplazo	= array('Fecha de Recepción',
+						'Primer Apellido',
+						'Segundo Apellido',
+						'CURP',
+						'RFC / Homoclave',
+						'Correo Electrónico Inst.',
+						'Correo Electrónico Alterno',
+						'Estado Civil',
+						'Regimen Matrimonial',
+						'País donde nació',
+						'Nacionalidad',
+						'Entidad donde nació',
+						'Nro de Celular',
+						'Lugar donde se ubica',
+						'Domicilio Particular',
+						'Localidad o colonia',
+						'Municipio o Alcaldía',
+						'Teléfono',
+						'Entidad Federativa',
+						'Codigo Postal',
+						'Grado Max. de estudios/Especialidad',
+						'Nro de cédula profesional',
+						'Usuario');
 
 
-$cadRef 	= '';
+$resEstadoCivil = $serviciosReferencias->traerEstadocivil();
+$cadRef = $serviciosFunciones->devolverSelectBoxActivo($resEstadoCivil,array(1),'', mysql_result($resResultado,0,'refestadocivil'));
 
-$refdescripcion = array();
-$refCampo 	=  array();
+$refRM = $serviciosReferencias->traerRegimenmatrimonial();
+$cadRef2 = $serviciosFunciones->devolverSelectBoxActivo($refRM,array(1),' ', mysql_result($resResultado,0,'refregimenmatrimonial'));
+
+$refUsuarios = $serviciosReferencias->traerUsuarios();
+$cadRef3 = $serviciosFunciones->devolverSelectBoxActivo($refUsuarios,array(1),' ', mysql_result($resResultado,0,'refusuarios'));
+
+if (mysql_result($resResultado,0,'lugarubica') == '1') {
+	$cadRef4 = "<option value='1' selected>México</option><option value='2'>Extranjero</option>";
+} else {
+	$cadRef4 = "<option value='1'>México</option><option value='2' selected>Extranjero</option>";
+}
+
+if (mysql_result($resResultado,0,'sexo') == '1') {
+	$cadRef5 = "<option value='1' selected>Femenino</option><option value='2'>Masculino</option>";
+} else {
+	$cadRef5 = "<option value='1'>Femenino</option><option value='2' selected>Masculino</option>";
+}
+
+
+
+$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3,3=>$cadRef4,4=>$cadRef5);
+$refCampo 	=  array("refestadocivil","refregimenmatrimonial","refusuarios","lugarubica","sexo"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 

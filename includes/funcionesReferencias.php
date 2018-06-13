@@ -653,10 +653,10 @@ function insertarDeclaracionanualinteres($refdeclaracionjuradacabecera,$essecret
 	$sql = "select 
 	d.iddeclaracionanualinteres,
 	d.refdeclaracionjuradacabecera,
-	d.essecretario,
-	d.esauditor,
+	(case when d.essecretario = 1 then 'Si' else 'No' end) as essecretario,
+	(case when d.esauditor = 1 then 'Si' else 'No' end) as esauditor,
 	d.ejercicio,
-	d.espublico,
+	(case when d.espublico = 1 then 'Si' else 'No' end) as espublico,
 	d.refpoder,
 	d.registrofederalcontribuyente,
 	d.fechadeclaracionanterior,
@@ -673,13 +673,110 @@ function insertarDeclaracionanualinteres($refdeclaracionjuradacabecera,$essecret
 	$res = $this->query($sql,0); 
 	return $res; 
 	} 
-	
-	
+
+
 	function traerDeclaracionanualinteresPorId($id) { 
-	$sql = "select iddeclaracionanualinteres,refdeclaracionjuradacabecera,essecretario,esauditor,ejercicio,espublico,refpoder,registrofederalcontribuyente,fechadeclaracionanterior,fechatomaposesion,cargoactual,cargoanterior,areaadquisicion,areaadquisicionanterior,dependencia,dependenciaanterior from dbdeclaracionanualinteres where iddeclaracionanualinteres =".$id; 
+	$sql = "select iddeclaracionanualinteres,refdeclaracionjuradacabecera
+					,(case when essecretario = 1 then 'Si' else 'No' end) as essecretario
+					,(case when esauditor = 1 then 'Si' else 'No' end) as esauditor
+					,ejercicio
+					,(case when espublico = 1 then 'Si' else 'No' end) as espublico
+					,refpoder
+					,registrofederalcontribuyente,fechadeclaracionanterior
+					,fechatomaposesion,cargoactual,cargoanterior,areaadquisicion
+					,areaadquisicionanterior,dependencia,dependenciaanterior 
+				from dbdeclaracionanualinteres where iddeclaracionanualinteres =".$id; 
 	$res = $this->query($sql,0); 
 	return $res; 
 	} 
+
+	function traerDeclaracionanualinteresGrid() { 
+		$sql = "select 
+				d.iddeclaracionanualinteres,
+				concat(dj.primerapellido, ' ', segundoapellido, ' ', nombres) as declaracioncabecera,
+				(case when essecretario = 1 then 'Si' else 'No' end) as essecretario,
+				(case when esauditor = 1 then 'Si' else 'No' end) as esauditor,
+				d.ejercicio,
+				(case when espublico = 1 then 'Si' else 'No' end) as espublico,
+				pod.poder,
+				d.registrofederalcontribuyente,
+				d.fechadeclaracionanterior,
+				d.fechatomaposesion,
+				d.cargoactual,
+				d.cargoanterior,
+				d.areaadquisicion,
+				d.areaadquisicionanterior,
+				d.dependencia,
+				d.dependenciaanterior,
+				d.refdeclaracionjuradacabecera,
+				d.refpoder
+				from dbdeclaracionanualinteres d 
+				inner join tbpoder pod ON pod.idpoder = d.refpoder 
+				inner join dbdeclaracionjuradacabecera dj on dj.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera
+				order by 1"; 
+		$res = $this->query($sql,0); 
+		return $res; 
+	}
+
+
+	function traerDeclaracionanualinteresGridPorCabecera($id) { 
+		$sql = "select 
+				d.iddeclaracionanualinteres,
+				concat(dj.primerapellido, ' ', segundoapellido, ' ', nombres) as declaracioncabecera,
+				(case when essecretario = 1 then 'Si' else 'No' end) as essecretario,
+				(case when esauditor = 1 then 'Si' else 'No' end) as esauditor,
+				d.ejercicio,
+				(case when espublico = 1 then 'Si' else 'No' end) as espublico,
+				pod.poder,
+				d.registrofederalcontribuyente,
+				d.fechadeclaracionanterior,
+				d.fechatomaposesion,
+				d.cargoactual,
+				d.cargoanterior,
+				d.areaadquisicion,
+				d.areaadquisicionanterior,
+				d.dependencia,
+				d.dependenciaanterior,
+				d.refdeclaracionjuradacabecera,
+				d.refpoder
+				from dbdeclaracionanualinteres d 
+				inner join tbpoder pod ON pod.idpoder = d.refpoder 
+				inner join dbdeclaracionjuradacabecera dj on dj.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera
+				where dj.iddeclaracionjuradacabecera = ".$id."
+				order by 1"; 
+		$res = $this->query($sql,0); 
+		return $res; 
+	}
+
+
+	function traerDeclaracionanualinteresGridPorUsuario($idUsuario) { 
+		$sql = "select 
+				d.iddeclaracionanualinteres,
+				concat(dj.primerapellido, ' ', segundoapellido, ' ', nombres) as declaracioncabecera,
+				(case when essecretario = 1 then 'Si' else 'No' end) as essecretario,
+				(case when esauditor = 1 then 'Si' else 'No' end) as esauditor,
+				d.ejercicio,
+				(case when espublico = 1 then 'Si' else 'No' end) as espublico,
+				pod.poder,
+				d.registrofederalcontribuyente,
+				d.fechadeclaracionanterior,
+				d.fechatomaposesion,
+				d.cargoactual,
+				d.cargoanterior,
+				d.areaadquisicion,
+				d.areaadquisicionanterior,
+				d.dependencia,
+				d.dependenciaanterior,
+				d.refdeclaracionjuradacabecera,
+				d.refpoder
+				from dbdeclaracionanualinteres d 
+				inner join tbpoder pod ON pod.idpoder = d.refpoder 
+				inner join dbdeclaracionjuradacabecera dj on dj.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera
+				where dj.refusuarios = ".$idUsuario."
+				order by 1"; 
+		$res = $this->query($sql,0); 
+		return $res; 
+	}
 	
 	/* Fin */
 	/* /* Fin de la Tabla: dbdeclaracionanualinteres*/
@@ -852,11 +949,81 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 	
 	
 	function traerPublicacionPorId($id) { 
-	$sql = "select idpublicacion,refdeclaracionjuradacabecera,estadeacuerdo,eningresosnetos,enbienesinmuebles,enbienesmuebles,envehiculos,eninversiones,enadeudos from dbpublicacion where idpublicacion =".$id; 
+	$sql = "select idpublicacion,refdeclaracionjuradacabecera,
+				(case when estadeacuerdo = 1 then 'Si' else 'No' end) as estadeacuerdo,
+				(case when eningresosnetos = 1 then 'Si' else 'No' end) as eningresosnetos,
+				(case when enbienesinmuebles = 1 then 'Si' else 'No' end) as enbienesinmuebles,
+				(case when enbienesmuebles = 1 then 'Si' else 'No' end) as enbienesmuebles,
+				(case when envehiculos = 1 then 'Si' else 'No' end) as envehiculos,
+				(case when eninversiones = 1 then 'Si' else 'No' end) as eninversiones,
+				(case when enadeudos = 1 then 'Si' else 'No' end) as enadeudos
+				from dbpublicacion where idpublicacion =".$id; 
 	$res = $this->query($sql,0); 
 	return $res; 
 	} 
+
+	function traerPublicacionGrilla() {
+		$sql = "select 
+				p.idpublicacion,
+				concat(dj.primerapellido, ' ', segundoapellido, ' ', nombres) as declaracioncabecera,
+				(case when p.estadeacuerdo = 1 then 'Si' else 'No' end) as estadeacuerdo,
+				(case when p.eningresosnetos = 1 then 'Si' else 'No' end) as eningresosnetos,
+				(case when p.enbienesinmuebles = 1 then 'Si' else 'No' end) as enbienesinmuebles,
+				(case when p.enbienesmuebles = 1 then 'Si' else 'No' end) as enbienesmuebles,
+				(case when p.envehiculos = 1 then 'Si' else 'No' end) as envehiculos,
+				(case when p.eninversiones = 1 then 'Si' else 'No' end) as eninversiones,
+				(case when p.enadeudos = 1 then 'Si' else 'No' end) as enadeudos,
+				p.refdeclaracionjuradacabecera
+				from dbpublicacion p 
+				inner join dbdeclaracionjuradacabecera dj on dj.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera
+				order by 1"; 
+		$res = $this->query($sql,0); 
+		return $res; 
+	}
+
+
+	function traerPublicacionGrillaPorCabecera($id) {
+		$sql = "select 
+				p.idpublicacion,
+				concat(dj.primerapellido, ' ', segundoapellido, ' ', nombres) as declaracioncabecera,
+				(case when p.estadeacuerdo = 1 then 'Si' else 'No' end) as estadeacuerdo,
+				(case when p.eningresosnetos = 1 then 'Si' else 'No' end) as eningresosnetos,
+				(case when p.enbienesinmuebles = 1 then 'Si' else 'No' end) as enbienesinmuebles,
+				(case when p.enbienesmuebles = 1 then 'Si' else 'No' end) as enbienesmuebles,
+				(case when p.envehiculos = 1 then 'Si' else 'No' end) as envehiculos,
+				(case when p.eninversiones = 1 then 'Si' else 'No' end) as eninversiones,
+				(case when p.enadeudos = 1 then 'Si' else 'No' end) as enadeudos,
+				p.refdeclaracionjuradacabecera
+				from dbpublicacion p 
+				inner join dbdeclaracionjuradacabecera dj on dj.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera
+				where dj.iddeclaracionjuradacabecera = ".$id."
+				order by 1"; 
+		$res = $this->query($sql,0); 
+		return $res; 
+	}
+
+
+	function traerPublicacionGrillaPorUsuario($idUsuario) {
+		$sql = "select 
+				p.idpublicacion,
+				concat(dj.primerapellido, ' ', dj.segundoapellido, ' ', dj.nombres) as declaracioncabecera,
+				(case when p.estadeacuerdo = 1 then 'Si' else 'No' end) as estadeacuerdo,
+				(case when p.eningresosnetos = 1 then 'Si' else 'No' end) as eningresosnetos,
+				(case when p.enbienesinmuebles = 1 then 'Si' else 'No' end) as enbienesinmuebles,
+				(case when p.enbienesmuebles = 1 then 'Si' else 'No' end) as enbienesmuebles,
+				(case when p.envehiculos = 1 then 'Si' else 'No' end) as envehiculos,
+				(case when p.eninversiones = 1 then 'Si' else 'No' end) as eninversiones,
+				(case when p.enadeudos = 1 then 'Si' else 'No' end) as enadeudos,
+				p.refdeclaracionjuradacabecera
+				from dbpublicacion p 
+				inner join dbdeclaracionjuradacabecera dj on dj.iddeclaracionjuradacabecera = p.refdeclaracionjuradacabecera
+				where dj.refusuarios = ".$idUsuario."
+				order by 1"; 
+		$res = $this->query($sql,0); 
+		return $res; 
+	}
 	
+		
 	/* Fin */
 	/* /* Fin de la Tabla: dbpublicacion*/
 

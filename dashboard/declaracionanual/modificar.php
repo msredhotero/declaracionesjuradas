@@ -22,40 +22,70 @@ $serviciosReferencias 	= new ServiciosReferencias();
 $fecha = date('Y-m-d');
 
 //$resProductos = $serviciosProductos->traerProductosLimite(6);
-$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Clientes",$_SESSION['refroll_predio'],'');
+$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Declaracion Anual Intereses",$_SESSION['refroll_predio'],'');
 
 
 $id = $_GET['id'];
 
-$resResultado = $serviciosReferencias->traerClientesPorId($id);
+$resResultado = $serviciosReferencias->traerDeclaracionanualinteresPorId($id);
 
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
-$singular = "Cliente";
+$singular = "Declaracion Anual Intereses";
 
-$plural = "Clientes";
+$plural = "Declaraciones Anual de Intereses";
 
-$eliminar = "eliminarClientes";
+$eliminar = "eliminarDeclaracionanualinteres";
 
-$modificar = "modificarClientes";
+$modificar = "modificarDeclaracionanualinteres";
 
-$idTabla = "idcliente";
+$idTabla = "iddeclaracionanualinteres";
 
-$tituloWeb = "Gestión: Estudio Contable";
+$tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
-$tabla 			= "dbclientes";
+$tabla 			= "dbdeclaracionanualinteres";
 
-$lblCambio	 	= array("telefono","direccion");
-$lblreemplazo	= array("Teléfono","dirección");
+$lblCambio	 	= array("refdeclaracionjuradacabecera",
+						"essecretario",
+						"esauditor",
+						"espublico",
+						"refpoder",
+						"registrofederalcontribuyente",
+						"fechadeclaracionanterior",
+						"fechatomaposesion",
+						"cargoactual",
+						"cargoanterior",
+						"areaadquisicion",
+						"areaadquisicionanterior",
+						"dependencia",
+						"dependenciaanterior");
+$lblreemplazo	= array('Declaración Patrimonial Cabecera',
+						'Secretario de la contraloría',
+						'Auditor General de la ESAF',
+						'Es mi deseo hacer publica la información confidencial',
+						'Poder',
+						'Registro Federal de Contribuyentes',
+						'Fecha Declaración anterior',
+						'Fecha de la toma de posesión actual',
+						'Cargo que desempeña actualmente',
+						'Cargo que manifesto en su ultima',
+						'Area de adscripción actual',
+						'Area de adscripción que manifesto en su ultima declaración',
+						'Dependencia, Organismo o Ayuntamiento de adscripción de la plaza',
+						'Dependencia, Organismo o Ayuntamiento que manifesto en su ultima declaración');
 
 
-$cadRef 	= '';
+$resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
+$cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(2,3,4),' ', mysql_result($resResultado,0,'refdeclaracionjuradacabecera'));
 
-$refdescripcion = array();
-$refCampo 	=  array();
+$refVar2 = $serviciosReferencias->traerPoder();
+$cadRef2 = $serviciosFunciones->devolverSelectBoxActivo($refVar2,array(1),' ', mysql_result($resResultado,0,'refpoder'));
+
+$refdescripcion = array(0 => $cadRef, 1=>$cadRef2);
+$refCampo 	=  array("refdeclaracionjuradacabecera","refpoder"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
