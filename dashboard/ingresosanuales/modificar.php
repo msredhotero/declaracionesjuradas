@@ -22,40 +22,69 @@ $serviciosReferencias 	= new ServiciosReferencias();
 $fecha = date('Y-m-d');
 
 //$resProductos = $serviciosProductos->traerProductosLimite(6);
-$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Clientes",$_SESSION['refroll_predio'],'');
+$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Ingresos Anuales",$_SESSION['refroll_predio'],'');
 
 
 $id = $_GET['id'];
 
-$resResultado = $serviciosReferencias->traerClientesPorId($id);
+$resResultado = $serviciosReferencias->traerIngresosanualesPorId($id);
 
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
-$singular = "Cliente";
+$singular = "Ingresos Anuales";
 
-$plural = "Clientes";
+$plural = "Ingresos Anuales";
 
-$eliminar = "eliminarClientes";
+$eliminar = "eliminarIngresosanuales";
 
-$modificar = "modificarClientes";
+$modificar = "modificarIngresosanuales";
 
-$idTabla = "idcliente";
+$idTabla = "idingresoanual";
 
-$tituloWeb = "Gestión: Estudio Contable";
+$tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
-$tabla 			= "dbclientes";
+$tabla 			= "dbingresosanuales";
 
-$lblCambio	 	= array("telefono","direccion");
-$lblreemplazo	= array("Teléfono","dirección");
+$lblCambio	 	= array('refdeclaracionjuradacabecera',
+						'remuneracionanualneta',
+						'actividadindustrial',
+						'razonsocialactividadindustrial',
+						'actividadfinanciera',
+						'razonsocialactividadfinanciera',
+						'actividadprofesional',
+						'descripcionactividadprofesional',
+						'otros',
+						'especifiqueotros',
+						'ingresoanualconyuge',
+						'especifiqueingresosconyuge',
+						'fueservidorpublico',
+						'vigenciadesde',
+						'vigenciahasta');
+$lblreemplazo	= array('Declaracion Pat. Cabecera',
+						'I Remuneración Anual neta del declarante por su cargo público',
+						'II.1 Por actividad indutrial y/o comercial',
+						'II.1 Especifique el nombre o razon social',
+						'II.2 Por actividad financiera',
+						'II.2 Especifique',
+						'II.3 Por servicios profesionales, participación en consejos, consultorias o asesorias',
+						'II.3 Especifique servicio y contratante',
+						'II.4 Otros',
+						'II.4 Especifique',
+						'B_ Ingresos Anual del conyuge concubina o concubinario y/o dependientes económicos',
+						'B_ Especifique',
+						'¿Te desempeñaste como servidor público federal obligado a presentar Declaracion Patrimonial en el año inmediato anterior?',
+						'Desde',
+						'Hasta');
 
 
-$cadRef 	= '';
+$resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
+$cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(2,3,4),' ', mysql_result($resResultado, 0,'refdeclaracionjuradacabecera'));
 
-$refdescripcion = array();
-$refCampo 	=  array();
+$refdescripcion = array(0 => $cadRef);
+$refCampo 	=  array("refdeclaracionjuradacabecera"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
@@ -138,7 +167,30 @@ if ($_SESSION['refroll_predio'] != 1) {
         	<form class="form-inline formulario" role="form">
         	
 			<div class="row">
-			<?php echo $formulario; ?>
+				<?php echo $formulario; ?>
+				<div class="row" style="padding: 10px 20px;">
+					<div class="col-md-6">
+						<div class="input-group col-md-12 col-xs-12">
+							<span class="input-group-addon">SubTotal II  $</span>
+							<input type="text" class="form-control" id="netoii" name="netoii" value="0" readonly />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="input-group col-md-12 col-xs-12">
+							<span class="input-group-addon">A = Suma subTotal I + SubTotal II  $</span>
+							<input type="text" class="form-control" id="neto" name="neto" value="0" readonly />
+						</div>
+					</div>
+				</div>
+				<div class="row" style="padding: 0 20px;">
+					<div class="col-md-6">
+						<div class="input-group col-md-12 col-xs-12">
+							<span class="input-group-addon">Suma de A + B  $</span>
+							<input type="text" class="form-control" id="total" name="total" value="0" readonly />
+						</div>
+					</div>
+					
+				</div>
             </div>
             
             
@@ -199,6 +251,70 @@ $(document).ready(function(){
 		url = "index.php";
 		$(location).attr('href',url);
 	});//fin del boton modificar
+
+
+	function sumaII(industrial, financiera, profesional, otros) {
+		$('#netoii').val(parseFloat(industrial) + parseFloat(financiera) + parseFloat(profesional) + parseFloat(otros));
+		sumaIII($('#remuneracionanualneta').val());
+		sumaTotal();
+	}
+
+	function sumaIII(remuneracion) {
+		$('#neto').val(parseFloat(remuneracion) + parseFloat($('#netoii').val()) );
+		sumaTotal();
+	}
+
+	function sumaTotal() {
+		$('#total').val(parseFloat($('#netoii').val()) + parseFloat($('#neto').val()) + parseFloat($('#ingresoanualconyuge').val()));
+	}
+
+	$('#ingresoanualconyuge').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		sumaTotal();
+	});
+
+	$('#actividadindustrial').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		sumaII($('#actividadindustrial').val(), $('#actividadfinanciera').val(), $('#actividadprofesional').val(), $('#otros').val());
+		
+	});
+
+	$('#actividadfinanciera').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		sumaII($('#actividadindustrial').val(), $('#actividadfinanciera').val(), $('#actividadprofesional').val(), $('#otros').val());
+		
+	});
+
+	$('#actividadprofesional').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		sumaII($('#actividadindustrial').val(), $('#actividadfinanciera').val(), $('#actividadprofesional').val(), $('#otros').val());
+		
+	});
+
+	$('#otros').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		sumaII($('#actividadindustrial').val(), $('#actividadfinanciera').val(), $('#actividadprofesional').val(), $('#otros').val());
+		
+	});
+
+	$('#remuneracionanualneta').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		sumaIII($('#remuneracionanualneta').val());
+	});
+
+	sumaII($('#actividadindustrial').val(), $('#actividadfinanciera').val(), $('#actividadprofesional').val(), $('#otros').val());
 	
 	$('.varborrar').click(function(event){
 		  usersid =  $(this).attr("id");

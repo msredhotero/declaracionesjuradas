@@ -829,6 +829,28 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 	$res = $this->query($sql,0); 
 	return $res; 
 	} 
+
+
+	function traerDependienteseconomicosGrilla() { 
+	$sql = "select 
+	d.iddependienteeconomico,
+	concat(dj.primerapellido, ' ', dj.segundoapellido, ' ', dj.nombres) as declaracioncabecera,
+	d.tiene,
+	d.nombre,
+	d.edad,
+	tip.tipoparentesco,
+	d.refdeclaracionjuradacabecera,
+	d.reftipoparentesco
+	from dbdependienteseconomicos d 
+	inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera 
+	inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+	inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+	inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+	inner join tbtipoparentesco tip ON tip.idtipoparentesco = d.reftipoparentesco 
+	order by 1"; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
 	
 	
 	function traerDependienteseconomicosPorId($id) { 
@@ -895,6 +917,35 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 	
 	function traerIngresosanualesPorId($id) { 
 	$sql = "select idingresoanual,refdeclaracionjuradacabecera,remuneracionanualneta,actividadindustrial,razonsocialactividadindustrial,actividadfinanciera,razonsocialactividadfinanciera,actividadprofesional,descripcionactividadprofesional,otros,especifiqueotros,ingresoanualconyuge,especifiqueingresosconyuge,fueservidorpublico,vigenciadesde,vigenciahasta from dbingresosanuales where idingresoanual =".$id; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+
+
+	function traerIngresosanualesGrilla() { 
+	$sql = "select 
+	i.idingresoanual,
+	concat(dj.primerapellido, ' ', dj.segundoapellido, ' ', dj.nombres) as declaracioncabecera,
+	i.remuneracionanualneta,
+	i.remuneracionanualneta + i.actividadindustrial + i.actividadfinanciera + i.actividadprofesional + i.otros as neto,
+	i.ingresoanualconyuge,
+	i.remuneracionanualneta + i.actividadindustrial + i.actividadfinanciera + i.actividadprofesional + i.otros + i.ingresoanualconyuge as total,
+	i.fueservidorpublico,
+	i.vigenciadesde,
+	i.vigenciahasta,
+	i.actividadindustrial,
+	i.razonsocialactividadindustrial,
+	i.actividadfinanciera,
+	i.razonsocialactividadfinanciera,
+	i.actividadprofesional,
+	i.descripcionactividadprofesional,
+	i.otros,
+	i.especifiqueotros,
+	i.especifiqueingresosconyuge,
+	i.refdeclaracionjuradacabecera
+	from dbingresosanuales i 
+	inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = i.refdeclaracionjuradacabecera 
+	order by 1"; 
 	$res = $this->query($sql,0); 
 	return $res; 
 	} 

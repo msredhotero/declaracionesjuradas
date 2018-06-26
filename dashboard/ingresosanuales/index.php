@@ -22,99 +22,82 @@ $serviciosReferencias 	= new ServiciosReferencias();
 $fecha = date('Y-m-d');
 
 //$resProductos = $serviciosProductos->traerProductosLimite(6);
-$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Declaracion Jurada",$_SESSION['refroll_predio'],'');
+$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Ingresos Anuales",$_SESSION['refroll_predio'],'');
+
+
+///////////////////////   id de la cabecera de la declaracion /////////////////////////
+$id = 1;
+///////////////////////////////////////////////////////////////////////////////////////
 
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
-$singular = "Declaracion Patrimonial";
+$singular = "Ingresos Anuales";
 
-$plural = "Declaraciones Patrimoniales";
+$plural = "Ingresos Anuales";
 
-$eliminar = "eliminarDeclaracionjuradacabecera";
+$eliminar = "eliminarIngresosanuales";
 
-$insertar = "insertarDeclaracionjuradacabecera";
+$insertar = "insertarIngresosanuales";
 
 $tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
-$tabla 			= "dbdeclaracionjuradacabecera";
+$tabla 			= "dbingresosanuales";
 
-$lblCambio	 	= array('fecharecepcion',
-						'primerapellido',
-						'segundoapellido',
-						'curp',
-						'homoclave',
-						'emailinstitucional',
-						'emailalterno',
-						'refestadocivil',
-						'refregimenmatrimonial',
-						'paisnacimiento',
-						'nacionalidad',
-						'entidadnacimiento',
-						'numerocelular',
-						'lugarubica',
-						'domicilioparticular',
-						'localidad',
-						'municipio',
-						'telefono',
-						'entidadfederativa',
-						'codigopostal',
-						'estudios',
-						'cedulaprofesional',
-						'refusuarios');
-$lblreemplazo	= array('Fecha de Recepción',
-						'Primer Apellido',
-						'Segundo Apellido',
-						'CURP',
-						'RFC / Homoclave',
-						'Correo Electrónico Inst.',
-						'Correo Electrónico Alterno',
-						'Estado Civil',
-						'Regimen Matrimonial',
-						'País donde nació',
-						'Nacionalidad',
-						'Entidad donde nació',
-						'Nro de Celular',
-						'Lugar donde se ubica',
-						'Domicilio Particular',
-						'Localidad o colonia',
-						'Municipio o Alcaldía',
-						'Teléfono',
-						'Entidad Federativa',
-						'Codigo Postal',
-						'Grado Max. de estudios/Especialidad',
-						'Nro de cédula profesional',
-						'Usuario');
+$lblCambio	 	= array('refdeclaracionjuradacabecera',
+						'remuneracionanualneta',
+						'actividadindustrial',
+						'razonsocialactividadindustrial',
+						'actividadfinanciera',
+						'razonsocialactividadfinanciera',
+						'actividadprofesional',
+						'descripcionactividadprofesional',
+						'otros',
+						'especifiqueotros',
+						'ingresoanualconyuge',
+						'especifiqueingresosconyuge',
+						'fueservidorpublico',
+						'vigenciadesde',
+						'vigenciahasta');
+$lblreemplazo	= array('Declaracion Pat. Cabecera',
+						'I Remuneración Anual neta del declarante por su cargo público',
+						'II.1 Por actividad indutrial y/o comercial',
+						'II.1 Especifique el nombre o razon social',
+						'II.2 Por actividad financiera',
+						'II.2 Especifique',
+						'II.3 Por servicios profesionales, participación en consejos, consultorias o asesorias',
+						'II.3 Especifique servicio y contratante',
+						'II.4 Otros',
+						'II.4 Especifique',
+						'B_ Ingresos Anual del conyuge concubina o concubinario y/o dependientes económicos',
+						'B_ Especifique',
+						'¿Te desempeñaste como servidor público federal obligado a presentar Declaracion Patrimonial en el año inmediato anterior?',
+						'Desde',
+						'Hasta');
 
 
-$resEstadoCivil = $serviciosReferencias->traerEstadocivil();
-$cadRef = $serviciosFunciones->devolverSelectBoxObligatorio($resEstadoCivil,array(1),'');
+$resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
+$cadRef = $serviciosFunciones->devolverSelectBoxObligatorio($resVar1,array(2,3,4),' ');
 
-$refRM = $serviciosReferencias->traerRegimenmatrimonial();
-$cadRef2 = $serviciosFunciones->devolverSelectBoxObligatorio($refRM,array(1),' ');
-
-$refUsuarios = $serviciosReferencias->traerUsuarios();
-$cadRef3 = $serviciosFunciones->devolverSelectBoxObligatorio($refUsuarios,array(1),' ');
-
-$cadRef4 = "<option value='1'>México</option><option value='2'>Extranjero</option>";
-$cadRef5 = "<option value='1'>Femenino</option><option value='2'>Masculino</option>";
-
-$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3,3=>$cadRef4,4=>$cadRef5);
-$refCampo 	=  array("refestadocivil","refregimenmatrimonial","refusuarios","lugarubica","sexo"); 
+$refdescripcion = array(0 => $cadRef);
+$refCampo 	=  array("refdeclaracionjuradacabecera"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
 
 
 /////////////////////// Opciones para la creacion del view  apellido,nombre,nrodocumento,fechanacimiento,direccion,telefono,email/////////////////////
-$cabeceras 		= "	<th>Apellidos</th>
-					<th>Nombres</th>
-					<th>CURP</th>
-					<th>Fecha DDJJ</th>
-					<th>Teléfono</th>
-					<th>Email Particular</th>";
+$cabeceras 		= "	<th>Declaracion Pat. Cabecera</th>
+					<th>Rem. Anual</th>
+					<th>Rem. Anual Neto</th>
+					<th>Rem. Anual Conyuge Neto</th>
+					<th>Ing. por Act. Financiera</th>
+					<th>Total Ingresos</th>
+					<th>Fue servidor publico?</th>
+					<th>Desde</th>
+					<th>Hasta</th>";
 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
@@ -123,7 +106,7 @@ $cabeceras 		= "	<th>Apellidos</th>
 
 $formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
-$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerDeclaracionjuradacabeceraGrilla(),6);
+$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerIngresosanualesGrilla(),9);
 
 
 
@@ -167,6 +150,8 @@ if ($_SESSION['refroll_predio'] != 1) {
     <!-- Latest compiled and minified JavaScript -->
     <script src="../../bootstrap/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="../../css/bootstrap-datetimepicker.min.css">
+
+	<script src="../../js/jquery.number.min.js"></script>
 	
     
    
@@ -200,7 +185,30 @@ if ($_SESSION['refroll_predio'] != 1) {
     	<div class="cuerpoBox">
         	<form class="form-inline formulario" role="form">
         	<div class="row">
-			<?php echo $formulario; ?>
+				<?php echo $formulario; ?>
+				<div class="row" style="padding: 10px 20px;">
+					<div class="col-md-6">
+						<div class="input-group col-md-12 col-xs-12">
+							<span class="input-group-addon">SubTotal II  $</span>
+							<input type="text" class="form-control" id="netoii" name="netoii" value="0" readonly />
+						</div>
+					</div>
+					<div class="col-md-6">
+						<div class="input-group col-md-12 col-xs-12">
+							<span class="input-group-addon">A = Suma subTotal I + SubTotal II  $</span>
+							<input type="text" class="form-control" id="neto" name="neto" value="0" readonly />
+						</div>
+					</div>
+				</div>
+				<div class="row" style="padding: 0 20px;">
+					<div class="col-md-6">
+						<div class="input-group col-md-12 col-xs-12">
+							<span class="input-group-addon">Suma de A + B  $</span>
+							<input type="text" class="form-control" id="total" name="total" value="0" readonly />
+						</div>
+					</div>
+					
+				</div>
             </div>
             <!--
             <div class="row">
@@ -306,6 +314,70 @@ $(document).ready(function(){
 			alert("Error, vuelva a realizar la acción.");	
 		  }
 	});//fin del boton eliminar
+
+	$('#remuneracionanualneta').number( true, 2,'.','' );
+
+	function sumaII(industrial, financiera, profesional, otros) {
+		$('#netoii').val(parseFloat(industrial) + parseFloat(financiera) + parseFloat(profesional) + parseFloat(otros));
+		sumaIII($('#remuneracionanualneta').val());
+		sumaTotal();
+	}
+
+	function sumaIII(remuneracion) {
+		$('#neto').val(parseFloat(remuneracion) + parseFloat($('#netoii').val()) );
+		sumaTotal();
+	}
+
+	function sumaTotal() {
+		$('#total').val(parseFloat($('#netoii').val()) + parseFloat($('#neto').val()) + parseFloat($('#ingresoanualconyuge').val()));
+	}
+
+
+	$('#ingresoanualconyuge').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		sumaTotal();
+	});
+
+	$('#actividadindustrial').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		sumaII($('#actividadindustrial').val(), $('#actividadfinanciera').val(), $('#actividadprofesional').val(), $('#otros').val());
+		
+	});
+
+	$('#actividadfinanciera').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		sumaII($('#actividadindustrial').val(), $('#actividadfinanciera').val(), $('#actividadprofesional').val(), $('#otros').val());
+		
+	});
+
+	$('#actividadprofesional').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		sumaII($('#actividadindustrial').val(), $('#actividadfinanciera').val(), $('#actividadprofesional').val(), $('#otros').val());
+		
+	});
+
+	$('#otros').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		sumaII($('#actividadindustrial').val(), $('#actividadfinanciera').val(), $('#actividadprofesional').val(), $('#otros').val());
+		
+	});
+
+	$('#remuneracionanualneta').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		sumaIII($('#remuneracionanualneta').val());
+	});
 	
 	$("#example").on("click",'.varmodificar', function(){
 		  usersid =  $(this).attr("id");

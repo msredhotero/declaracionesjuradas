@@ -22,40 +22,52 @@ $serviciosReferencias 	= new ServiciosReferencias();
 $fecha = date('Y-m-d');
 
 //$resProductos = $serviciosProductos->traerProductosLimite(6);
-$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Clientes",$_SESSION['refroll_predio'],'');
+$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Dependientes Economicos",$_SESSION['refroll_predio'],'');
 
 
 $id = $_GET['id'];
 
-$resResultado = $serviciosReferencias->traerClientesPorId($id);
+$resResultado = $serviciosReferencias->traerDependienteseconomicosPorId($id);
 
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
-$singular = "Cliente";
+$singular = "Dependientes Economicos";
 
-$plural = "Clientes";
+$plural = "Dependientes Economicos";
 
-$eliminar = "eliminarClientes";
+$eliminar = "eliminarDependienteseconomicos";
 
-$modificar = "modificarClientes";
+$modificar = "modificarDependienteseconomicos";
 
-$idTabla = "idcliente";
+$idTabla = "iddependienteeconomico";
 
-$tituloWeb = "Gestión: Estudio Contable";
+$tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
-$tabla 			= "dbclientes";
+$tabla 			= "dbdependienteseconomicos";
 
-$lblCambio	 	= array("telefono","direccion");
-$lblreemplazo	= array("Teléfono","dirección");
+$lblCambio	 	= array('refdeclaracionjuradacabecera',
+						'tiene',
+						'nombre',
+						'edad',
+						'reftipoparentesco');
+$lblreemplazo	= array('Declaracion Pat. Cabecera',
+						'Tiene Dependientes Eco.',
+						'Nombre Completo',
+						'Edad',
+						'Tipo de Parentesco');
 
 
-$cadRef 	= '';
+$resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
+$cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(2,3,4),' ', mysql_result($resResultado,0,'refdeclaracionjuradacabecera'));
 
-$refdescripcion = array();
-$refCampo 	=  array();
+$refVar2 = $serviciosReferencias->traerTipoparentesco();
+$cadRef2 = $serviciosFunciones->devolverSelectBoxActivo($refVar2,array(1),' ', mysql_result($resResultado,0,'reftipoparentesco'));
+
+$refdescripcion = array(0 => $cadRef, 1=>$cadRef2);
+$refCampo 	=  array("refdeclaracionjuradacabecera","reftipoparentesco"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
@@ -199,6 +211,13 @@ $(document).ready(function(){
 		url = "index.php";
 		$(location).attr('href',url);
 	});//fin del boton modificar
+
+
+	if ('<?php echo mysql_result($resResultado,0,'tiene'); ?>'  == 'Si') {
+		$('#tiene').prop("checked",true);
+	} else {
+		$('#tiene').prop("checked",false);
+	}
 	
 	$('.varborrar').click(function(event){
 		  usersid =  $(this).attr("id");
