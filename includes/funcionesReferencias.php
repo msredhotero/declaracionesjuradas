@@ -930,7 +930,7 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 	i.remuneracionanualneta + i.actividadindustrial + i.actividadfinanciera + i.actividadprofesional + i.otros as neto,
 	i.ingresoanualconyuge,
 	i.remuneracionanualneta + i.actividadindustrial + i.actividadfinanciera + i.actividadprofesional + i.otros + i.ingresoanualconyuge as total,
-	i.fueservidorpublico,
+	(case when i.fueservidorpublico = 1 then 'Si' else 'No' end) as fueservidorpublico,
 	i.vigenciadesde,
 	i.vigenciahasta,
 	i.actividadindustrial,

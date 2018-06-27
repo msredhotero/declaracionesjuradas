@@ -14,81 +14,117 @@ include ('../../includes/funcionesUsuarios.php');
 include ('../../includes/funcionesHTML.php');
 include ('../../includes/funcionesReferencias.php');
 
-$serviciosFunciones = new Servicios();
-$serviciosUsuario 	= new ServiciosUsuarios();
-$serviciosHTML 		= new ServiciosHTML();
+$serviciosFunciones 	= new Servicios();
+$serviciosUsuario 		= new ServiciosUsuarios();
+$serviciosHTML 			= new ServiciosHTML();
 $serviciosReferencias 	= new ServiciosReferencias();
 
 $fecha = date('Y-m-d');
 
 //$resProductos = $serviciosProductos->traerProductosLimite(6);
-$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Ingresos Anuales",$_SESSION['refroll_predio'],'');
-
-
-$id = $_GET['id'];
-
-$resResultado = $serviciosReferencias->traerIngresosanualesPorId($id);
+$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Declaracion Patrimonial",$_SESSION['refroll_predio'],'');
 
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
-$singular = "Ingresos Anuales";
+$singular = "Declaracion Patrimonial";
 
-$plural = "Ingresos Anuales";
+$plural = "Declaraciones Patrimoniales";
 
-$eliminar = "eliminarIngresosanuales";
+$eliminar = "eliminarDeclaracionjuradacabecera";
 
-$modificar = "modificarIngresosanuales";
-
-$idTabla = "idingresoanual";
+$insertar = "insertarDeclaracionjuradacabecera";
 
 $tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
-$tabla 			= "dbingresosanuales";
+$tabla 			= "dbdeclaracionjuradacabecera";
 
-$lblCambio	 	= array('refdeclaracionjuradacabecera',
-						'remuneracionanualneta',
-						'actividadindustrial',
-						'razonsocialactividadindustrial',
-						'actividadfinanciera',
-						'razonsocialactividadfinanciera',
-						'actividadprofesional',
-						'descripcionactividadprofesional',
-						'otros',
-						'especifiqueotros',
-						'ingresoanualconyuge',
-						'especifiqueingresosconyuge',
-						'fueservidorpublico',
-						'vigenciadesde',
-						'vigenciahasta');
-$lblreemplazo	= array('Declaracion Pat. Cabecera',
-						'I Remuneración Anual neta del declarante por su cargo público',
-						'II.1 Por actividad indutrial y/o comercial',
-						'II.1 Especifique el nombre o razon social',
-						'II.2 Por actividad financiera',
-						'II.2 Especifique',
-						'II.3 Por servicios profesionales, participación en consejos, consultorias o asesorias',
-						'II.3 Especifique servicio y contratante',
-						'II.4 Otros',
-						'II.4 Especifique',
-						'B_ Ingresos Anual del conyuge concubina o concubinario y/o dependientes económicos',
-						'B_ Especifique',
-						'¿Te desempeñaste como servidor público federal obligado a presentar Declaracion Patrimonial en el año inmediato anterior?',
-						'Desde',
-						'Hasta');
+$lblCambio	 	= array('fecharecepcion',
+						'primerapellido',
+						'segundoapellido',
+						'curp',
+						'homoclave',
+						'emailinstitucional',
+						'emailalterno',
+						'refestadocivil',
+						'refregimenmatrimonial',
+						'paisnacimiento',
+						'nacionalidad',
+						'entidadnacimiento',
+						'numerocelular',
+						'lugarubica',
+						'domicilioparticular',
+						'localidad',
+						'municipio',
+						'telefono',
+						'entidadfederativa',
+						'codigopostal',
+						'estudios',
+						'cedulaprofesional',
+						'refusuarios');
+$lblreemplazo	= array('Fecha de Recepción',
+						'Primer Apellido',
+						'Segundo Apellido',
+						'CURP',
+						'RFC / Homoclave',
+						'Correo Electrónico Inst.',
+						'Correo Electrónico Alterno',
+						'Estado Civil',
+						'Regimen Matrimonial',
+						'País donde nació',
+						'Nacionalidad',
+						'Entidad donde nació',
+						'Nro de Celular',
+						'Lugar donde se ubica',
+						'Domicilio Particular',
+						'Localidad o colonia',
+						'Municipio o Alcaldía',
+						'Teléfono',
+						'Entidad Federativa',
+						'Codigo Postal',
+						'Grado Max. de estudios/Especialidad',
+						'Nro de cédula profesional',
+						'Usuario');
 
 
-$resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
-$cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(2,3,4),' ', mysql_result($resResultado, 0,'refdeclaracionjuradacabecera'));
+$resEstadoCivil = $serviciosReferencias->traerEstadocivil();
+$cadRef = $serviciosFunciones->devolverSelectBoxObligatorio($resEstadoCivil,array(1),'');
 
-$refdescripcion = array(0 => $cadRef);
-$refCampo 	=  array("refdeclaracionjuradacabecera"); 
+$refRM = $serviciosReferencias->traerRegimenmatrimonial();
+$cadRef2 = $serviciosFunciones->devolverSelectBoxObligatorio($refRM,array(1),' ');
+
+$refUsuarios = $serviciosReferencias->traerUsuarios();
+$cadRef3 = $serviciosFunciones->devolverSelectBoxObligatorio($refUsuarios,array(1),' ');
+
+$cadRef4 = "<option value='1'>México</option><option value='2'>Extranjero</option>";
+$cadRef5 = "<option value='1'>Femenino</option><option value='2'>Masculino</option>";
+
+$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3,3=>$cadRef4,4=>$cadRef5);
+$refCampo 	=  array("refestadocivil","refregimenmatrimonial","refusuarios","lugarubica","sexo"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
-$formulario 	= $serviciosFunciones->camposTablaModificar($id, $idTabla, $modificar,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
+
+
+/////////////////////// Opciones para la creacion del view  apellido,nombre,nrodocumento,fechanacimiento,direccion,telefono,email/////////////////////
+$cabeceras 		= "	<th>Apellidos</th>
+					<th>Nombres</th>
+					<th>CURP</th>
+					<th>Fecha DDJJ</th>
+					<th>Teléfono</th>
+					<th>Email Particular</th>";
+
+//////////////////////////////////////////////  FIN de los opciones //////////////////////////
+
+
+
+
+$formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
+
+$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerDeclaracionjuradacabeceraGrilla(),6);
+
 
 
 if ($_SESSION['refroll_predio'] != 1) {
@@ -131,13 +167,7 @@ if ($_SESSION['refroll_predio'] != 1) {
     <!-- Latest compiled and minified JavaScript -->
     <script src="../../bootstrap/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="../../css/bootstrap-datetimepicker.min.css">
-	<style type="text/css">
-		
-  
-		
-	</style>
-
-	<script src="../../js/jquery.number.min.js"></script>
+	
     
    
    <link href="../../css/perfect-scrollbar.css" rel="stylesheet">
@@ -150,6 +180,8 @@ if ($_SESSION['refroll_predio'] != 1) {
         $('#navigation').perfectScrollbar();
       });
     </script>
+    
+ 
 </head>
 
 <body>
@@ -162,40 +194,20 @@ if ($_SESSION['refroll_predio'] != 1) {
 
     <div class="boxInfoLargo">
         <div id="headBoxInfo">
-        	<p style="color: #fff; font-size:18px; height:16px;">Modificar <?php echo $singular; ?></p>
+        	<p style="color: #fff; font-size:18px; height:16px;">Carga de <?php echo $plural; ?></p>
         	
         </div>
     	<div class="cuerpoBox">
         	<form class="form-inline formulario" role="form">
-        	
-			<div class="row">
-				<?php echo $formulario; ?>
-				<div class="row" style="padding: 10px 20px;">
-					<div class="col-md-6">
-						<div class="input-group col-md-12 col-xs-12">
-							<span class="input-group-addon">SubTotal II  $</span>
-							<input type="text" class="form-control" id="netoii" name="netoii" value="0" readonly />
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="input-group col-md-12 col-xs-12">
-							<span class="input-group-addon">A = Suma subTotal I + SubTotal II  $</span>
-							<input type="text" class="form-control" id="neto" name="neto" value="0" readonly />
-						</div>
-					</div>
-				</div>
-				<div class="row" style="padding: 0 20px;">
-					<div class="col-md-6">
-						<div class="input-group col-md-12 col-xs-12">
-							<span class="input-group-addon">Suma de A + B  $</span>
-							<input type="text" class="form-control" id="total" name="total" value="0" readonly />
-						</div>
-					</div>
-					
-				</div>
+        	<div class="row">
+			<?php echo $formulario; ?>
             </div>
-            
-            
+            <!--
+            <div class="row">
+            	<div id="map" ></div>
+
+            </div>
+            -->
             <div class='row' style="margin-left:25px; margin-right:25px;">
                 <div class='alert'>
                 
@@ -209,13 +221,7 @@ if ($_SESSION['refroll_predio'] != 1) {
                 <div class="col-md-12">
                 <ul class="list-inline" style="margin-top:15px;">
                     <li>
-                        <button type="button" class="btn btn-warning" id="cargar" style="margin-left:0px;">Modificar</button>
-                    </li>
-                    <li>
-                        <button type="button" class="btn btn-danger varborrar" id="<?php echo $id; ?>" style="margin-left:0px;">Eliminar</button>
-                    </li>
-                    <li>
-                        <button type="button" class="btn btn-default volver" style="margin-left:0px;">Volver</button>
+                        <button type="button" class="btn btn-primary" id="cargar" style="margin-left:0px;">Guardar</button>
                     </li>
                 </ul>
                 </div>
@@ -224,19 +230,31 @@ if ($_SESSION['refroll_predio'] != 1) {
     	</div>
     </div>
     
+    <div class="boxInfoLargo">
+        <div id="headBoxInfo">
+        	<p style="color: #fff; font-size:18px; height:16px;"><?php echo $plural; ?> Cargados</p>
+        	
+        </div>
+    	<div class="cuerpoBox">
+        	<?php echo $lstCargados; ?>
+    	</div>
+    </div>
+    
+    
+
+    
     
    
 </div>
 
 
 </div>
-
 <div id="dialog2" title="Eliminar <?php echo $singular; ?>">
     	<p>
         	<span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
             ¿Esta seguro que desea eliminar el <?php echo $singular; ?>?.<span id="proveedorEli"></span>
         </p>
-        <p><strong>Importante: </strong>Si elimina el equipo se perderan todos los datos de este</p>
+        <p><strong>Importante: </strong>Si elimina el <?php echo $singular; ?> se perderan todos los datos de este</p>
         <input type="hidden" value="" id="idEliminar" name="idEliminar">
 </div>
 <script type="text/javascript" src="../../js/jquery.dataTables.min.js"></script>
@@ -247,85 +265,35 @@ if ($_SESSION['refroll_predio'] != 1) {
 
 <script type="text/javascript">
 $(document).ready(function(){
-
-	$('#remuneracionanualneta').number( true, 2,'.','' );
-	$('#ingresoanualconyuge').number( true, 2,'.','' );
-	$('#actividadindustrial').number( true, 2,'.','' );
-	$('#actividadfinanciera').number( true, 2,'.','' );
-	$('#actividadprofesional').number( true, 2,'.','' );
-	$('#otros').number( true, 2,'.','' );
-
-	$('.volver').click(function(event){
-		 
-		url = "index.php";
-		$(location).attr('href',url);
-	});//fin del boton modificar
-
-
-	function sumaII(industrial, financiera, profesional, otros) {
-		$('#netoii').val(parseFloat(industrial) + parseFloat(financiera) + parseFloat(profesional) + parseFloat(otros));
-		sumaIII($('#remuneracionanualneta').val());
-		sumaTotal();
-	}
-
-	function sumaIII(remuneracion) {
-		$('#neto').val(parseFloat(remuneracion) + parseFloat($('#netoii').val()) );
-		sumaTotal();
-	}
-
-	function sumaTotal() {
-		$('#total').val(parseFloat($('#neto').val()) + parseFloat($('#ingresoanualconyuge').val()));
-	}
-
-	$('#ingresoanualconyuge').change(function() {
-		if ($(this).val() == '') {
-			$(this).val('0');
-		}
-		sumaTotal();
-	});
-
-	$('#actividadindustrial').change(function() {
-		if ($(this).val() == '') {
-			$(this).val('0');
-		}
-		sumaII($('#actividadindustrial').val(), $('#actividadfinanciera').val(), $('#actividadprofesional').val(), $('#otros').val());
-		
-	});
-
-	$('#actividadfinanciera').change(function() {
-		if ($(this).val() == '') {
-			$(this).val('0');
-		}
-		sumaII($('#actividadindustrial').val(), $('#actividadfinanciera').val(), $('#actividadprofesional').val(), $('#otros').val());
-		
-	});
-
-	$('#actividadprofesional').change(function() {
-		if ($(this).val() == '') {
-			$(this).val('0');
-		}
-		sumaII($('#actividadindustrial').val(), $('#actividadfinanciera').val(), $('#actividadprofesional').val(), $('#otros').val());
-		
-	});
-
-	$('#otros').change(function() {
-		if ($(this).val() == '') {
-			$(this).val('0');
-		}
-		sumaII($('#actividadindustrial').val(), $('#actividadfinanciera').val(), $('#actividadprofesional').val(), $('#otros').val());
-		
-	});
-
-	$('#remuneracionanualneta').change(function() {
-		if ($(this).val() == '') {
-			$(this).val('0');
-		}
-		sumaIII($('#remuneracionanualneta').val());
-	});
-
-	sumaII($('#actividadindustrial').val(), $('#actividadfinanciera').val(), $('#actividadprofesional').val(), $('#otros').val());
+	$('#example').dataTable({
+		"order": [[ 0, "asc" ]],
+		"language": {
+			"emptyTable":     "No hay datos cargados",
+			"info":           "Mostrar _START_ hasta _END_ del total de _TOTAL_ filas",
+			"infoEmpty":      "Mostrar 0 hasta 0 del total de 0 filas",
+			"infoFiltered":   "(filtrados del total de _MAX_ filas)",
+			"infoPostFix":    "",
+			"thousands":      ",",
+			"lengthMenu":     "Mostrar _MENU_ filas",
+			"loadingRecords": "Cargando...",
+			"processing":     "Procesando...",
+			"search":         "Buscar:",
+			"zeroRecords":    "No se encontraron resultados",
+			"paginate": {
+				"first":      "Primero",
+				"last":       "Ultimo",
+				"next":       "Siguiente",
+				"previous":   "Anterior"
+			},
+			"aria": {
+				"sortAscending":  ": activate to sort column ascending",
+				"sortDescending": ": activate to sort column descending"
+			}
+		  }
+	} );
 	
-	$('.varborrar').click(function(event){
+
+	$("#example").on("click",'.varborrar', function(){
 		  usersid =  $(this).attr("id");
 		  if (!isNaN(usersid)) {
 			$("#idEliminar").val(usersid);
@@ -338,6 +306,29 @@ $(document).ready(function(){
 			alert("Error, vuelva a realizar la acción.");	
 		  }
 	});//fin del boton eliminar
+	
+	$("#example").on("click",'.varmodificar', function(){
+		  usersid =  $(this).attr("id");
+		  if (!isNaN(usersid)) {
+			
+			url = "modificar.php?id=" + usersid;
+			$(location).attr('href',url);
+		  } else {
+			alert("Error, vuelva a realizar la acción.");	
+		  }
+	});//fin del boton modificar
+
+
+	$("#example").on("click",'.vararchivos', function(){
+		  usersid =  $(this).attr("id");
+		  if (!isNaN(usersid)) {
+			
+			url = "archivos.php?id=" + usersid;
+			$(location).attr('href',url);
+		  } else {
+			alert("Error, vuelva a realizar la acción.");	
+		  }
+	});//fin del boton archivos
 
 	 $( "#dialog2" ).dialog({
 		 	
@@ -376,8 +367,7 @@ $(document).ready(function(){
 		 
 		 
 	 		}); //fin del dialogo para eliminar
-	
-	
+			
 	<?php 
 		echo $serviciosHTML->validacion($tabla);
 	
@@ -416,7 +406,7 @@ $(document).ready(function(){
                                             $(".alert").removeClass("alert-danger");
 											$(".alert").removeClass("alert-info");
                                             $(".alert").addClass("alert-success");
-                                            $(".alert").html('<strong>Ok!</strong> Se modifico exitosamente el <strong><?php echo $singular; ?></strong>. ');
+                                            $(".alert").html('<strong>Ok!</strong> Se cargo exitosamente el <strong><?php echo $singular; ?></strong>. ');
 											$(".alert").delay(3000).queue(function(){
 												/*aca lo que quiero hacer 
 												  después de los 2 segundos de retraso*/
@@ -424,8 +414,8 @@ $(document).ready(function(){
 												
 											});
 											$("#load").html('');
-											//url = "index.php";
-											//$(location).attr('href',url);
+											url = "index.php";
+											$(location).attr('href',url);
                                             
 											
                                         } else {

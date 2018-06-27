@@ -93,7 +93,6 @@ $cabeceras 		= "	<th>Declaracion Pat. Cabecera</th>
 					<th>Rem. Anual</th>
 					<th>Rem. Anual Neto</th>
 					<th>Rem. Anual Conyuge Neto</th>
-					<th>Ing. por Act. Financiera</th>
 					<th>Total Ingresos</th>
 					<th>Fue servidor publico?</th>
 					<th>Desde</th>
@@ -106,7 +105,7 @@ $cabeceras 		= "	<th>Declaracion Pat. Cabecera</th>
 
 $formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
-$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerIngresosanualesGrilla(),9);
+$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerIngresosanualesGrilla(),8);
 
 
 
@@ -316,6 +315,11 @@ $(document).ready(function(){
 	});//fin del boton eliminar
 
 	$('#remuneracionanualneta').number( true, 2,'.','' );
+	$('#ingresoanualconyuge').number( true, 2,'.','' );
+	$('#actividadindustrial').number( true, 2,'.','' );
+	$('#actividadfinanciera').number( true, 2,'.','' );
+	$('#actividadprofesional').number( true, 2,'.','' );
+	$('#otros').number( true, 2,'.','' );
 
 	function sumaII(industrial, financiera, profesional, otros) {
 		$('#netoii').val(parseFloat(industrial) + parseFloat(financiera) + parseFloat(profesional) + parseFloat(otros));
@@ -329,7 +333,7 @@ $(document).ready(function(){
 	}
 
 	function sumaTotal() {
-		$('#total').val(parseFloat($('#netoii').val()) + parseFloat($('#neto').val()) + parseFloat($('#ingresoanualconyuge').val()));
+		$('#total').val(parseFloat($('#neto').val()) + parseFloat($('#ingresoanualconyuge').val()));
 	}
 
 
