@@ -24,6 +24,9 @@ $fecha = date('Y-m-d');
 $resMenu = $serviciosHTML->menu($_SESSION['nombre_predio'],"Dashboard",$_SESSION['refroll_predio'],'');
 
 
+if ($_SESSION['idroll_predio'] == 2) {
+	$resAgente = $serviciosReferencias->traerAgenteReal($_SESSION['curp_predio']);
+}
 
 ?>
 
@@ -42,7 +45,7 @@ $resMenu = $serviciosHTML->menu($_SESSION['nombre_predio'],"Dashboard",$_SESSION
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 
-<link href="../css/estiloDash.css" rel="stylesheet" type="text/css">
+
     
 
     
@@ -50,6 +53,10 @@ $resMenu = $serviciosHTML->menu($_SESSION['nombre_predio'],"Dashboard",$_SESSION
     <link rel="stylesheet" href="../css/jquery-ui.css">
 
     <script src="../js/jquery-ui.js"></script>
+
+    <link rel="stylesheet" href="../materialize/css/materialize.min.css"/>
+
+    <link href="../css/estiloDash.css" rel="stylesheet" type="text/css">
     
     <script src="../js/jquery.easy-autocomplete.min.js"></script> 
 
@@ -64,6 +71,9 @@ $resMenu = $serviciosHTML->menu($_SESSION['nombre_predio'],"Dashboard",$_SESSION
 	<!--<link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>-->
     <!-- Latest compiled and minified JavaScript -->
     <script src="../bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="../materialize/js/materialize.min.js"></script>
+
 	
 
 
@@ -132,25 +142,162 @@ $resMenu = $serviciosHTML->menu($_SESSION['nombre_predio'],"Dashboard",$_SESSION
                 </div>
                 <?php } else { ?>
                 <ul class="list-group">
-	              <li class="list-group-item list-group-item-info"><span class="glyphicon glyphicon-user"></span> Cliente - (<span style="color:#F00;">*</span> Datos No editables)</li>
-	              <li class="list-group-item list-group-item-default">Apellido: <input type="text" class="form-control sinborde" name="apellido" id="apellido" value="<?php echo mysql_result($resCliente,0,'apellido'); ?>" /></li>
-	              <li class="list-group-item list-group-item-default">Nombre: <input type="text" class="form-control sinborde" name="nombre" id="nombre" value="<?php echo mysql_result($resCliente,0,'nombre'); ?>" /></li>
-	              <li class="list-group-item list-group-item-default">CUIT: <input type="text" class="form-control sinborde" name="cuit" id="cuit" value="<?php echo mysql_result($resCliente,0,'cuit'); ?>" /></li>
-	              <li class="list-group-item list-group-item-default">Dirección: <input type="text" style="width:100%;" class="form-control sinborde" name="direccion" id="direccion" value="<?php echo mysql_result($resCliente,0,'direccion'); ?>" /></li>
-	              <li class="list-group-item list-group-item-default">Tel. Fijo: <input type="text" class="form-control sinborde" name="telefono" id="telefono" value="<?php echo mysql_result($resCliente,0,'telefono'); ?>" /></li>
-	              <li class="list-group-item list-group-item-default">Tel. Movil: <input type="text" class="form-control sinborde" name="celular" id="celular" value="<?php echo mysql_result($resCliente,0,'celular'); ?>" /></li>
-	              <li class="list-group-item list-group-item-default"><span style="color:#F00;">*</span> Email: <?php echo mysql_result($resCliente,0,'email'); ?></li>
-	              <li class="list-group-item list-group-item-default">
-	                <ul class="list-inline">
-	                    <li>Modificar Cliente:</li>
-	                    <li><button type="button" class="btn btn-warning" id="modificarCliente" style="margin-left:0px;">Modificar</button></li>
-	                    <li id="mensaje"></li>
-	                </ul>
-	              </li>
+                  <li class="list-group-item list-group-item-info">Datos del Declarante</li>
+	              <li class="list-group-item list-group-item-default">Primer Apellido: <?php echo mysql_result($resAgente,0,'paterno'); ?></li>
+	              <li class="list-group-item list-group-item-default">Segundo Apellido: <?php echo mysql_result($resAgente,0,'materno'); ?></li>
+	              <li class="list-group-item list-group-item-default">Nombres: <?php echo mysql_result($resAgente,0,'nombre'); ?></li>
+	              <li class="list-group-item list-group-item-default">CURP: <?php echo mysql_result($resAgente,0,'curp'); ?></li>
+	              <li class="list-group-item list-group-item-default">Email: <?php echo mysql_result($resAgente,0,'email'); ?></li>
+
 	            </ul>
 
-	            <div class="cuerpoBox" id="resultadosArchivos">
-    
+	            <div class="cuerpoBox">
+
+	            	<div class="row">
+						<div class="col s12 m4">
+							<div class="card teal lighten-2 darken-1">
+								<div class="card-content white-text">
+									<span class="card-title">DATOS GENERALES DEL DECLARANTE</span>
+									<p>En nombre y apellidos, deberá anotarlos sin abreviaciones con excepción de las personas que lo tengan
+registrado así en su acta de nacimiento. Utilizar todos los espacios disponibles para el RFC con
+HOMOCLAVE. De Igual forma para anotar su CURP. El lugar de nacimiento deberá indicar el municipio o
+delegación y separado por una coma, el Estado al que pertenece.
+Para el caso del Sexo, solo debe anotar la letra que corresponda: M para Masculino y F para Femenino.
+Si dispone de un correo electrónico personal, deberá anotarlo, esto con el objeto de que pueda recibir
+información por este medio, si fuera necesario.</p>
+								</div>
+								<div class="card-action">
+									<a href="declaracionpatrimonial/">Acceder</a>
+								</div>
+							</div>
+						</div>
+
+						<div class="col s12 m4">
+							<div class="card light-blue lighten-2 darken-1">
+								<div class="card-content white-text">
+									<span class="card-title">DATOS DEL CARGO</span>
+									<p>Anotará el cargo que va a desempeñar o que concluye, mencionando la fecha en que toma posesión o se
+retira del cargo, según sea el caso. El nombre del cargo, dependencia, organismo o ayuntamiento, así
+como área de adscripción, deberá anotarlos sin abreviaciones, exceptuando cuando quiera indicar
+“Dirección General” con Dir. Gral. o “Coordinación” como Coord.
+En área de adscripción indicará el área a la que pertenece el cargo que va a ocupar o que concluye,
+exceptuando cuando Usted ocupe un cargo de Dirección General o Coordinación, o nivel similar, por
+ejemplo: Cargo: Jefe de Departamento de Recursos Materiales; área de Adscripción: Coordinación
+Administrativa.</p>
+								</div>
+								<div class="card-action">
+									<a href="declaracionanual/">Acceder</a>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col s12 m4">
+							<div class="card indigo lighten-2 darken-1">
+								<div class="card-content white-text">
+									<span class="card-title">DATOS PUBLICOS</span>
+									<p>Seleccionará los datos que el declarante desee que sean públicos.</p>
+								</div>
+								<div class="card-action">
+									<a href="publicacion/">Acceder</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+
+					<div class="row">
+						<div class="col s12 m4">
+							<div class="card teal lighten-2 darken-1">
+								<div class="card-content white-text">
+									<span class="card-title">INGRESOS ANUALES DEL DECLARANTE</span>
+									<p>Anotará el monto de percepción mensual por concepto de salarios, después de haber descontado los
+impuestos y cuotas de Seguridad Social. En el caso de tener otros ingresos, éstos serán bajo los mismos
+criterios señalados en este párrafo, indicando en la sección XII.- OBSERVACIONES Y ACLARACIONES,
+el concepto de estos ingresos. Las cantidades deberán ser redondeados y sin centavos.</p>
+								</div>
+								<div class="card-action">
+									<a href="ingresosanuales/">Acceder</a>
+								</div>
+							</div>
+						</div>
+
+						<div class="col s12 m4">
+							<div class="card light-blue darken-4">
+								<div class="card-content white-text">
+									<span class="card-title">DEPENDIENTES ECONOMICOS</span>
+									<p>En caso de tener dependientes económicos, deberá anotar sus datos en esta sección.</p>
+								</div>
+								<div class="card-action">
+									<a href="dependienteseconomicos/">Acceder</a>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col s12 m4">
+							<div class="card teal lighten-2 darken-1">
+								<div class="card-content white-text">
+									<span class="card-title">BIENES MUEBLES</span>
+									<p>Anote el número que corresponda según la clave de bien mueble con que cuenta, así como su valor, tanto
+del declarante como de su cónyuge, concubino (a) y dependientes económicos, en caso de tenerlos. El
+valor del bien deberá ir redondeado y sin centavos.
+</p>
+								</div>
+								<div class="card-action">
+									<a href="bienesmuebles/">Acceder</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
+
+
+					<div class="row">
+						<div class="col s12 m4">
+							<div class="card teal lighten-2 darken-1">
+								<div class="card-content white-text">
+									<span class="card-title">VEHICULOS</span>
+									<p>Anote la clave de operación referente al vehículo, si se trata de otro tipo de transporte como
+avión, tractor, etc. deberá especificarlo también en esta sección.</p>
+								</div>
+								<div class="card-action">
+									<a href="vehiculos/">Acceder</a>
+								</div>
+							</div>
+						</div>
+
+						<div class="col s12 m4">
+							<div class="card teal lighten-2 darken-1">
+								<div class="card-content white-text">
+									<span class="card-title">BIENES INMUEBLES</span>
+									<p>Anote la clave que corresponda al tipo de inmueble con el que cuenta. IMPORTANTE anotar
+el registro que se tenga ante el Registro Público de la Propiedad. En caso de terrenos
+ejidales, deberá señalar en el mismo espacio la sesión de derechos correspondiente.</p>
+								</div>
+								<div class="card-action">
+									<a href="bienesinmuebles/">Acceder</a>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col s12 m4">
+							<div class="card teal lighten-2 darken-1">
+								<div class="card-content white-text">
+									<span class="card-title">INVERSIONES</span>
+									<p>Anote la clave de inversión con que cuenta, en caso de tener inversión en un negocio propio,
+deberá señalarlo en la sección VIII.- OTRO TIPO DE INVERSIÓN.</p>
+								</div>
+								<div class="card-action">
+									<a href="inversiones/">Acceder</a>
+								</div>
+							</div>
+						</div>
+					</div>
+
                 </div>
 
                 <?php } ?>

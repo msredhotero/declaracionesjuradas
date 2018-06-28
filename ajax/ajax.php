@@ -152,9 +152,571 @@ case 'traerArchivosPorCliente':
 		eliminarTipoparentesco($serviciosReferencias); 
 	break; 
 
+
+	case 'insertarBienesinmuebles': 
+		insertarBienesinmuebles($serviciosReferencias); 
+	break; 
+	case 'modificarBienesinmuebles': 
+		modificarBienesinmuebles($serviciosReferencias); 
+	break; 
+	case 'eliminarBienesinmuebles': 
+		eliminarBienesinmuebles($serviciosReferencias); 
+	break; 
+	case 'insertarBienesmuebles': 
+		insertarBienesmuebles($serviciosReferencias); 
+	break; 
+	case 'modificarBienesmuebles': 
+		modificarBienesmuebles($serviciosReferencias); 
+	break; 
+	case 'eliminarBienesmuebles': 
+		eliminarBienesmuebles($serviciosReferencias); 
+	break; 
+
+	case 'insertarInversiones': 
+		insertarInversiones($serviciosReferencias); 
+	break; 
+	case 'modificarInversiones': 
+		modificarInversiones($serviciosReferencias); 
+	break; 
+	case 'eliminarInversiones': 
+		eliminarInversiones($serviciosReferencias); 
+	break; 
+
+	case 'insertarVehiculos': 
+		insertarVehiculos($serviciosReferencias); 
+	break; 
+	case 'modificarVehiculos': 
+		modificarVehiculos($serviciosReferencias); 
+	break; 
+	case 'eliminarVehiculos': 
+		eliminarVehiculos($serviciosReferencias); 
+	break; 
+
+	case 'insertarFormaadquisicion': 
+		insertarFormaadquisicion($serviciosReferencias); 
+	break; 
+	case 'modificarFormaadquisicion': 
+		modificarFormaadquisicion($serviciosReferencias); 
+	break; 
+	case 'eliminarFormaadquisicion': 
+		eliminarFormaadquisicion($serviciosReferencias); 
+	break; 
+	case 'insertarOtrotipobien': 
+		insertarOtrotipobien($serviciosReferencias); 
+	break; 
+	case 'modificarOtrotipobien': 
+		modificarOtrotipobien($serviciosReferencias); 
+	break; 
+	case 'eliminarOtrotipobien': 
+		eliminarOtrotipobien($serviciosReferencias); 
+	break; 
+
+	case 'insertarTipobien': 
+		insertarTipobien($serviciosReferencias); 
+	break; 
+	case 'modificarTipobien': 
+		modificarTipobien($serviciosReferencias); 
+	break; 
+	case 'eliminarTipobien': 
+		eliminarTipobien($serviciosReferencias); 
+	break; 
+	case 'insertarTipocesionario': 
+		insertarTipocesionario($serviciosReferencias); 
+	break; 
+	case 'modificarTipocesionario': 
+		modificarTipocesionario($serviciosReferencias); 
+	break; 
+	case 'eliminarTipocesionario': 
+		eliminarTipocesionario($serviciosReferencias); 
+	break; 
+	case 'insertarTipoinversion': 
+		insertarTipoinversion($serviciosReferencias); 
+	break; 
+	case 'modificarTipoinversion': 
+		modificarTipoinversion($serviciosReferencias); 
+	break; 
+	case 'eliminarTipoinversion': 
+		eliminarTipoinversion($serviciosReferencias); 
+	break; 
+	case 'insertarTipooperacion': 
+		insertarTipooperacion($serviciosReferencias); 
+	break; 
+	case 'modificarTipooperacion': 
+		modificarTipooperacion($serviciosReferencias); 
+	break; 
+	case 'eliminarTipooperacion': 
+		eliminarTipooperacion($serviciosReferencias); 
+	break; 
+
+	case 'insertarTitular': 
+		insertarTitular($serviciosReferencias); 
+	break; 
+	case 'modificarTitular': 
+		modificarTitular($serviciosReferencias); 
+	break; 
+	case 'eliminarTitular': 
+		eliminarTitular($serviciosReferencias); 
+	break; 
 }
 
 /* Fin */
+
+	
+
+	function insertarBienesinmuebles($serviciosReferencias) { 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$reftipooperacion = $_POST['reftipooperacion']; 
+		$reftipobien = $_POST['reftipobien']; 
+		$refotrotipobien = $_POST['refotrotipobien']; 
+		$mtrsterreno = $_POST['mtrsterreno']; 
+		$mtrsconstruccion = $_POST['mtrsconstruccion']; 
+		$refformaadquisicion = $_POST['refformaadquisicion']; 
+		$cesionario = $_POST['cesionario']; 
+		$reftitular = $_POST['reftitular']; 
+		$reftipocesionario = $_POST['reftipocesionario']; 
+		$otrotipocesionario = $_POST['otrotipocesionario']; 
+		$valor = $_POST['valor']; 
+		$tipomoneda = $_POST['tipomoneda']; 
+		$fechaadquisicion = $_POST['fechaadquisicion']; 
+		$registropublico = $_POST['registropublico']; 
+		$ubicacion = $_POST['ubicacion']; 
+		$especificacionobra = $_POST['especificacionobra']; 
+		$especificacionventa = $_POST['especificacionventa']; 
+		
+		$res = $serviciosReferencias->insertarBienesinmuebles($refdeclaracionjuradacabecera,$reftipooperacion,$reftipobien,$refotrotipobien,$mtrsterreno,$mtrsconstruccion,$refformaadquisicion,$cesionario,$reftitular,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$registropublico,$ubicacion,$especificacionobra,$especificacionventa); 
+		
+		if ((integer)$res > 0) { 
+			echo ''; 
+		} else { 
+			echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+
+	function modificarBienesinmuebles($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$reftipooperacion = $_POST['reftipooperacion']; 
+		$reftipobien = $_POST['reftipobien']; 
+		$refotrotipobien = $_POST['refotrotipobien']; 
+		$mtrsterreno = $_POST['mtrsterreno']; 
+		$mtrsconstruccion = $_POST['mtrsconstruccion']; 
+		$refformaadquisicion = $_POST['refformaadquisicion']; 
+		$cesionario = $_POST['cesionario']; 
+		$reftitular = $_POST['reftitular']; 
+		$reftipocesionario = $_POST['reftipocesionario']; 
+		$otrotipocesionario = $_POST['otrotipocesionario']; 
+		$valor = $_POST['valor']; 
+		$tipomoneda = $_POST['tipomoneda']; 
+		$fechaadquisicion = $_POST['fechaadquisicion']; 
+		$registropublico = $_POST['registropublico']; 
+		$ubicacion = $_POST['ubicacion']; 
+		$especificacionobra = $_POST['especificacionobra']; 
+		$especificacionventa = $_POST['especificacionventa']; 
+		
+		$res = $serviciosReferencias->modificarBienesinmuebles($id,$refdeclaracionjuradacabecera,$reftipooperacion,$reftipobien,$refotrotipobien,$mtrsterreno,$mtrsconstruccion,$refformaadquisicion,$cesionario,$reftitular,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$registropublico,$ubicacion,$especificacionobra,$especificacionventa); 
+		
+		if ($res == true) { 
+			echo ''; 
+		} else { 
+			echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+	function eliminarBienesinmuebles($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarBienesinmuebles($id); 
+		echo $res; 
+	} 
+
+
+
+	function insertarBienesmuebles($serviciosReferencias) { 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$reftipooperacion = $_POST['reftipooperacion']; 
+		$reftipobien = $_POST['reftipobien']; 
+		$descripcion = $_POST['descripcion']; 
+		$refformaadquisicion = $_POST['refformaadquisicion']; 
+		$cesionario = $_POST['cesionario']; 
+		$reftipocesionario = $_POST['reftipocesionario']; 
+		$otrotipocesionario = $_POST['otrotipocesionario']; 
+		$valor = $_POST['valor']; 
+		$tipomoneda = $_POST['tipomoneda']; 
+		$fechaadquisicion = $_POST['fechaadquisicion']; 
+		$reftitular = $_POST['reftitular']; 
+		$especificacionventa = $_POST['especificacionventa']; 
+		
+		$res = $serviciosReferencias->insertarBienesmuebles($refdeclaracionjuradacabecera,$reftipooperacion,$reftipobien,$descripcion,$refformaadquisicion,$cesionario,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$reftitular,$especificacionventa); 
+		
+		if ((integer)$res > 0) { 
+			echo ''; 
+		} else { 
+			echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+
+	function modificarBienesmuebles($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$reftipooperacion = $_POST['reftipooperacion']; 
+		$reftipobien = $_POST['reftipobien']; 
+		$descripcion = $_POST['descripcion']; 
+		$refformaadquisicion = $_POST['refformaadquisicion']; 
+		$cesionario = $_POST['cesionario']; 
+		$reftipocesionario = $_POST['reftipocesionario']; 
+		$otrotipocesionario = $_POST['otrotipocesionario']; 
+		$valor = $_POST['valor']; 
+		$tipomoneda = $_POST['tipomoneda']; 
+		$fechaadquisicion = $_POST['fechaadquisicion']; 
+		$reftitular = $_POST['reftitular']; 
+		$especificacionventa = $_POST['especificacionventa']; 
+		
+		$res = $serviciosReferencias->modificarBienesmuebles($id,$refdeclaracionjuradacabecera,$reftipooperacion,$reftipobien,$descripcion,$refformaadquisicion,$cesionario,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$reftitular,$especificacionventa); 
+		
+		if ($res == true) { 
+			echo ''; 
+		} else { 
+			echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+	function eliminarBienesmuebles($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarBienesmuebles($id); 
+		echo $res; 
+	} 
+
+
+
+	function insertarInversiones($serviciosReferencias) { 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$reftipooperacion = $_POST['reftipooperacion']; 
+		$reftitular = $_POST['reftitular']; 
+		$numerocuenta = $_POST['numerocuenta']; 
+		$donde = $_POST['donde']; 
+		$razonsocial = $_POST['razonsocial']; 
+		$pais = $_POST['pais']; 
+		$saldo = $_POST['saldo']; 
+		$tipomoneda = $_POST['tipomoneda']; 
+		$reftipoinversion = $_POST['reftipoinversion']; 
+		$especifica = $_POST['especifica']; 
+		
+		$res = $serviciosReferencias->insertarInversiones($refdeclaracionjuradacabecera,$reftipooperacion,$reftitular,$numerocuenta,$donde,$razonsocial,$pais,$saldo,$tipomoneda,$reftipoinversion,$especifica); 
+		
+		if ((integer)$res > 0) { 
+			echo ''; 
+		} else { 
+			echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+
+	function modificarInversiones($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$reftipooperacion = $_POST['reftipooperacion']; 
+		$reftitular = $_POST['reftitular']; 
+		$numerocuenta = $_POST['numerocuenta']; 
+		$donde = $_POST['donde']; 
+		$razonsocial = $_POST['razonsocial']; 
+		$pais = $_POST['pais']; 
+		$saldo = $_POST['saldo']; 
+		$tipomoneda = $_POST['tipomoneda']; 
+		$reftipoinversion = $_POST['reftipoinversion']; 
+		$especifica = $_POST['especifica']; 
+		
+		$res = $serviciosReferencias->modificarInversiones($id,$refdeclaracionjuradacabecera,$reftipooperacion,$reftitular,$numerocuenta,$donde,$razonsocial,$pais,$saldo,$tipomoneda,$reftipoinversion,$especifica); 
+		
+		if ($res == true) { 
+			echo ''; 
+		} else { 
+			echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+
+	function eliminarInversiones($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarInversiones($id); 
+		echo $res; 
+	} 
+
+
+
+	function insertarVehiculos($serviciosReferencias) { 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$reftipooperacion = $_POST['reftipooperacion']; 
+		$vehiculo = $_POST['vehiculo']; 
+		$donde = $_POST['donde']; 
+		$entidadfederativa = $_POST['entidadfederativa']; 
+		$refformaadquisicion = $_POST['refformaadquisicion']; 
+		$cesionario = $_POST['cesionario']; 
+		$reftipocesionario = $_POST['reftipocesionario']; 
+		$otrotipocesionario = $_POST['otrotipocesionario']; 
+		$valor = $_POST['valor']; 
+		$tipomoneda = $_POST['tipomoneda']; 
+		$fechaadquisicion = $_POST['fechaadquisicion']; 
+		$reftitular = $_POST['reftitular']; 
+		$especificacionventa = $_POST['especificacionventa']; 
+		$especificacionsiniestro = $_POST['especificacionsiniestro']; 
+		
+		$res = $serviciosReferencias->insertarVehiculos($refdeclaracionjuradacabecera,$reftipooperacion,$vehiculo,$donde,$entidadfederativa,$refformaadquisicion,$cesionario,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$reftitular,$especificacionventa,$especificacionsiniestro); 
+		
+		if ((integer)$res > 0) { 
+			echo ''; 
+		} else { 
+			echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+
+	function modificarVehiculos($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$reftipooperacion = $_POST['reftipooperacion']; 
+		$vehiculo = $_POST['vehiculo']; 
+		$donde = $_POST['donde']; 
+		$entidadfederativa = $_POST['entidadfederativa']; 
+		$refformaadquisicion = $_POST['refformaadquisicion']; 
+		$cesionario = $_POST['cesionario']; 
+		$reftipocesionario = $_POST['reftipocesionario']; 
+		$otrotipocesionario = $_POST['otrotipocesionario']; 
+		$valor = $_POST['valor']; 
+		$tipomoneda = $_POST['tipomoneda']; 
+		$fechaadquisicion = $_POST['fechaadquisicion']; 
+		$reftitular = $_POST['reftitular']; 
+		$especificacionventa = $_POST['especificacionventa']; 
+		$especificacionsiniestro = $_POST['especificacionsiniestro']; 
+		
+		$res = $serviciosReferencias->modificarVehiculos($id,$refdeclaracionjuradacabecera,$reftipooperacion,$vehiculo,$donde,$entidadfederativa,$refformaadquisicion,$cesionario,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$reftitular,$especificacionventa,$especificacionsiniestro); 
+		
+		if ($res == true) { 
+			echo ''; 
+		} else { 
+			echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+
+	function eliminarVehiculos($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarVehiculos($id); 
+		echo $res; 
+	} 
+
+
+	function insertarFormaadquisicion($serviciosReferencias) { 
+		$formaadquisicion = $_POST['formaadquisicion']; 
+		
+		$res = $serviciosReferencias->insertarFormaadquisicion($formaadquisicion); 
+		
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+
+	function modificarFormaadquisicion($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$formaadquisicion = $_POST['formaadquisicion']; 
+		$res = $serviciosReferencias->modificarFormaadquisicion($id,$formaadquisicion); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+
+	function eliminarFormaadquisicion($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarFormaadquisicion($id); 
+		echo $res; 
+	} 
+
+
+	function insertarOtrotipobien($serviciosReferencias) { 
+		$otrotipobien = $_POST['otrotipobien']; 
+		$res = $serviciosReferencias->insertarOtrotipobien($otrotipobien); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+
+	function modificarOtrotipobien($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$otrotipobien = $_POST['otrotipobien']; 
+		$res = $serviciosReferencias->modificarOtrotipobien($id,$otrotipobien); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+
+	function eliminarOtrotipobien($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarOtrotipobien($id); 
+		echo $res; 
+	} 
+
+
+
+	function insertarTipobien($serviciosReferencias) { 
+		$tipobien = $_POST['tipobien']; 
+		$res = $serviciosReferencias->insertarTipobien($tipobien); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+
+	function modificarTipobien($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$tipobien = $_POST['tipobien']; 
+		$res = $serviciosReferencias->modificarTipobien($id,$tipobien); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+
+	function eliminarTipobien($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarTipobien($id); 
+		echo $res; 
+	} 
+
+
+	function insertarTipocesionario($serviciosReferencias) { 
+		$tipocesionario = $_POST['tipocesionario']; 
+		$res = $serviciosReferencias->insertarTipocesionario($tipocesionario); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+
+	function modificarTipocesionario($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$tipocesionario = $_POST['tipocesionario']; 
+		$res = $serviciosReferencias->modificarTipocesionario($id,$tipocesionario); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+
+	function eliminarTipocesionario($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarTipocesionario($id); 
+		echo $res; 
+	} 
+
+
+	function insertarTipoinversion($serviciosReferencias) { 
+		$tipoinversion = $_POST['tipoinversion']; 
+		$res = $serviciosReferencias->insertarTipoinversion($tipoinversion); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+
+	function modificarTipoinversion($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$tipoinversion = $_POST['tipoinversion']; 
+		$res = $serviciosReferencias->modificarTipoinversion($id,$tipoinversion); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+
+	function eliminarTipoinversion($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarTipoinversion($id); 
+		echo $res; 
+	} 
+
+
+	function insertarTipooperacion($serviciosReferencias) { 
+		$tipooperacion = $_POST['tipooperacion']; 
+		$res = $serviciosReferencias->insertarTipooperacion($tipooperacion); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+
+	function modificarTipooperacion($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$tipooperacion = $_POST['tipooperacion']; 
+		$res = $serviciosReferencias->modificarTipooperacion($id,$tipooperacion); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+
+	function eliminarTipooperacion($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarTipooperacion($id); 
+		echo $res; 
+	} 
+
+
+	function insertarTitular($serviciosReferencias) { 
+		$titular = $_POST['titular']; 
+		$res = $serviciosReferencias->insertarTitular($titular); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+
+	function modificarTitular($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$titular = $_POST['titular']; 
+		$res = $serviciosReferencias->modificarTitular($id,$titular); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+	
+	function eliminarTitular($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarTitular($id); 
+		echo $res; 
+	} 
 
 
 

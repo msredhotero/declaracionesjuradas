@@ -563,7 +563,7 @@ class Servicios {
 									$label = ucwords($label);
 									$campo = strtolower($row[0]);
 									
-									if (($row[0] == "fechapago") || ($row[0] == "vigenciadesde") || ($row[0] == "vigenciahasta") || ($row[0] == "fechaalta") || ($row[0] == "fechabaja") || ($row[0] == "fechabajatentativa")) {
+									if (($row[0] == "fechapago") || ($row[0] == "fechaalta") || ($row[0] == "fechabaja") || ($row[0] == "fechabajatentativa")) {
 										$form	=	$form.'
 														
 										<div class="form-group col-md-6 col-xs-6">

@@ -22,7 +22,7 @@ $serviciosReferencias 	= new ServiciosReferencias();
 $fecha = date('Y-m-d');
 
 //$resProductos = $serviciosProductos->traerProductosLimite(6);
-$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Declaracion Anual Intereses",$_SESSION['refroll_predio'],'');
+$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Bienes Muebles",$_SESSION['refroll_predio'],'');
 
 
 ///////////////////////   id de la cabecera de la declaracion /////////////////////////
@@ -30,79 +30,88 @@ $id = 1;
 ///////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
-$singular = "Declaracion Anual Intereses";
+$singular = "Bienes Muebles";
 
-$plural = "Declaraciones Anual de Intereses";
+$plural = "Bienes Muebles";
 
-$eliminar = "eliminarDeclaracionanualinteres";
+$eliminar = "eliminarBienesmuebles";
 
-$insertar = "insertarDeclaracionanualinteres";
+$insertar = "insertarBienesmuebles";
 
 $tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
-$tabla 			= "dbdeclaracionanualinteres";
+$tabla 			= "dbbienesmuebles";
 
 $lblCambio	 	= array("refdeclaracionjuradacabecera",
-						"essecretario",
-						"esauditor",
-						"espublico",
-						"refpoder",
-						"registrofederalcontribuyente",
-						"fechadeclaracionanterior",
-						"fechatomaposesion",
-						"cargoactual",
-						"cargoanterior",
-						"areaadquisicion",
-						"areaadquisicionanterior",
-						"dependencia",
-						"dependenciaanterior");
+						"reftipooperacion",
+						"reftipobien",
+						"descripcion",
+						"refformaadquisicion",
+						"cesionario",
+						"reftipocesionario",
+						"otrotipocesionario",
+						"valor",
+						"tipomoneda",
+						"fechaadquisicion",
+						"reftitular",
+						"especificacionventa");
 $lblreemplazo	= array('Declaración Patrimonial Cabecera',
-						'Secretario de la contraloría',
-						'Auditor General de la ESAF',
-						'Es mi deseo hacer publica la información confidencial',
-						'Poder',
-						'Registro Federal de Contribuyentes',
-						'Fecha Declaración anterior',
-						'Fecha de la toma de posesión actual',
-						'Cargo que desempeña actualmente',
-						'Cargo que manifesto en su ultima',
-						'Area de adscripción actual',
-						'Area de adscripción que manifesto en su ultima declaración',
-						'Dependencia, Organismo o Ayuntamiento de adscripción de la plaza',
-						'Dependencia, Organismo o Ayuntamiento que manifesto en su ultima declaración');
+						'Tipo de Operacion',
+						'Tipo de Bien',
+						'Descripcion del Bien',
+						'Forma de Adquisicion',
+						'Nombre del cesionario, del autor de la donacion o del autor de la herencia',
+						'Relacion del cesionario, del autor de la donacion o del autor de la herencia con el titular',
+						'En caso de elegir "Otro" indicar',
+						'Valor del Bien, sin centavos',
+						'Tipo de Moneda',
+						'Fecha de Adquisicion',
+						'Titular',
+						'Si eligio "Venta" debera especificar los datos de la operacion');
 
 
 $resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
 $cadRef = $serviciosFunciones->devolverSelectBoxObligatorio($resVar1,array(2,3,4),' ');
 
-$refVar2 = $serviciosReferencias->traerPoder();
+$refVar2 = $serviciosReferencias->traerTipooperacion();
 $cadRef2 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar2,array(1),' ');
 
-$refdescripcion = array(0 => $cadRef, 1=>$cadRef2);
-$refCampo 	=  array("refdeclaracionjuradacabecera","refpoder"); 
+$refVar6 = $serviciosReferencias->traerTipobien();
+$cadRef6 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar6,array(1),' ');
+
+$refVar3 = $serviciosReferencias->traerFormaadquisicion();
+$cadRef3 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar3,array(1),' ');
+
+$refVar4 = $serviciosReferencias->traerTipocesionario();
+$cadRef4 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar4,array(1),' ');
+
+$refVar5 = $serviciosReferencias->traerTitular();
+$cadRef5 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar5,array(1),' ');
+
+$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef6, 3=>$cadRef3, 4=>$cadRef4, 5=>$cadRef5);
+$refCampo 	=  array("refdeclaracionjuradacabecera","reftipooperacion","reftipobien","refformaadquisicion","reftipocesionario","reftitular"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
 
 
 /////////////////////// Opciones para la creacion del view  apellido,nombre,nrodocumento,fechanacimiento,direccion,telefono,email/////////////////////
-$cabeceras 		= "	<th>Decla. Patri. Cab.</th>
-					<th>Sec. contraloría</th>
-					<th>Audi. Gral. ESAF</th>
-					<th>Inf. Public.</th>
-					<th>Poder</th>
-					<th>Reg. Fed. Contrib.</th>
-					<th>Fecha Decla. anterior</th>
-					<th>Fecha Toma Posesión act.</th>
-					<th>Cargo act.</th>
-					<th>Cargo Ante.</th>
-					<th>Area adscripción</th>
-					<th>Area adscripción ultima</th>
-					<th>Dependencia</th>
-					<th>Dependencia ultima</th>";
+$cabeceras 		= "	<th>Declaración Patr. Cabecera</th>
+					<th>Tipo de Operacion</th>
+					<th>Tipo de Bien</th>
+					<th>Descripcion del Bien</th>
+					<th>Forma de Adquisicion</th>
+					<th>Nombre del cesionario</th>
+					<th>Relacion del cesionario</th>
+					<th>En caso de elegir 'Otro' indicar</th>
+					<th>Valor del Bien, sin centavos</th>
+					<th>Tipo de Moneda</th>
+					<th>Fecha de Adquisicion</th>
+					<th>Titular</th>
+					<th>Si eligio 'Venta'</th>";
 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
@@ -111,7 +120,7 @@ $cabeceras 		= "	<th>Decla. Patri. Cab.</th>
 
 $formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
-$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerDeclaracionanualinteresGridPorUsuario($_SESSION['idusuario']),14);
+$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerBienesmueblesGridPorCabecera($id),13);
 
 
 
@@ -157,6 +166,8 @@ if ($_SESSION['refroll_predio'] != 1) {
     <!-- Latest compiled and minified JavaScript -->
     <script src="../../bootstrap/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="../../css/bootstrap-datetimepicker.min.css">
+
+	<script src="../../js/jquery.number.min.js"></script>
     
    
    <link href="../../css/perfect-scrollbar.css" rel="stylesheet">
@@ -186,7 +197,7 @@ if ($_SESSION['refroll_predio'] != 1) {
         </div>
     	<div class="cuerpoBox">
         	<form class="form-inline formulario" role="form">
-        	<div class="row">
+        	<div class="row" style="font-size:0.8em;">
 			<?php echo $formulario; ?>
             </div>
             <!--
@@ -278,6 +289,8 @@ $(document).ready(function(){
 			}
 		  }
 	} );
+
+	$('#valor').number( true, 0,'.','' );
 	
 
 	$("#example").on("click",'.varborrar', function(){

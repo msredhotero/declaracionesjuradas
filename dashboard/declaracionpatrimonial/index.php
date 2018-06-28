@@ -105,7 +105,7 @@ $refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3,3=>$cadRef4,4=>$c
 $refCampo 	=  array("refestadocivil","refregimenmatrimonial","refusuarios","lugarubica","sexo"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
-
+$declaracionReal = $serviciosReferencias->traerAgenteReal($_SESSION['curp_predio']);
 
 
 /////////////////////// Opciones para la creacion del view  apellido,nombre,nrodocumento,fechanacimiento,direccion,telefono,email/////////////////////
@@ -291,6 +291,30 @@ $(document).ready(function(){
 			}
 		  }
 	} );
+
+	$('#primerapellido').val('<?php echo mysql_result($declaracionReal,0,'paterno'); ?>');
+	$('#primerapellido').prop('readonly', true);
+
+	$('#segundoapellido').val('<?php echo mysql_result($declaracionReal,0,'materno'); ?>');
+	$('#segundoapellido').prop('readonly', true);
+
+	$('#nombres').val('<?php echo mysql_result($declaracionReal,0,'nombre'); ?>');
+	$('#nombres').prop('readonly', true);
+
+	$('#curp').val('<?php echo mysql_result($declaracionReal,0,'curp'); ?>');
+	$('#curp').prop('readonly', true);
+
+	$('#homoclave').val('<?php echo mysql_result($declaracionReal,0,'rfc'); ?>');
+	$('#homoclave').prop('readonly', true);
+
+	$('#emailinstitucional').val('<?php echo mysql_result($declaracionReal,0,'email'); ?>');
+	$('#emailinstitucional').prop('readonly', true);
+
+	$('#numerocelular').val('<?php echo mysql_result($declaracionReal,0,'celular'); ?>');
+	$('#numerocelular').prop('readonly', true);
+
+	$('#domicilioparticular').val('<?php echo mysql_result($declaracionReal,0,'domicilio_particular'); ?>');
+	$('#domicilioparticular').prop('readonly', true);
 	
 
 	$("#example").on("click",'.varborrar', function(){

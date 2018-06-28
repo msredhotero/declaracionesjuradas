@@ -52,7 +52,7 @@ function login($usuario,$pass) {
 			$idUsua = mysql_result($respusu,0,0);
 
 			
-			$sqlpass = "select nombre,email, id_perfil from loginreal where pass_user = '".$pass."' and empleado_id = ".$idUsua;
+			$sqlpass = "select nombre,email, id_perfil, curp from loginreal where pass_user = '".$pass."' and empleado_id = ".$idUsua;
 		
 			$resppass = $this->query($sqlpass,0);
 			
@@ -76,7 +76,8 @@ function login($usuario,$pass) {
 			$_SESSION['nombre_predio'] = mysql_result($resppass,0,0);
 			$_SESSION['email_predio'] = mysql_result($resppass,0,1);
 			$_SESSION['idroll_predio'] = mysql_result($resppass,0,2);
-			$_SESSION['refroll_predio'] = 'Administrador';
+			$_SESSION['refroll_predio'] = 'Usuario';
+			$_SESSION['curp_predio'] = mysql_result($resppass,0,3);
 
 			$_SESSION['idusuario'] = $idUsua;
 			

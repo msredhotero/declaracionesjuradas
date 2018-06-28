@@ -47,6 +47,17 @@ $tablasAr	= array("declaracionjuradacabecera"        => "dbdeclaracionjuradacabe
 "estadocivil"     			=> "tbestadocivil",
 "tipoparentesco"  			=> "tbtipoparentesco",
 "poder"			  			=> "tbpoder",
+"tipooperacion"			  	=> "tbtipooperacion",
+"tipobien"			  		=> "tbtipobien",
+"formaadquisicion"			=> "tbformaadquisicion",
+"tipocesionario"			=> "tbtipocesionario",
+"titular"			  		=> "tbtitular",
+"bienesmuebles"			  	=> "dbbienesmuebles",
+"otrotipobien"				=> "tbotrotipobien",
+"vehiculos"					=> "dbvehiculos",
+"bienesinmuebles"			=> "dbbienesinmuebles",
+"inversiones"				=> "dbinversiones",
+"tipoinversion"				=> "tbtipoinversion",
 "regimenmatrimonial" 		=> "tbregimenmatrimonial");
 
 
@@ -64,6 +75,17 @@ function recursiveTablas($ar, $tabla, $aliasTablaMadre) {
 	"estadocivil"     			=> "tbestadocivil",
 	"tipoparentesco"  			=> "tbtipoparentesco",
 	"poder"			  			=> "tbpoder",
+	"tipooperacion"			  	=> "tbtipooperacion",
+	"tipobien"			  		=> "tbtipobien",
+	"formaadquisicion"			=> "tbformaadquisicion",
+	"tipocesionario"			=> "tbtipocesionario",
+	"titular"			  		=> "tbtitular",
+	"bienesmuebles"			  	=> "dbbienesmuebles",
+	"otrotipobien"				=> "tbotrotipobien",
+	"vehiculos"					=> "dbvehiculos",
+	"bienesinmuebles"			=> "dbbienesinmuebles",
+	"inversiones"				=> "dbinversiones",
+	"tipoinversion"				=> "tbtipoinversion",
 	"regimenmatrimonial" 		=> "tbregimenmatrimonial");
 
 	$tablasArAux	= array("declaracionjuradacabecera"        => 3,                
@@ -78,6 +100,17 @@ function recursiveTablas($ar, $tabla, $aliasTablaMadre) {
 "estadocivil"     => 1,
 "tipoparentesco"  => 1,
 "poder"			  => 1,
+"tipooperacion"			 	=> 1,
+"tipobien"			  		=> 1,
+"formaadquisicion"			=> 1,
+"tipocesionario"			=> 1,
+"titular"			  		=> 1,
+"bienesmuebles"			  	=> 6,
+"otrotipobien"				=> 1,
+"vehiculos"					=> 5,
+"bienesinmuebles"			=> 7,
+"inversiones"				=> 4,
+"tipoinversion"				=> 1,
 "regimenmatrimonial" => 1);
 	
 	$inner= '';
@@ -108,7 +141,7 @@ $ajaxFuncionesController = '';
 
 $servicios	= "Referencias";
 
-$sqlMapaer	= "SHOW FULL TABLES FROM remolques";
+$sqlMapaer	= "SHOW FULL TABLES FROM declaracionjurada";
 $resMapeo 	=	query($sqlMapaer,0);
 
 $aliasTablaMadre = '';

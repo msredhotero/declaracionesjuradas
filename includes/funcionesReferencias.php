@@ -1184,6 +1184,39 @@ function insertarTipoparentesco($tipoparentesco) {
 
 /* PARA Declaracionjuradacabecera */
 
+function traerAgenteReal($curp) {
+	$sql = "SELECT 
+			    empleado_id,
+			    nombre,
+			    paterno,
+			    materno,
+			    sexo,
+			    curp,
+			    rfc,
+			    id_identificacion,
+			    expide_ident,
+			    no_ident,
+			    edad,
+			    telefono,
+			    celular,
+			    email,
+			    domicilio_lab,
+			    domicilio_entrega,
+			    domicilio_particular,
+			    departamento_id,
+			    puesto_id,
+			    fecha_inicio,
+			    fecha_fin,
+			    fecha_entraga,
+			    clasificacion,
+			    pass_user,
+			    id_perfil
+			FROM loginreal 
+			where curp = '".$curp."'";
+	$res = $this->query($sql,0); 
+	return $res; 
+}
+
 function insertarDeclaracionjuradacabecera($fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios) { 
 $sql = "insert into dbdeclaracionjuradacabecera(iddeclaracionjuradacabecera,fecharecepcion,primerapellido,segundoapellido,nombres,curp,homoclave,emailinstitucional,emailalterno,refestadocivil,refregimenmatrimonial,paisnacimiento,nacionalidad,entidadnacimiento,numerocelular,lugarubica,domicilioparticular,localidad,municipio,telefono,entidadfederativa,codigopostal,lada,sexo,estudios,cedulaprofesional,refusuarios) 
 values ('','".($fecharecepcion)."','".($primerapellido)."','".($segundoapellido)."','".($nombres)."','".($curp)."','".($homoclave)."','".($emailinstitucional)."','".($emailalterno)."',".$refestadocivil.",".$refregimenmatrimonial.",'".($paisnacimiento)."','".($nacionalidad)."','".($entidadnacimiento)."','".($numerocelular)."',".$lugarubica.",'".($domicilioparticular)."','".($localidad)."','".($municipio)."','".($telefono)."','".($entidadfederativa)."','".($codigopostal)."','".($lada)."',".$sexo.",'".($estudios)."','".($cedulaprofesional)."',".$refusuarios.")"; 
@@ -1375,6 +1408,660 @@ return $res;
 /* /* Fin de la Tabla: tbregimenmatrimonial*/
 
 
+
+/* PARA Bienesinmuebles */
+
+function insertarBienesinmuebles($refdeclaracionjuradacabecera,$reftipooperacion,$reftipobien,$refotrotipobien,$mtrsterreno,$mtrsconstruccion,$refformaadquisicion,$cesionario,$reftitular,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$registropublico,$ubicacion,$especificacionobra,$especificacionventa) { 
+$sql = "insert into dbbienesinmuebles(idbieninmueble,refdeclaracionjuradacabecera,reftipooperacion,reftipobien,refotrotipobien,mtrsterreno,mtrsconstruccion,refformaadquisicion,cesionario,reftitular,reftipocesionario,otrotipocesionario,valor,tipomoneda,fechaadquisicion,registropublico,ubicacion,especificacionobra,especificacionventa) 
+values ('',".$refdeclaracionjuradacabecera.",".$reftipooperacion.",".$reftipobien.",".$refotrotipobien.",".$mtrsterreno.",".$mtrsconstruccion.",".$refformaadquisicion.",'".($cesionario)."',".$reftitular.",".$reftipocesionario.",'".($otrotipocesionario)."',".$valor.",'".($tipomoneda)."','".($fechaadquisicion)."','".($registropublico)."','".($ubicacion)."','".($especificacionobra)."','".($especificacionventa)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarBienesinmuebles($id,$refdeclaracionjuradacabecera,$reftipooperacion,$reftipobien,$refotrotipobien,$mtrsterreno,$mtrsconstruccion,$refformaadquisicion,$cesionario,$reftitular,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$registropublico,$ubicacion,$especificacionobra,$especificacionventa) { 
+$sql = "update dbbienesinmuebles 
+set 
+refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",reftipooperacion = ".$reftipooperacion.",reftipobien = ".$reftipobien.",refotrotipobien = ".$refotrotipobien.",mtrsterreno = ".$mtrsterreno.",mtrsconstruccion = ".$mtrsconstruccion.",refformaadquisicion = ".$refformaadquisicion.",cesionario = '".($cesionario)."',reftitular = ".$reftitular.",reftipocesionario = ".$reftipocesionario.",otrotipocesionario = '".($otrotipocesionario)."',valor = ".$valor.",tipomoneda = '".($tipomoneda)."',fechaadquisicion = '".($fechaadquisicion)."',registropublico = '".($registropublico)."',ubicacion = '".($ubicacion)."',especificacionobra = '".($especificacionobra)."',especificacionventa = '".($especificacionventa)."' 
+where idbieninmueble =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarBienesinmuebles($id) { 
+$sql = "delete from dbbienesinmuebles where idbieninmueble =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerBienesinmuebles() { 
+$sql = "select 
+b.idbieninmueble,
+b.refdeclaracionjuradacabecera,
+b.reftipooperacion,
+b.reftipobien,
+b.refotrotipobien,
+b.mtrsterreno,
+b.mtrsconstruccion,
+b.refformaadquisicion,
+b.cesionario,
+b.reftitular,
+b.reftipocesionario,
+b.otrotipocesionario,
+b.valor,
+b.tipomoneda,
+b.fechaadquisicion,
+b.registropublico,
+b.ubicacion,
+b.especificacionobra,
+b.especificacionventa
+from dbbienesinmuebles b 
+inner join dbdeclaracionjuradacabecera dec ON dec.iddeclaracionjuradacabecera = b.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dec.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dec.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dec.refusuarios 
+inner join tbtipooperacion tip ON tip.idtipooperacion = b.reftipooperacion 
+inner join tbtipobien tip ON tip.idtipobien = b.reftipobien 
+inner join tbotrotipobien otr ON otr.idotrotipobien = b.refotrotipobien 
+inner join tbformaadquisicion for ON for.idformaadquisicion = b.refformaadquisicion 
+inner join tbtitular tit ON tit.idtitular = b.reftitular 
+inner join tbtipocesionario tip ON tip.idtipocesionario = b.reftipocesionario 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerBienesinmueblesPorId($id) { 
+$sql = "select idbieninmueble,refdeclaracionjuradacabecera,reftipooperacion,reftipobien,refotrotipobien,mtrsterreno,mtrsconstruccion,refformaadquisicion,cesionario,reftitular,reftipocesionario,otrotipocesionario,valor,tipomoneda,fechaadquisicion,registropublico,ubicacion,especificacionobra,especificacionventa from dbbienesinmuebles where idbieninmueble =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: dbbienesinmuebles*/
+
+
+/* PARA Bienesmuebles */
+
+function insertarBienesmuebles($refdeclaracionjuradacabecera,$reftipooperacion,$reftipobien,$descripcion,$refformaadquisicion,$cesionario,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$reftitular,$especificacionventa) { 
+$sql = "insert into dbbienesmuebles(idbienmueble,refdeclaracionjuradacabecera,reftipooperacion,reftipobien,descripcion,refformaadquisicion,cesionario,reftipocesionario,otrotipocesionario,valor,tipomoneda,fechaadquisicion,reftitular,especificacionventa) 
+values ('',".$refdeclaracionjuradacabecera.",".$reftipooperacion.",".$reftipobien.",'".($descripcion)."',".$refformaadquisicion.",'".($cesionario)."',".$reftipocesionario.",'".($otrotipocesionario)."',".$valor.",'".($tipomoneda)."','".($fechaadquisicion)."',".$reftitular.",'".($especificacionventa)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarBienesmuebles($id,$refdeclaracionjuradacabecera,$reftipooperacion,$reftipobien,$descripcion,$refformaadquisicion,$cesionario,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$reftitular,$especificacionventa) { 
+$sql = "update dbbienesmuebles 
+set 
+refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",reftipooperacion = ".$reftipooperacion.",reftipobien = ".$reftipobien.",descripcion = '".($descripcion)."',refformaadquisicion = ".$refformaadquisicion.",cesionario = '".($cesionario)."',reftipocesionario = ".$reftipocesionario.",otrotipocesionario = '".($otrotipocesionario)."',valor = ".$valor.",tipomoneda = '".($tipomoneda)."',fechaadquisicion = '".($fechaadquisicion)."',reftitular = ".$reftitular.",especificacionventa = '".($especificacionventa)."' 
+where idbienmueble =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarBienesmuebles($id) { 
+$sql = "delete from dbbienesmuebles where idbienmueble =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerBienesmuebles() { 
+$sql = "select 
+b.idbienmueble,
+b.refdeclaracionjuradacabecera,
+b.reftipooperacion,
+b.reftipobien,
+b.descripcion,
+b.refformaadquisicion,
+b.cesionario,
+b.reftipocesionario,
+b.otrotipocesionario,
+b.valor,
+b.tipomoneda,
+b.fechaadquisicion,
+b.reftitular,
+b.especificacionventa
+from dbbienesmuebles b 
+inner join dbdeclaracionjuradacabecera dec ON dec.iddeclaracionjuradacabecera = b.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dec.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dec.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dec.refusuarios 
+inner join tbtipooperacion tip ON tip.idtipooperacion = b.reftipooperacion 
+inner join tbtipobien tip ON tip.idtipobien = b.reftipobien 
+inner join tbformaadquisicion for ON for.idformaadquisicion = b.refformaadquisicion 
+inner join tbtipocesionario tip ON tip.idtipocesionario = b.reftipocesionario 
+inner join tbtitular tit ON tit.idtitular = b.reftitular 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerBienesmueblesPorId($id) { 
+$sql = "select idbienmueble,refdeclaracionjuradacabecera,reftipooperacion,reftipobien,descripcion,refformaadquisicion,cesionario,reftipocesionario,otrotipocesionario,valor,tipomoneda,fechaadquisicion,reftitular,especificacionventa from dbbienesmuebles where idbienmueble =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerBienesmueblesGridPorCabecera($cabecera) { 
+$sql = "select 
+b.idbienmueble,
+concat(dj.primerapellido, ' ', dj.segundoapellido, ' ', dj.nombres) as declaracioncabecera,
+tiop.tipooperacion,
+tipb.tipobien,
+b.descripcion,
+fr.formaadquisicion,
+b.cesionario,
+tipc.tipocesionario,
+b.otrotipocesionario,
+b.valor,
+b.tipomoneda,
+b.fechaadquisicion,
+tit.titular,
+b.especificacionventa,
+b.refdeclaracionjuradacabecera,
+b.reftipooperacion,
+b.reftipobien,
+b.refformaadquisicion,
+b.reftipocesionario,
+b.reftitular
+from dbbienesmuebles b 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = b.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+inner join tbtipooperacion tiop ON tiop.idtipooperacion = b.reftipooperacion 
+inner join tbtipobien tipb ON tipb.idtipobien = b.reftipobien 
+inner join tbformaadquisicion fr ON fr.idformaadquisicion = b.refformaadquisicion 
+inner join tbtipocesionario tipc ON tipc.idtipocesionario = b.reftipocesionario 
+inner join tbtitular tit ON tit.idtitular = b.reftitular 
+where dj.iddeclaracionjuradacabecera = ".$cabecera."
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: dbbienesmuebles*/
+
+
+/* PARA Inversiones */
+
+function insertarInversiones($refdeclaracionjuradacabecera,$reftipooperacion,$reftitular,$numerocuenta,$donde,$razonsocial,$pais,$saldo,$tipomoneda,$reftipoinversion,$especifica) { 
+$sql = "insert into dbinversiones(idinversion,refdeclaracionjuradacabecera,reftipooperacion,reftitular,numerocuenta,donde,razonsocial,pais,saldo,tipomoneda,reftipoinversion,especifica) 
+values ('',".$refdeclaracionjuradacabecera.",".$reftipooperacion.",".$reftitular.",'".($numerocuenta)."','".($donde)."','".($razonsocial)."','".($pais)."',".$saldo.",'".($tipomoneda)."',".$reftipoinversion.",'".($especifica)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarInversiones($id,$refdeclaracionjuradacabecera,$reftipooperacion,$reftitular,$numerocuenta,$donde,$razonsocial,$pais,$saldo,$tipomoneda,$reftipoinversion,$especifica) { 
+$sql = "update dbinversiones 
+set 
+refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",reftipooperacion = ".$reftipooperacion.",reftitular = ".$reftitular.",numerocuenta = '".($numerocuenta)."',donde = '".($donde)."',razonsocial = '".($razonsocial)."',pais = '".($pais)."',saldo = ".$saldo.",tipomoneda = '".($tipomoneda)."',reftipoinversion = ".$reftipoinversion.",especifica = '".($especifica)."' 
+where idinversion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarInversiones($id) { 
+$sql = "delete from dbinversiones where idinversion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerInversiones() { 
+$sql = "select 
+i.idinversion,
+i.refdeclaracionjuradacabecera,
+i.reftipooperacion,
+i.reftitular,
+i.numerocuenta,
+i.donde,
+i.razonsocial,
+i.pais,
+i.saldo,
+i.tipomoneda,
+i.reftipoinversion,
+i.especifica
+from dbinversiones i 
+inner join dbdeclaracionjuradacabecera dec ON dec.iddeclaracionjuradacabecera = i.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dec.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dec.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dec.refusuarios 
+inner join tbtipooperacion tip ON tip.idtipooperacion = i.reftipooperacion 
+inner join tbtitular tit ON tit.idtitular = i.reftitular 
+inner join tbtipoinversion tip ON tip.idtipoinversion = i.reftipoinversion 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerInversionesPorId($id) { 
+$sql = "select idinversion,refdeclaracionjuradacabecera,reftipooperacion,reftitular,numerocuenta,donde,razonsocial,pais,saldo,tipomoneda,reftipoinversion,especifica from dbinversiones where idinversion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: dbinversiones*/
+
+
+/* PARA Vehiculos */
+
+function insertarVehiculos($refdeclaracionjuradacabecera,$reftipooperacion,$vehiculo,$donde,$entidadfederativa,$refformaadquisicion,$cesionario,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$reftitular,$especificacionventa,$especificacionsiniestro) { 
+$sql = "insert into dbvehiculos(idvehiculos,refdeclaracionjuradacabecera,reftipooperacion,vehiculo,donde,entidadfederativa,refformaadquisicion,cesionario,reftipocesionario,otrotipocesionario,valor,tipomoneda,fechaadquisicion,reftitular,especificacionventa,especificacionsiniestro) 
+values ('',".$refdeclaracionjuradacabecera.",".$reftipooperacion.",'".($vehiculo)."','".($donde)."','".($entidadfederativa)."',".$refformaadquisicion.",'".($cesionario)."',".$reftipocesionario.",'".($otrotipocesionario)."',".$valor.",'".($tipomoneda)."','".($fechaadquisicion)."',".$reftitular.",'".($especificacionventa)."','".($especificacionsiniestro)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarVehiculos($id,$refdeclaracionjuradacabecera,$reftipooperacion,$vehiculo,$donde,$entidadfederativa,$refformaadquisicion,$cesionario,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$reftitular,$especificacionventa,$especificacionsiniestro) { 
+$sql = "update dbvehiculos 
+set 
+refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",reftipooperacion = ".$reftipooperacion.",vehiculo = '".($vehiculo)."',donde = '".($donde)."',entidadfederativa = '".($entidadfederativa)."',refformaadquisicion = ".$refformaadquisicion.",cesionario = '".($cesionario)."',reftipocesionario = ".$reftipocesionario.",otrotipocesionario = '".($otrotipocesionario)."',valor = ".$valor.",tipomoneda = '".($tipomoneda)."',fechaadquisicion = '".($fechaadquisicion)."',reftitular = ".$reftitular.",especificacionventa = '".($especificacionventa)."',especificacionsiniestro = '".($especificacionsiniestro)."' 
+where idvehiculos =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarVehiculos($id) { 
+$sql = "delete from dbvehiculos where idvehiculos =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerVehiculos() { 
+$sql = "select 
+v.idvehiculos,
+v.refdeclaracionjuradacabecera,
+v.reftipooperacion,
+v.vehiculo,
+v.donde,
+v.entidadfederativa,
+v.refformaadquisicion,
+v.cesionario,
+v.reftipocesionario,
+v.otrotipocesionario,
+v.valor,
+v.tipomoneda,
+v.fechaadquisicion,
+v.reftitular,
+v.especificacionventa,
+v.especificacionsiniestro
+from dbvehiculos v 
+inner join dbdeclaracionjuradacabecera dec ON dec.iddeclaracionjuradacabecera = v.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dec.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dec.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dec.refusuarios 
+inner join tbtipooperacion tip ON tip.idtipooperacion = v.reftipooperacion 
+inner join tbformaadquisicion for ON for.idformaadquisicion = v.refformaadquisicion 
+inner join tbtipocesionario tip ON tip.idtipocesionario = v.reftipocesionario 
+inner join tbtitular tit ON tit.idtitular = v.reftitular 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerVehiculosPorId($id) { 
+$sql = "select idvehiculos,refdeclaracionjuradacabecera,reftipooperacion,vehiculo,donde,entidadfederativa,refformaadquisicion,cesionario,reftipocesionario,otrotipocesionario,valor,tipomoneda,fechaadquisicion,reftitular,especificacionventa,especificacionsiniestro from dbvehiculos where idvehiculos =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: dbvehiculos*/
+
+
+/* PARA Formaadquisicion */
+
+function insertarFormaadquisicion($formaadquisicion) { 
+$sql = "insert into tbformaadquisicion(idformaadquisicion,formaadquisicion) 
+values ('','".($formaadquisicion)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarFormaadquisicion($id,$formaadquisicion) { 
+$sql = "update tbformaadquisicion 
+set 
+formaadquisicion = '".($formaadquisicion)."' 
+where idformaadquisicion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarFormaadquisicion($id) { 
+$sql = "delete from tbformaadquisicion where idformaadquisicion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerFormaadquisicion() { 
+$sql = "select 
+f.idformaadquisicion,
+f.formaadquisicion
+from tbformaadquisicion f 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerFormaadquisicionPorId($id) { 
+$sql = "select idformaadquisicion,formaadquisicion from tbformaadquisicion where idformaadquisicion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: tbformaadquisicion*/
+
+
+/* PARA Otrotipobien */
+
+function insertarOtrotipobien($otrotipobien) { 
+$sql = "insert into tbotrotipobien(idotrotipobien,otrotipobien) 
+values ('','".($otrotipobien)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarOtrotipobien($id,$otrotipobien) { 
+$sql = "update tbotrotipobien 
+set 
+otrotipobien = '".($otrotipobien)."' 
+where idotrotipobien =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarOtrotipobien($id) { 
+$sql = "delete from tbotrotipobien where idotrotipobien =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerOtrotipobien() { 
+$sql = "select 
+o.idotrotipobien,
+o.otrotipobien
+from tbotrotipobien o 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerOtrotipobienPorId($id) { 
+$sql = "select idotrotipobien,otrotipobien from tbotrotipobien where idotrotipobien =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: tbotrotipobien*/
+
+
+
+/* PARA Tipobien */
+
+function insertarTipobien($tipobien) { 
+$sql = "insert into tbtipobien(idtipobien,tipobien) 
+values ('','".($tipobien)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarTipobien($id,$tipobien) { 
+$sql = "update tbtipobien 
+set 
+tipobien = '".($tipobien)."' 
+where idtipobien =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarTipobien($id) { 
+$sql = "delete from tbtipobien where idtipobien =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerTipobien() { 
+$sql = "select 
+t.idtipobien,
+t.tipobien
+from tbtipobien t 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerTipobienPorId($id) { 
+$sql = "select idtipobien,tipobien from tbtipobien where idtipobien =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: tbtipobien*/
+
+
+/* PARA Tipocesionario */
+
+function insertarTipocesionario($tipocesionario) { 
+$sql = "insert into tbtipocesionario(idtipocesionario,tipocesionario) 
+values ('','".($tipocesionario)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarTipocesionario($id,$tipocesionario) { 
+$sql = "update tbtipocesionario 
+set 
+tipocesionario = '".($tipocesionario)."' 
+where idtipocesionario =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarTipocesionario($id) { 
+$sql = "delete from tbtipocesionario where idtipocesionario =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerTipocesionario() { 
+$sql = "select 
+t.idtipocesionario,
+t.tipocesionario
+from tbtipocesionario t 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerTipocesionarioPorId($id) { 
+$sql = "select idtipocesionario,tipocesionario from tbtipocesionario where idtipocesionario =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: tbtipocesionario*/
+
+
+/* PARA Tipoinversion */
+
+function insertarTipoinversion($tipoinversion) { 
+$sql = "insert into tbtipoinversion(idtipoinversion,tipoinversion) 
+values ('','".($tipoinversion)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarTipoinversion($id,$tipoinversion) { 
+$sql = "update tbtipoinversion 
+set 
+tipoinversion = '".($tipoinversion)."' 
+where idtipoinversion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarTipoinversion($id) { 
+$sql = "delete from tbtipoinversion where idtipoinversion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerTipoinversion() { 
+$sql = "select 
+t.idtipoinversion,
+t.tipoinversion
+from tbtipoinversion t 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerTipoinversionPorId($id) { 
+$sql = "select idtipoinversion,tipoinversion from tbtipoinversion where idtipoinversion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: tbtipoinversion*/
+
+
+/* PARA Tipooperacion */
+
+function insertarTipooperacion($tipooperacion) { 
+$sql = "insert into tbtipooperacion(idtipooperacion,tipooperacion) 
+values ('','".($tipooperacion)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarTipooperacion($id,$tipooperacion) { 
+$sql = "update tbtipooperacion 
+set 
+tipooperacion = '".($tipooperacion)."' 
+where idtipooperacion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarTipooperacion($id) { 
+$sql = "delete from tbtipooperacion where idtipooperacion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerTipooperacion() { 
+$sql = "select 
+t.idtipooperacion,
+t.tipooperacion
+from tbtipooperacion t 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerTipooperacionPorId($id) { 
+$sql = "select idtipooperacion,tipooperacion from tbtipooperacion where idtipooperacion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: tbtipooperacion*/
+
+
+/* PARA Titular */
+
+function insertarTitular($titular) { 
+$sql = "insert into tbtitular(idtitular,titular) 
+values ('','".($titular)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarTitular($id,$titular) { 
+$sql = "update tbtitular 
+set 
+titular = '".($titular)."' 
+where idtitular =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarTitular($id) { 
+$sql = "delete from tbtitular where idtitular =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerTitular() { 
+$sql = "select 
+t.idtitular,
+t.titular
+from tbtitular t 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerTitularPorId($id) { 
+$sql = "select idtitular,titular from tbtitular where idtitular =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: tbtitular*/
 
 
 function query($sql,$accion) {
