@@ -22,70 +22,93 @@ $serviciosReferencias 	= new ServiciosReferencias();
 $fecha = date('Y-m-d');
 
 //$resProductos = $serviciosProductos->traerProductosLimite(6);
-$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Declaracion Anual Intereses",$_SESSION['refroll_predio'],'');
+$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Bienes Inmuebles",$_SESSION['refroll_predio'],'');
 
 
 $id = $_GET['id'];
 
-$resResultado = $serviciosReferencias->traerDeclaracionanualinteresPorId($id);
+$resResultado = $serviciosReferencias->traerBienesinmueblesPorId($id);
 
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
-$singular = "Declaracion Anual Intereses";
+$singular = "Bienes Inmuebles";
 
-$plural = "Declaraciones Anual de Intereses";
+$plural = "Bienes Inmuebles";
 
-$eliminar = "eliminarDeclaracionanualinteres";
+$eliminar = "eliminarBienesinmuebles";
 
-$modificar = "modificarDeclaracionanualinteres";
+$modificar = "modificarBienesinmuebles";
 
-$idTabla = "iddeclaracionanualinteres";
+$idTabla = "idbieninmueble";
 
 $tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
-$tabla 			= "dbdeclaracionanualinteres";
+$tabla 			= "dbbienesinmuebles";
 
 $lblCambio	 	= array("refdeclaracionjuradacabecera",
-						"essecretario",
-						"esauditor",
-						"espublico",
-						"refpoder",
-						"registrofederalcontribuyente",
-						"fechadeclaracionanterior",
-						"fechatomaposesion",
-						"cargoactual",
-						"cargoanterior",
-						"areaadquisicion",
-						"areaadquisicionanterior",
-						"dependencia",
-						"dependenciaanterior");
+						"reftipooperacion",
+						"reftipobien",
+						"refotrotipobien",
+						"mtrsterreno",
+						"mtrsconstruccion",
+						"refformaadquisicion",
+						"cesionario",
+						"reftitular",
+						"reftipocesionario",
+						"otrotipocesionario",
+						"valor",
+						"tipomoneda",
+						"fechaadquisicion",
+						"registropublico",
+						"ubicacion",
+						"especificacionobra",
+						"especificacionventa");
 $lblreemplazo	= array('Declaración Patrimonial Cabecera',
-						'Secretario de la contraloría',
-						'Auditor General de la ESAF',
-						'Es mi deseo hacer publica la información confidencial',
-						'Poder',
-						'Registro Federal de Contribuyentes',
-						'Fecha Declaración anterior',
-						'Fecha de la toma de posesión actual',
-						'Cargo que desempeña actualmente',
-						'Cargo que manifesto en su ultima',
-						'Area de adscripción actual',
-						'Area de adscripción que manifesto en su ultima declaración',
-						'Dependencia, Organismo o Ayuntamiento de adscripción de la plaza',
-						'Dependencia, Organismo o Ayuntamiento que manifesto en su ultima declaración');
+						'Tipo de Operacion',
+						'Tipo de Bien',
+						'Otro Tipo de Bien',
+						'Terreno m2',
+						'Contruccion m2',
+						'Forma de Adquisicion',
+						'Nombre del cesionario, del autor de la donacion o del autor de la herencia',
+						'Titular',
+						'Relacion del cesionario, del autor de la donacion o del autor de la herencia con el titular',
+						'En caso de elegir "Otro" indicar',
+						'Valor del Bien, sin centavos',
+						'Tipo de Moneda',
+						'Fecha de Adquisicion',
+						'Datos del registro publico de la propiedad: folio real u otro dato que permita la identificacion del mismo',
+						'Ubicacion del inmueble',
+						'Si eligio "Obra" debera especificar los datos de la operacion',
+						'Si eligio "Venta" debera especificar los datos de la operacion');
 
 
 $resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
-$cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(2,3,4),' ', mysql_result($resResultado,0,'refdeclaracionjuradacabecera'));
+$cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(2,3,4),' ', mysql_result($resResultado, 0,'refdeclaracionjuradacabecera'));
 
-$refVar2 = $serviciosReferencias->traerPoder();
-$cadRef2 = $serviciosFunciones->devolverSelectBoxActivo($refVar2,array(1),' ', mysql_result($resResultado,0,'refpoder'));
+$refVar2 = $serviciosReferencias->traerTipooperacion();
+$cadRef2 = $serviciosFunciones->devolverSelectBoxActivo($refVar2,array(1),' ', mysql_result($resResultado, 0,'reftipooperacion'));
 
-$refdescripcion = array(0 => $cadRef, 1=>$cadRef2);
-$refCampo 	=  array("refdeclaracionjuradacabecera","refpoder"); 
+$refVar6 = $serviciosReferencias->traerTipobien();
+$cadRef6 = $serviciosFunciones->devolverSelectBoxActivo($refVar6,array(1),' ', mysql_result($resResultado, 0,'reftipobien'));
+
+$refVar3 = $serviciosReferencias->traerFormaadquisicion();
+$cadRef3 = $serviciosFunciones->devolverSelectBoxActivo($refVar3,array(1),' ', mysql_result($resResultado, 0,'refformaadquisicion'));
+
+$refVar4 = $serviciosReferencias->traerTipocesionario();
+$cadRef4 = $serviciosFunciones->devolverSelectBoxActivo($refVar4,array(1),' ', mysql_result($resResultado, 0,'reftipocesionario'));
+
+$refVar5 = $serviciosReferencias->traerTitular();
+$cadRef5 = $serviciosFunciones->devolverSelectBoxActivo($refVar5,array(1),' ', mysql_result($resResultado, 0,'reftitular'));
+
+$refVar7 = $serviciosReferencias->traerOtrotipobien();
+$cadRef7 = $serviciosFunciones->devolverSelectBoxActivo($refVar7,array(1),' ', mysql_result($resResultado, 0,'refotrotipobien'));
+
+$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef6, 3=>$cadRef3, 4=>$cadRef4, 5=>$cadRef5, 6=>$cadRef7);
+$refCampo 	=  array("refdeclaracionjuradacabecera","reftipooperacion","reftipobien","refformaadquisicion","reftipocesionario","reftitular","refotrotipobien"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
@@ -167,7 +190,7 @@ if ($_SESSION['refroll_predio'] != 1) {
     	<div class="cuerpoBox">
         	<form class="form-inline formulario" role="form">
         	
-			<div class="row">
+			<div class="row" style="font-size:0.9em;">
 			<?php echo $formulario; ?>
             </div>
             

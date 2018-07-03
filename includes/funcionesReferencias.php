@@ -1241,24 +1241,6 @@ $res = $this->query($sql,0);
 return $res; 
 } 
 
-function traerDeclaracionjuradacabeceraGrilla() {
-	$sql = "select 
-				d.iddeclaracionjuradacabecera,
-				concat(d.primerapellido, ' ', d.segundoapellido) as apellidos,
-				d.nombres,
-				d.curp,
-				d.fecharecepcion,
-				d.telefono,
-				d.emailinstitucional
-			from dbdeclaracionjuradacabecera d 
-			inner join tbestadocivil est ON est.idestadocivil = d.refestadocivil 
-			inner join tbregimenmatrimonial reg ON reg.idregimenmatrimonial = d.refregimenmatrimonial 
-			inner join dbusuarios usu ON usu.idusuario = d.refusuarios 
-			inner join tbroles ro ON ro.idrol = usu.refroles 
-			order by 1"; 
-	$res = $this->query($sql,0); 
-	return $res; 
-}
 
 
 function traerDeclaracionjuradacabecera() { 
@@ -1306,6 +1288,49 @@ $sql = "select iddeclaracionjuradacabecera,fecharecepcion,primerapellido,segundo
 $res = $this->query($sql,0); 
 return $res; 
 } 
+
+
+
+function traerDeclaracionjuradacabeceraGrilla() {
+	$sql = "select 
+				d.iddeclaracionjuradacabecera,
+				concat(d.primerapellido, ' ', d.segundoapellido) as apellidos,
+				d.nombres,
+				d.curp,
+				d.fecharecepcion,
+				d.telefono,
+				d.emailinstitucional
+			from dbdeclaracionjuradacabecera d 
+			inner join tbestadocivil est ON est.idestadocivil = d.refestadocivil 
+			inner join tbregimenmatrimonial reg ON reg.idregimenmatrimonial = d.refregimenmatrimonial 
+			inner join dbusuarios usu ON usu.idusuario = d.refusuarios 
+			inner join tbroles ro ON ro.idrol = usu.refroles 
+			order by 1"; 
+	$res = $this->query($sql,0); 
+	return $res; 
+}
+
+
+
+function traerDeclaracionjuradacabeceraGrillaPorCURP($curp) {
+	$sql = "select 
+				d.iddeclaracionjuradacabecera,
+				concat(d.primerapellido, ' ', d.segundoapellido) as apellidos,
+				d.nombres,
+				d.curp,
+				d.fecharecepcion,
+				d.telefono,
+				d.emailinstitucional
+			from dbdeclaracionjuradacabecera d 
+			inner join tbestadocivil est ON est.idestadocivil = d.refestadocivil 
+			inner join tbregimenmatrimonial reg ON reg.idregimenmatrimonial = d.refregimenmatrimonial 
+			inner join dbusuarios usu ON usu.idusuario = d.refusuarios 
+			inner join tbroles ro ON ro.idrol = usu.refroles 
+			where d.curp = '".$curp."'
+			order by 1"; 
+	$res = $this->query($sql,0); 
+	return $res; 
+}
 
 /* Fin */
 /* /* Fin de la Tabla: dbdeclaracionjuradacabecera*/
@@ -1413,7 +1438,7 @@ return $res;
 
 function insertarBienesinmuebles($refdeclaracionjuradacabecera,$reftipooperacion,$reftipobien,$refotrotipobien,$mtrsterreno,$mtrsconstruccion,$refformaadquisicion,$cesionario,$reftitular,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$registropublico,$ubicacion,$especificacionobra,$especificacionventa) { 
 $sql = "insert into dbbienesinmuebles(idbieninmueble,refdeclaracionjuradacabecera,reftipooperacion,reftipobien,refotrotipobien,mtrsterreno,mtrsconstruccion,refformaadquisicion,cesionario,reftitular,reftipocesionario,otrotipocesionario,valor,tipomoneda,fechaadquisicion,registropublico,ubicacion,especificacionobra,especificacionventa) 
-values ('',".$refdeclaracionjuradacabecera.",".$reftipooperacion.",".$reftipobien.",".$refotrotipobien.",".$mtrsterreno.",".$mtrsconstruccion.",".$refformaadquisicion.",'".($cesionario)."',".$reftitular.",".$reftipocesionario.",'".($otrotipocesionario)."',".$valor.",'".($tipomoneda)."','".($fechaadquisicion)."','".($registropublico)."','".($ubicacion)."','".($especificacionobra)."','".($especificacionventa)."')"; 
+values ('',".$refdeclaracionjuradacabecera.",".$reftipooperacion.",".$reftipobien.",".$refotrotipobien.",".($mtrsterreno == '' ? 'NULL' : $mtrsterreno).",".($mtrsconstruccion == '' ? 'NULL' : $mtrsconstruccion).",".$refformaadquisicion.",'".($cesionario)."',".$reftitular.",".$reftipocesionario.",'".($otrotipocesionario)."',".($valor == '' ? 'NULL' : $valor).",'".($tipomoneda)."','".($fechaadquisicion)."','".($registropublico)."','".($ubicacion)."','".($especificacionobra)."','".($especificacionventa)."')"; 
 $res = $this->query($sql,1); 
 return $res; 
 } 
@@ -1422,7 +1447,7 @@ return $res;
 function modificarBienesinmuebles($id,$refdeclaracionjuradacabecera,$reftipooperacion,$reftipobien,$refotrotipobien,$mtrsterreno,$mtrsconstruccion,$refformaadquisicion,$cesionario,$reftitular,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$registropublico,$ubicacion,$especificacionobra,$especificacionventa) { 
 $sql = "update dbbienesinmuebles 
 set 
-refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",reftipooperacion = ".$reftipooperacion.",reftipobien = ".$reftipobien.",refotrotipobien = ".$refotrotipobien.",mtrsterreno = ".$mtrsterreno.",mtrsconstruccion = ".$mtrsconstruccion.",refformaadquisicion = ".$refformaadquisicion.",cesionario = '".($cesionario)."',reftitular = ".$reftitular.",reftipocesionario = ".$reftipocesionario.",otrotipocesionario = '".($otrotipocesionario)."',valor = ".$valor.",tipomoneda = '".($tipomoneda)."',fechaadquisicion = '".($fechaadquisicion)."',registropublico = '".($registropublico)."',ubicacion = '".($ubicacion)."',especificacionobra = '".($especificacionobra)."',especificacionventa = '".($especificacionventa)."' 
+refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",reftipooperacion = ".$reftipooperacion.",reftipobien = ".$reftipobien.",refotrotipobien = ".$refotrotipobien.",mtrsterreno = ".($mtrsterreno == '' ? 'NULL' : $mtrsterreno).",mtrsconstruccion = ".($mtrsconstruccion == '' ? 'NULL' : $mtrsconstruccion).",refformaadquisicion = ".$refformaadquisicion.",cesionario = '".($cesionario)."',reftitular = ".$reftitular.",reftipocesionario = ".$reftipocesionario.",otrotipocesionario = '".($otrotipocesionario)."',valor = ".($valor == '' ? 'NULL' : $valor).",tipomoneda = '".($tipomoneda)."',fechaadquisicion = '".($fechaadquisicion)."',registropublico = '".($registropublico)."',ubicacion = '".($ubicacion)."',especificacionobra = '".($especificacionobra)."',especificacionventa = '".($especificacionventa)."' 
 where idbieninmueble =".$id; 
 $res = $this->query($sql,0); 
 return $res; 
@@ -1476,6 +1501,50 @@ return $res;
 
 function traerBienesinmueblesPorId($id) { 
 $sql = "select idbieninmueble,refdeclaracionjuradacabecera,reftipooperacion,reftipobien,refotrotipobien,mtrsterreno,mtrsconstruccion,refformaadquisicion,cesionario,reftitular,reftipocesionario,otrotipocesionario,valor,tipomoneda,fechaadquisicion,registropublico,ubicacion,especificacionobra,especificacionventa from dbbienesinmuebles where idbieninmueble =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+
+function traerBienesinmueblesGridPorCabecera($cabecera) { 
+$sql = "select 
+b.idbieninmueble,
+tiop.tipooperacion,
+tb.tipobien,
+otr.otrotipobien,
+b.mtrsterreno,
+b.mtrsconstruccion,
+fa.formaadquisicion,
+b.valor,
+b.tipomoneda,
+b.fechaadquisicion,
+b.cesionario,
+b.otrotipocesionario,
+b.registropublico,
+b.ubicacion,
+b.especificacionobra,
+b.especificacionventa,
+b.refdeclaracionjuradacabecera,
+b.reftipooperacion,
+b.reftipobien,
+b.reftitular,
+b.reftipocesionario,
+b.refformaadquisicion,
+b.refotrotipobien
+from dbbienesinmuebles b 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = b.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+inner join tbtipooperacion tiop ON tiop.idtipooperacion = b.reftipooperacion 
+inner join tbtipobien tb ON tb.idtipobien = b.reftipobien 
+inner join tbotrotipobien otr ON otr.idotrotipobien = b.refotrotipobien 
+inner join tbformaadquisicion fa ON fa.idformaadquisicion = b.refformaadquisicion 
+inner join tbtitular tit ON tit.idtitular = b.reftitular 
+inner join tbtipocesionario tc ON tc.idtipocesionario = b.reftipocesionario 
+where dj.iddeclaracionjuradacabecera = ".$cabecera."
+order by 1"; 
 $res = $this->query($sql,0); 
 return $res; 
 } 
@@ -1558,12 +1627,12 @@ tiop.tipooperacion,
 tipb.tipobien,
 b.descripcion,
 fr.formaadquisicion,
-b.cesionario,
-tipc.tipocesionario,
-b.otrotipocesionario,
 b.valor,
 b.tipomoneda,
 b.fechaadquisicion,
+b.cesionario,
+tipc.tipocesionario,
+b.otrotipocesionario,
 tit.titular,
 b.especificacionventa,
 b.refdeclaracionjuradacabecera,
@@ -1653,6 +1722,39 @@ $res = $this->query($sql,0);
 return $res; 
 } 
 
+
+
+function traerInversionesGridPorCabecera($cabecera) { 
+$sql = "select 
+i.idinversion,
+concat(dj.primerapellido, ' ', dj.segundoapellido, ' ', dj.nombres) as declaracioncabecera,
+tiop.tipooperacion,
+tit.titular,
+i.numerocuenta,
+i.donde,
+i.razonsocial,
+i.pais,
+i.saldo,
+i.tipomoneda,
+i.reftipoinversion,
+i.refdeclaracionjuradacabecera,
+i.reftipooperacion,
+i.reftitular,
+i.especifica
+from dbinversiones i 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = i.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+inner join tbtipooperacion tiop ON tiop.idtipooperacion = i.reftipooperacion 
+inner join tbtitular tit ON tit.idtitular = i.reftitular 
+inner join tbtipoinversion ti ON ti.idtipoinversion = i.reftipoinversion
+where dj.iddeclaracionjuradacabecera = ".$cabecera." 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
 /* Fin */
 /* /* Fin de la Tabla: dbinversiones*/
 
@@ -1719,6 +1821,43 @@ return $res;
 
 function traerVehiculosPorId($id) { 
 $sql = "select idvehiculos,refdeclaracionjuradacabecera,reftipooperacion,vehiculo,donde,entidadfederativa,refformaadquisicion,cesionario,reftipocesionario,otrotipocesionario,valor,tipomoneda,fechaadquisicion,reftitular,especificacionventa,especificacionsiniestro from dbvehiculos where idvehiculos =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerVehiculosGridPorCabecera($cabecera) { 
+$sql = "select 
+v.idvehiculos,
+concat(dj.primerapellido, ' ', dj.segundoapellido, ' ', dj.nombres) as declaracioncabecera,
+tiop.tipooperacion,
+v.vehiculo,
+fa.formaadquisicion,
+v.valor,
+v.tipomoneda,
+v.fechaadquisicion,
+v.donde,
+v.entidadfederativa,
+v.cesionario,
+v.otrotipocesionario,
+v.reftipocesionario,
+v.refformaadquisicion,
+v.reftitular,
+v.refdeclaracionjuradacabecera,
+v.reftipooperacion,
+v.especificacionventa,
+v.especificacionsiniestro
+from dbvehiculos v 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = v.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+inner join tbtipooperacion tiop ON tiop.idtipooperacion = v.reftipooperacion 
+inner join tbformaadquisicion fa ON fa.idformaadquisicion = v.refformaadquisicion 
+inner join tbtipocesionario tc ON tc.idtipocesionario = v.reftipocesionario 
+inner join tbtitular tit ON tit.idtitular = v.reftitular 
+where dj.iddeclaracionjuradacabecera = ".$cabecera."
+order by 1"; 
 $res = $this->query($sql,0); 
 return $res; 
 } 

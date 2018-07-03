@@ -471,8 +471,12 @@ $('.form_date').datetimepicker({
 	startView: 2,
 	minView: 2,
 	forceParse: 0,
-	format: 'dd/mm/yyyy'
+	format: 'dd/mm/yyyy',
+	setDate: new Date()
 });
+
+$(".form_date").datetimepicker("setDate", new Date());
+
 </script>
 <?php } ?>
 </body>

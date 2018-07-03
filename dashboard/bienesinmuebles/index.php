@@ -22,7 +22,7 @@ $serviciosReferencias 	= new ServiciosReferencias();
 $fecha = date('Y-m-d');
 
 //$resProductos = $serviciosProductos->traerProductosLimite(6);
-$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Bienes Muebles",$_SESSION['refroll_predio'],'');
+$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Bienes Inmuebles",$_SESSION['refroll_predio'],'');
 
 
 ///////////////////////   id de la cabecera de la declaracion /////////////////////////
@@ -30,46 +30,56 @@ $id = 1;
 ///////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
-$singular = "Bienes Muebles";
+$singular = "Bienes Inmuebles";
 
-$plural = "Bienes Muebles";
+$plural = "Bienes Inmuebles";
 
-$eliminar = "eliminarBienesmuebles";
+$eliminar = "eliminarBienesinmuebles";
 
-$insertar = "insertarBienesmuebles";
+$insertar = "insertarBienesinmuebles";
 
 $tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
-$tabla 			= "dbbienesmuebles";
+$tabla 			= "dbbienesinmuebles";
 
 $lblCambio	 	= array("refdeclaracionjuradacabecera",
 						"reftipooperacion",
 						"reftipobien",
-						"descripcion",
+						"refotrotipobien",
+						"mtrsterreno",
+						"mtrsconstruccion",
 						"refformaadquisicion",
 						"cesionario",
+						"reftitular",
 						"reftipocesionario",
 						"otrotipocesionario",
 						"valor",
 						"tipomoneda",
 						"fechaadquisicion",
-						"reftitular",
+						"registropublico",
+						"ubicacion",
+						"especificacionobra",
 						"especificacionventa");
 $lblreemplazo	= array('Declaración Patrimonial Cabecera',
 						'Tipo de Operacion',
 						'Tipo de Bien',
-						'Descripcion del Bien',
+						'Otro Tipo de Bien',
+						'Terreno m2',
+						'Contruccion m2',
 						'Forma de Adquisicion',
 						'Nombre del cesionario, del autor de la donacion o del autor de la herencia',
+						'Titular',
 						'Relacion del cesionario, del autor de la donacion o del autor de la herencia con el titular',
 						'En caso de elegir "Otro" indicar',
 						'Valor del Bien, sin centavos',
 						'Tipo de Moneda',
 						'Fecha de Adquisicion',
-						'Titular',
+						'Datos del registro publico de la propiedad: folio real u otro dato que permita la identificacion del mismo',
+						'Ubicacion del inmueble',
+						'Si eligio "Obra" debera especificar los datos de la operacion',
 						'Si eligio "Venta" debera especificar los datos de la operacion');
 
 
@@ -91,27 +101,27 @@ $cadRef4 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar4,array(1),'
 $refVar5 = $serviciosReferencias->traerTitular();
 $cadRef5 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar5,array(1),' ');
 
-$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef6, 3=>$cadRef3, 4=>$cadRef4, 5=>$cadRef5);
-$refCampo 	=  array("refdeclaracionjuradacabecera","reftipooperacion","reftipobien","refformaadquisicion","reftipocesionario","reftitular"); 
+$refVar7 = $serviciosReferencias->traerOtrotipobien();
+$cadRef7 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar7,array(1),' ');
+
+$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef6, 3=>$cadRef3, 4=>$cadRef4, 5=>$cadRef5, 6=>$cadRef7);
+$refCampo 	=  array("refdeclaracionjuradacabecera","reftipooperacion","reftipobien","refformaadquisicion","reftipocesionario","reftitular","refotrotipobien"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
 
 
 /////////////////////// Opciones para la creacion del view  apellido,nombre,nrodocumento,fechanacimiento,direccion,telefono,email/////////////////////
-$cabeceras 		= "	<th>Declaración Patr. Cabecera</th>
+$cabeceras 		= "	<th>Declaración Patr. Cab.</th>
 					<th>Tipo de Operacion</th>
 					<th>Tipo de Bien</th>
-					<th>Descripcion del Bien</th>
+					<th>Otro Bien</th>
+					<th>Terreno m2</th>
+					<th>Construccion m2</th>
 					<th>Forma de Adquisicion</th>
-					<th>Nombre del cesionario</th>
-					<th>Relacion del cesionario</th>
-					<th>En caso de elegir 'Otro' indicar</th>
-					<th>Valor del Bien, sin centavos</th>
+					<th>Valor</th>
 					<th>Tipo de Moneda</th>
-					<th>Fecha de Adquisicion</th>
-					<th>Titular</th>
-					<th>Si eligio 'Venta'</th>";
+					<th>Fecha de Adquisicion</th>";
 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
@@ -120,7 +130,7 @@ $cabeceras 		= "	<th>Declaración Patr. Cabecera</th>
 
 $formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
-$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerBienesmueblesGridPorCabecera($id),13);
+$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerBienesinmueblesGridPorCabecera($id),10);
 
 
 
@@ -197,7 +207,7 @@ if ($_SESSION['refroll_predio'] != 1) {
         </div>
     	<div class="cuerpoBox">
         	<form class="form-inline formulario" role="form">
-        	<div class="row" style="font-size:0.8em;">
+        	<div class="row" style="font-size:0.9em;">
 			<?php echo $formulario; ?>
             </div>
             <!--

@@ -22,70 +22,75 @@ $serviciosReferencias 	= new ServiciosReferencias();
 $fecha = date('Y-m-d');
 
 //$resProductos = $serviciosProductos->traerProductosLimite(6);
-$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Declaracion Anual Intereses",$_SESSION['refroll_predio'],'');
+$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Inversiones",$_SESSION['refroll_predio'],'');
 
 
 $id = $_GET['id'];
 
-$resResultado = $serviciosReferencias->traerDeclaracionanualinteresPorId($id);
+$resResultado = $serviciosReferencias->traerInversionesPorId($id);
 
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
-$singular = "Declaracion Anual Intereses";
+$singular = "Inversion";
 
-$plural = "Declaraciones Anual de Intereses";
+$plural = "Inversiones";
 
-$eliminar = "eliminarDeclaracionanualinteres";
+$eliminar = "eliminarInversiones";
 
-$modificar = "modificarDeclaracionanualinteres";
+$modificar = "modificarInversiones";
 
-$idTabla = "iddeclaracionanualinteres";
+$idTabla = "idinversion";
 
 $tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
-$tabla 			= "dbdeclaracionanualinteres";
+$tabla 			= "dbinversiones";
 
 $lblCambio	 	= array("refdeclaracionjuradacabecera",
-						"essecretario",
-						"esauditor",
-						"espublico",
-						"refpoder",
-						"registrofederalcontribuyente",
-						"fechadeclaracionanterior",
-						"fechatomaposesion",
-						"cargoactual",
-						"cargoanterior",
-						"areaadquisicion",
-						"areaadquisicionanterior",
-						"dependencia",
-						"dependenciaanterior");
+						"reftipooperacion",
+						"reftitular",
+						"numerocuenta",
+						"donde",
+						"razonsocial",
+						"pais",
+						"saldo",
+						"tipomoneda",
+						"reftipoinversion");
 $lblreemplazo	= array('Declaración Patrimonial Cabecera',
-						'Secretario de la contraloría',
-						'Auditor General de la ESAF',
-						'Es mi deseo hacer publica la información confidencial',
-						'Poder',
-						'Registro Federal de Contribuyentes',
-						'Fecha Declaración anterior',
-						'Fecha de la toma de posesión actual',
-						'Cargo que desempeña actualmente',
-						'Cargo que manifesto en su ultima',
-						'Area de adscripción actual',
-						'Area de adscripción que manifesto en su ultima declaración',
-						'Dependencia, Organismo o Ayuntamiento de adscripción de la plaza',
-						'Dependencia, Organismo o Ayuntamiento que manifesto en su ultima declaración');
+						'Tipo de Operacion',
+						'Titular',
+						'Nro de Cuenta',
+						'¿Donde se localiza la inversion?',
+						'Institucion o Razon Social',
+						'En caso de elegir extrangero, indicar el Pais',
+						'Saldo el 31 de Diciembre del año anterior, sin centavos',
+						'Tipo de Moneda',
+						'Tipo de Inversion');
 
 
 $resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
-$cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(2,3,4),' ', mysql_result($resResultado,0,'refdeclaracionjuradacabecera'));
+$cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(2,3,4),' ', mysql_result($resResultado, 0, 'refdeclaracionjuradacabecera'));
 
-$refVar2 = $serviciosReferencias->traerPoder();
-$cadRef2 = $serviciosFunciones->devolverSelectBoxActivo($refVar2,array(1),' ', mysql_result($resResultado,0,'refpoder'));
+$refVar2 = $serviciosReferencias->traerTipooperacion();
+$cadRef2 = $serviciosFunciones->devolverSelectBoxActivo($refVar2,array(1),' ', mysql_result($resResultado, 0, 'reftipooperacion'));
 
-$refdescripcion = array(0 => $cadRef, 1=>$cadRef2);
-$refCampo 	=  array("refdeclaracionjuradacabecera","refpoder"); 
+$refVar6 = $serviciosReferencias->traerTipoinversion();
+$cadRef6 = $serviciosFunciones->devolverSelectBoxActivo($refVar6,array(1),' ', mysql_result($resResultado, 0, 'reftipoinversion'));
+
+$refVar5 = $serviciosReferencias->traerTitular();
+$cadRef5 = $serviciosFunciones->devolverSelectBoxActivo($refVar5,array(1),' ', mysql_result($resResultado, 0, 'reftitular'));
+
+if (mysql_result($resResultado, 0, 'donde') == 'Mexico') {
+	$cadRef3 = '<option value="Mexico" selected>Mexico</option><option value="Extrangero">Extrangero</option>';
+} else {
+	$cadRef3 = '<option value="Mexico">Mexico</option><option value="Extrangero" selected>Extrangero</option>';
+}
+	
+
+$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef6, 3=>$cadRef5, 4=>$cadRef3);
+$refCampo 	=  array("refdeclaracionjuradacabecera","reftipooperacion","reftipoinversion","reftitular","donde"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 

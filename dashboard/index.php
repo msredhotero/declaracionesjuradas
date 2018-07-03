@@ -28,6 +28,19 @@ if ($_SESSION['idroll_predio'] == 2) {
 	$resAgente = $serviciosReferencias->traerAgenteReal($_SESSION['curp_predio']);
 }
 
+if ($_SESSION['idroll_predio'] == 2) {
+	$lstDeclaraciones = $serviciosReferencias->traerDeclaracionjuradacabeceraGrillaPorCURP($_SESSION['curp_predio']);
+
+
+	$cabeceras 		= "	<th>Apellidos</th>
+					<th>Nombres</th>
+					<th>CURP</th>
+					<th>Fecha Recepción</th>
+					<th>Email</th>";
+
+	$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$lstDeclaraciones,90);
+}
+
 ?>
 
 <!DOCTYPE HTML>
@@ -96,6 +109,7 @@ if ($_SESSION['idroll_predio'] == 2) {
 		  }
 
     </style>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
 
     
@@ -112,7 +126,7 @@ if ($_SESSION['idroll_predio'] == 2) {
         	<?php if ($_SESSION['idroll_predio'] == 1) { ?>
         	<p style="color: #fff; font-size:18px; height:16px;">Buscar Agentes</p>
         	<?php } else { ?>
-        	<p style="color: #fff; font-size:18px; height:16px;">Agente</p>
+        	<p style="color: #fff; font-size:18px; height:16px;">Declarante</p>
 
         	<?php } ?>
         </div>
@@ -154,6 +168,10 @@ if ($_SESSION['idroll_predio'] == 2) {
 	            <div class="cuerpoBox">
 
 	            	<div class="row">
+	            		<a class="waves-effect green accent-4 btn agregarddpp" href="declaracionpatrimonial/"><i class="large material-icons left">add</i>Nueva Declaración</a>
+	            		<?php echo $lstCargados; ?>
+	            	</div>	
+	            		<!--
 						<div class="col s12 m4">
 							<div class="card teal lighten-2 darken-1">
 								<div class="card-content white-text">
@@ -296,8 +314,9 @@ deberá señalarlo en la sección VIII.- OTRO TIPO DE INVERSIÓN.</p>
 								</div>
 							</div>
 						</div>
-					</div>
 
+					</div>
+					-->
                 </div>
 
                 <?php } ?>
@@ -480,6 +499,13 @@ $(document).ready(function(){
 		  }
 	});//fin del boton eliminar
 
+	$('.agregarddpp').click(function() {
+
+		url = "declaracionpatrimonial/index.php";
+		$(location).attr('href',url);
+
+	})
+
 	
 
 
@@ -515,7 +541,42 @@ $(document).ready(function(){
 
 
 	
+	$("#example").on("click",'.varborrar', function(){
+		  usersid =  $(this).attr("id");
+		  if (!isNaN(usersid)) {
+			$("#idEliminar").val(usersid);
+			$("#dialog2").dialog("open");
+
+			
+			//url = "../clienteseleccionado/index.php?idcliente=" + usersid;
+			//$(location).attr('href',url);
+		  } else {
+			alert("Error, vuelva a realizar la acción.");	
+		  }
+	});//fin del boton eliminar
 	
+	$("#example").on("click",'.varmodificar', function(){
+		  usersid =  $(this).attr("id");
+		  if (!isNaN(usersid)) {
+			
+			url = "declaracionpatrimonial/modificar.php?id=" + usersid;
+			$(location).attr('href',url);
+		  } else {
+			alert("Error, vuelva a realizar la acción.");	
+		  }
+	});//fin del boton modificar
+
+
+	$("#example").on("click",'.varver', function(){
+		  usersid =  $(this).attr("id");
+		  if (!isNaN(usersid)) {
+			
+			url = "ver.php?id=" + usersid;
+			$(location).attr('href',url);
+		  } else {
+			alert("Error, vuelva a realizar la acción.");	
+		  }
+	});//fin del boton modificar
 	
 
 	
@@ -538,6 +599,8 @@ $('.form_date').datetimepicker({
 	forceParse: 0,
 	format: 'dd/mm/yyyy'
 });
+
+
 </script>
    
     <script src="../js/chosen.jquery.js" type="text/javascript"></script>

@@ -22,70 +22,81 @@ $serviciosReferencias 	= new ServiciosReferencias();
 $fecha = date('Y-m-d');
 
 //$resProductos = $serviciosProductos->traerProductosLimite(6);
-$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Declaracion Anual Intereses",$_SESSION['refroll_predio'],'');
+$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Vehiculos",$_SESSION['refroll_predio'],'');
 
 
 $id = $_GET['id'];
 
-$resResultado = $serviciosReferencias->traerDeclaracionanualinteresPorId($id);
+$resResultado = $serviciosReferencias->traerVehiculosPorId($id);
 
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
-$singular = "Declaracion Anual Intereses";
+$singular = "Vehiculo";
 
-$plural = "Declaraciones Anual de Intereses";
+$plural = "Vehiculos";
 
-$eliminar = "eliminarDeclaracionanualinteres";
+$eliminar = "eliminarVehiculos";
 
-$modificar = "modificarDeclaracionanualinteres";
+$modificar = "modificarVehiculos";
 
-$idTabla = "iddeclaracionanualinteres";
+$idTabla = "idvehiculos";
 
 $tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
-$tabla 			= "dbdeclaracionanualinteres";
+$tabla 			= "dbvehiculos";
 
 $lblCambio	 	= array("refdeclaracionjuradacabecera",
-						"essecretario",
-						"esauditor",
-						"espublico",
-						"refpoder",
-						"registrofederalcontribuyente",
-						"fechadeclaracionanterior",
-						"fechatomaposesion",
-						"cargoactual",
-						"cargoanterior",
-						"areaadquisicion",
-						"areaadquisicionanterior",
-						"dependencia",
-						"dependenciaanterior");
+						"reftipooperacion",
+						"vehiculo",
+						"donde",
+						"entidadfederativa",
+						"refformaadquisicion",
+						"cesionario",
+						"reftipocesionario",
+						"otrotipocesionario",
+						"valor",
+						"tipomoneda",
+						"fechaadquisicion",
+						"reftitular",
+						"especificacionventa",
+						"especificacionsiniestro");
 $lblreemplazo	= array('Declaración Patrimonial Cabecera',
-						'Secretario de la contraloría',
-						'Auditor General de la ESAF',
-						'Es mi deseo hacer publica la información confidencial',
-						'Poder',
-						'Registro Federal de Contribuyentes',
-						'Fecha Declaración anterior',
-						'Fecha de la toma de posesión actual',
-						'Cargo que desempeña actualmente',
-						'Cargo que manifesto en su ultima',
-						'Area de adscripción actual',
-						'Area de adscripción que manifesto en su ultima declaración',
-						'Dependencia, Organismo o Ayuntamiento de adscripción de la plaza',
-						'Dependencia, Organismo o Ayuntamiento que manifesto en su ultima declaración');
+						'Tipo de Operacion',
+						'Marca, Tipo, Modelo y Nro de Serie',
+						'¿Donde se encuentra Registrado?',
+						'Entidad Federativa',
+						'Forma de Adquisicion',
+						'Nombre del cesionario, del autor de la donacion o del autor de la herencia',
+						'Relacion del cesionario, del autor de la donacion o del autor de la herencia con el titular',
+						'En caso de elegir "Otro" indicar',
+						'Valor del Vehiculo al momento de la adquisicion, sin centavos',
+						'Tipo de Moneda',
+						'Fecha de Adquisicion',
+						'Titular',
+						'Si eligio "Venta" debera especificar los datos de la operacion',
+						'Si eligio "Siniestro" debera especificar los datos de la operacion');
 
 
 $resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
 $cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(2,3,4),' ', mysql_result($resResultado,0,'refdeclaracionjuradacabecera'));
 
-$refVar2 = $serviciosReferencias->traerPoder();
-$cadRef2 = $serviciosFunciones->devolverSelectBoxActivo($refVar2,array(1),' ', mysql_result($resResultado,0,'refpoder'));
+$refVar2 = $serviciosReferencias->traerTipooperacion();
+$cadRef2 = $serviciosFunciones->devolverSelectBoxActivo($refVar2,array(1),' ', mysql_result($resResultado,0,'reftipooperacion'));
 
-$refdescripcion = array(0 => $cadRef, 1=>$cadRef2);
-$refCampo 	=  array("refdeclaracionjuradacabecera","refpoder"); 
+$refVar3 = $serviciosReferencias->traerFormaadquisicion();
+$cadRef3 = $serviciosFunciones->devolverSelectBoxActivo($refVar3,array(1),' ', mysql_result($resResultado,0,'refformaadquisicion'));
+
+$refVar4 = $serviciosReferencias->traerTipocesionario();
+$cadRef4 = $serviciosFunciones->devolverSelectBoxActivo($refVar4,array(1),' ', mysql_result($resResultado,0,'reftipocesionario'));
+
+$refVar5 = $serviciosReferencias->traerTitular();
+$cadRef5 = $serviciosFunciones->devolverSelectBoxActivo($refVar5,array(1),' ', mysql_result($resResultado,0,'reftitular'));
+
+$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3, 3=>$cadRef4, 4=>$cadRef5);
+$refCampo 	=  array("refdeclaracionjuradacabecera","reftipooperacion","refformaadquisicion","reftipocesionario","reftitular"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
@@ -167,7 +178,7 @@ if ($_SESSION['refroll_predio'] != 1) {
     	<div class="cuerpoBox">
         	<form class="form-inline formulario" role="form">
         	
-			<div class="row">
+			<div class="row" style="font-size:0.9em;">
 			<?php echo $formulario; ?>
             </div>
             

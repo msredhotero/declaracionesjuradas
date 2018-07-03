@@ -99,19 +99,14 @@ $refCampo 	=  array("refdeclaracionjuradacabecera","reftipooperacion","reftipobi
 
 
 /////////////////////// Opciones para la creacion del view  apellido,nombre,nrodocumento,fechanacimiento,direccion,telefono,email/////////////////////
-$cabeceras 		= "	<th>Declaración Patr. Cabecera</th>
+$cabeceras 		= "	<th>Declaración Patr. Cab.</th>
 					<th>Tipo de Operacion</th>
 					<th>Tipo de Bien</th>
 					<th>Descripcion del Bien</th>
 					<th>Forma de Adquisicion</th>
-					<th>Nombre del cesionario</th>
-					<th>Relacion del cesionario</th>
-					<th>En caso de elegir 'Otro' indicar</th>
-					<th>Valor del Bien, sin centavos</th>
+					<th>Valor</th>
 					<th>Tipo de Moneda</th>
-					<th>Fecha de Adquisicion</th>
-					<th>Titular</th>
-					<th>Si eligio 'Venta'</th>";
+					<th>Fecha de Adquisicion</th>";
 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
@@ -120,7 +115,7 @@ $cabeceras 		= "	<th>Declaración Patr. Cabecera</th>
 
 $formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
-$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerBienesmueblesGridPorCabecera($id),13);
+$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerBienesmueblesGridPorCabecera($id),8);
 
 
 
@@ -197,7 +192,7 @@ if ($_SESSION['refroll_predio'] != 1) {
         </div>
     	<div class="cuerpoBox">
         	<form class="form-inline formulario" role="form">
-        	<div class="row" style="font-size:0.8em;">
+        	<div class="row" style="font-size:0.9em;">
 			<?php echo $formulario; ?>
             </div>
             <!--

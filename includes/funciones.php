@@ -128,7 +128,7 @@ class Servicios {
 				$idresultados = "resultados";
 				break;
 			case 96:
-				$cantidad = 9;
+				$cantidad = 5;
 				$classMod = 'varmodificar';
 				$classEditar = 'vardomicilios';
 				$iconoEditar = 'glyphicon glyphicon-home';
@@ -143,7 +143,7 @@ class Servicios {
 				$idresultados = "resultados";
 				break;
 			case 95:
-				$cantidad = 6;
+				$cantidad = 5;
 				$classMod = 'varmodificarpedidos';
 				$classVer	  = 'varpagos';
 				$classFinalizar = 'varfinalizar';
@@ -168,7 +168,7 @@ class Servicios {
 				$classEli = 'varborrarpedido';
 				$classPagar = 'varpagar';
 				$idresultados = "resultados";
-				$lblVer = 'Detalle';
+				$lblVer = 'Ver';
 				break;
 			case 92:
 				$cantidad = 7;
@@ -195,8 +195,8 @@ class Servicios {
 				$classEli = 'varborrar';
 				$classEditar = 'vargastos';
 				$classVer	  = 'varver';
-				$iconoEditar = 'glyphicon glyphicon-gift';
-				$lblEditar	  = 'Gastos';
+				$iconoEditar = 'glyphicon glyphicon-print';
+				$lblEditar	  = 'Imprimir';
 				$lblVer = 'Ver';
 				$idresultados = "resultados";
 				break;
