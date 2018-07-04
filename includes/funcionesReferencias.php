@@ -669,6 +669,7 @@ function insertarDeclaracionanualinteres($refdeclaracionjuradacabecera,$essecret
 	d.dependenciaanterior
 	from dbdeclaracionanualinteres d 
 	inner join tbpoder pod ON pod.idpoder = d.refpoder 
+	inner join dbdeclaracionjuradacabecera dj on dj.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera
 	order by 1"; 
 	$res = $this->query($sql,0); 
 	return $res; 
@@ -777,6 +778,34 @@ function insertarDeclaracionanualinteres($refdeclaracionjuradacabecera,$essecret
 		$res = $this->query($sql,0); 
 		return $res; 
 	}
+
+
+	function traerDeclaracionanualinteresPorCabeceraCURP($cabecera, $curp) { 
+	$sql = "select 
+	d.iddeclaracionanualinteres,
+	d.refdeclaracionjuradacabecera,
+	(case when d.essecretario = 1 then 'Si' else 'No' end) as essecretario,
+	(case when d.esauditor = 1 then 'Si' else 'No' end) as esauditor,
+	d.ejercicio,
+	(case when d.espublico = 1 then 'Si' else 'No' end) as espublico,
+	d.refpoder,
+	d.registrofederalcontribuyente,
+	d.fechadeclaracionanterior,
+	d.fechatomaposesion,
+	d.cargoactual,
+	d.cargoanterior,
+	d.areaadquisicion,
+	d.areaadquisicionanterior,
+	d.dependencia,
+	d.dependenciaanterior
+	from dbdeclaracionanualinteres d 
+	inner join tbpoder pod ON pod.idpoder = d.refpoder 
+	inner join dbdeclaracionjuradacabecera dj on dj.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera
+	where dj.curp = '".$curp."' and dj.iddeclaracionjuradacabecera = ".$cabecera."
+	order by 1"; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	}
 	
 	/* Fin */
 	/* /* Fin de la Tabla: dbdeclaracionanualinteres*/
@@ -820,10 +849,10 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 	d.edad,
 	d.reftipoparentesco
 	from dbdependienteseconomicos d 
-	inner join dbdeclaracionjuradacabecera dec ON dec.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera 
-	inner join tbestadocivil es ON es.idestadocivil = dec.refestadocivil 
-	inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dec.refregimenmatrimonial 
-	inner join dbusuarios us ON us.idusuario = dec.refusuarios 
+	inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera 
+	inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+	inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+	inner join dbusuarios us ON us.idusuario = dj.refusuarios 
 	inner join tbtipoparentesco tip ON tip.idtipoparentesco = d.reftipoparentesco 
 	order by 1"; 
 	$res = $this->query($sql,0); 
@@ -858,6 +887,29 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 	$res = $this->query($sql,0); 
 	return $res; 
 	} 
+
+	function traerDependienteseconomicosPorCabeceraCURP($cabecera, $curp) { 
+	$sql = "select 
+	d.iddependienteeconomico,
+	d.refdeclaracionjuradacabecera,
+	d.tiene,
+	d.nombre,
+	d.edad,
+	d.reftipoparentesco
+	from dbdependienteseconomicos d 
+	inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera 
+	inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+	inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+	inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+	inner join tbtipoparentesco tip ON tip.idtipoparentesco = d.reftipoparentesco 
+	where dj.curp = '".$curp."' and dj.iddeclaracionjuradacabecera = ".$cabecera."
+	order by 1"; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+
+
+	
 	
 	/* Fin */
 	/* /* Fin de la Tabla: dbdependienteseconomicos*/
@@ -949,6 +1001,36 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 	$res = $this->query($sql,0); 
 	return $res; 
 	} 
+
+
+
+	function traerIngresosanualesPorCabeceraCURP($cabecera, $curp) { 
+		$sql = "select 
+					i.idingresoanual,
+					i.refdeclaracionjuradacabecera,
+					i.remuneracionanualneta,
+					i.actividadindustrial,
+					i.razonsocialactividadindustrial,
+					i.actividadfinanciera,
+					i.razonsocialactividadfinanciera,
+					i.actividadprofesional,
+					i.descripcionactividadprofesional,
+					i.otros,
+					i.especifiqueotros,
+					i.ingresoanualconyuge,
+					i.especifiqueingresosconyuge,
+					i.fueservidorpublico,
+					i.vigenciadesde,
+					i.vigenciahasta
+				from dbingresosanuales i 
+				inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = i.refdeclaracionjuradacabecera 
+				where dj.curp = '".$curp."' and dj.iddeclaracionjuradacabecera = ".$cabecera."
+				order by 1"; 
+		$res = $this->query($sql,0); 
+		return $res; 
+	} 
+
+	
 	
 	/* Fin */
 	/* /* Fin de la Tabla: dbingresosanuales*/
@@ -1046,7 +1128,7 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 				(case when p.enadeudos = 1 then 'Si' else 'No' end) as enadeudos,
 				p.refdeclaracionjuradacabecera
 				from dbpublicacion p 
-				inner join dbdeclaracionjuradacabecera dj on dj.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera
+				inner join dbdeclaracionjuradacabecera dj on dj.iddeclaracionjuradacabecera = p.refdeclaracionjuradacabecera
 				where dj.iddeclaracionjuradacabecera = ".$id."
 				order by 1"; 
 		$res = $this->query($sql,0); 
@@ -1073,6 +1155,27 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 		$res = $this->query($sql,0); 
 		return $res; 
 	}
+
+
+	function traerPublicacionPorCabeceraCURP($cabecera, $curp) { 
+	$sql = "select 
+	p.idpublicacion,
+	p.refdeclaracionjuradacabecera,
+	(case when p.estadeacuerdo = 1 then 'Si' else 'No' end) as estadeacuerdo,
+	(case when p.eningresosnetos = 1 then 'Si' else 'No' end) as eningresosnetos,
+	(case when p.enbienesinmuebles = 1 then 'Si' else 'No' end) as enbienesinmuebles,
+	(case when p.enbienesmuebles = 1 then 'Si' else 'No' end) as enbienesmuebles,
+	(case when p.envehiculos = 1 then 'Si' else 'No' end) as envehiculos,
+	(case when p.eninversiones = 1 then 'Si' else 'No' end) as eninversiones,
+	(case when p.enadeudos = 1 then 'Si' else 'No' end) as enadeudos
+	from dbpublicacion p 
+	inner join dbdeclaracionjuradacabecera dj on dj.iddeclaracionjuradacabecera = p.refdeclaracionjuradacabecera
+	where dj.curp = '".$curp."' and dj.iddeclaracionjuradacabecera = ".$cabecera."
+	order by 1"; 
+	$res = $this->query($sql,0); 
+	return $res; 
+	} 
+	
 	
 		
 	/* Fin */
@@ -1483,16 +1586,16 @@ b.ubicacion,
 b.especificacionobra,
 b.especificacionventa
 from dbbienesinmuebles b 
-inner join dbdeclaracionjuradacabecera dec ON dec.iddeclaracionjuradacabecera = b.refdeclaracionjuradacabecera 
-inner join tbestadocivil es ON es.idestadocivil = dec.refestadocivil 
-inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dec.refregimenmatrimonial 
-inner join dbusuarios us ON us.idusuario = dec.refusuarios 
-inner join tbtipooperacion tip ON tip.idtipooperacion = b.reftipooperacion 
-inner join tbtipobien tip ON tip.idtipobien = b.reftipobien 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = b.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+inner join tbtipooperacion tiop ON tiop.idtipooperacion = b.reftipooperacion 
+inner join tbtipobien tb ON tb.idtipobien = b.reftipobien 
 inner join tbotrotipobien otr ON otr.idotrotipobien = b.refotrotipobien 
-inner join tbformaadquisicion for ON for.idformaadquisicion = b.refformaadquisicion 
+inner join tbformaadquisicion fa ON fa.idformaadquisicion = b.refformaadquisicion 
 inner join tbtitular tit ON tit.idtitular = b.reftitular 
-inner join tbtipocesionario tip ON tip.idtipocesionario = b.reftipocesionario 
+inner join tbtipocesionario tc ON tc.idtipocesionario = b.reftipocesionario 
 order by 1"; 
 $res = $this->query($sql,0); 
 return $res; 
@@ -1549,6 +1652,47 @@ $res = $this->query($sql,0);
 return $res; 
 } 
 
+
+function traerBienesinmueblesPorCabeceraCURP($cabecera, $curp) { 
+$sql = "select 
+b.idbieninmueble,
+b.refdeclaracionjuradacabecera,
+b.reftipooperacion,
+b.reftipobien,
+b.refotrotipobien,
+b.mtrsterreno,
+b.mtrsconstruccion,
+b.refformaadquisicion,
+b.cesionario,
+b.reftitular,
+b.reftipocesionario,
+b.otrotipocesionario,
+b.valor,
+b.tipomoneda,
+b.fechaadquisicion,
+b.registropublico,
+b.ubicacion,
+b.especificacionobra,
+b.especificacionventa
+from dbbienesinmuebles b 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = b.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+inner join tbtipooperacion tiop ON tiop.idtipooperacion = b.reftipooperacion 
+inner join tbtipobien tb ON tb.idtipobien = b.reftipobien 
+inner join tbotrotipobien otr ON otr.idotrotipobien = b.refotrotipobien 
+inner join tbformaadquisicion fa ON fa.idformaadquisicion = b.refformaadquisicion 
+inner join tbtitular tit ON tit.idtitular = b.reftitular 
+inner join tbtipocesionario tc ON tc.idtipocesionario = b.reftipocesionario 
+where dj.curp = '".$curp."' and dj.iddeclaracionjuradacabecera = ".$cabecera."
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+
 /* Fin */
 /* /* Fin de la Tabla: dbbienesinmuebles*/
 
@@ -1597,14 +1741,14 @@ b.fechaadquisicion,
 b.reftitular,
 b.especificacionventa
 from dbbienesmuebles b 
-inner join dbdeclaracionjuradacabecera dec ON dec.iddeclaracionjuradacabecera = b.refdeclaracionjuradacabecera 
-inner join tbestadocivil es ON es.idestadocivil = dec.refestadocivil 
-inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dec.refregimenmatrimonial 
-inner join dbusuarios us ON us.idusuario = dec.refusuarios 
-inner join tbtipooperacion tip ON tip.idtipooperacion = b.reftipooperacion 
-inner join tbtipobien tip ON tip.idtipobien = b.reftipobien 
-inner join tbformaadquisicion for ON for.idformaadquisicion = b.refformaadquisicion 
-inner join tbtipocesionario tip ON tip.idtipocesionario = b.reftipocesionario 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = b.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+inner join tbtipooperacion tiop ON tiop.idtipooperacion = b.reftipooperacion 
+inner join tbtipobien tipb ON tipb.idtipobien = b.reftipobien 
+inner join tbformaadquisicion fr ON fr.idformaadquisicion = b.refformaadquisicion 
+inner join tbtipocesionario tipc ON tipc.idtipocesionario = b.reftipocesionario 
 inner join tbtitular tit ON tit.idtitular = b.reftitular 
 order by 1"; 
 $res = $this->query($sql,0); 
@@ -1657,6 +1801,40 @@ $res = $this->query($sql,0);
 return $res; 
 } 
 
+
+function traerBienesmueblesPorCabeceraCURP($cabecera, $curp) { 
+$sql = "select 
+b.idbienmueble,
+b.refdeclaracionjuradacabecera,
+b.reftipooperacion,
+b.reftipobien,
+b.descripcion,
+b.refformaadquisicion,
+b.cesionario,
+b.reftipocesionario,
+b.otrotipocesionario,
+b.valor,
+b.tipomoneda,
+b.fechaadquisicion,
+b.reftitular,
+b.especificacionventa
+from dbbienesmuebles b 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = b.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+inner join tbtipooperacion tiop ON tiop.idtipooperacion = b.reftipooperacion 
+inner join tbtipobien tipb ON tipb.idtipobien = b.reftipobien 
+inner join tbformaadquisicion fr ON fr.idformaadquisicion = b.refformaadquisicion 
+inner join tbtipocesionario tipc ON tipc.idtipocesionario = b.reftipocesionario 
+inner join tbtitular tit ON tit.idtitular = b.reftitular 
+where dj.curp = '".$curp."' and dj.iddeclaracionjuradacabecera = ".$cabecera."
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
 /* Fin */
 /* /* Fin de la Tabla: dbbienesmuebles*/
 
@@ -1703,13 +1881,13 @@ i.tipomoneda,
 i.reftipoinversion,
 i.especifica
 from dbinversiones i 
-inner join dbdeclaracionjuradacabecera dec ON dec.iddeclaracionjuradacabecera = i.refdeclaracionjuradacabecera 
-inner join tbestadocivil es ON es.idestadocivil = dec.refestadocivil 
-inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dec.refregimenmatrimonial 
-inner join dbusuarios us ON us.idusuario = dec.refusuarios 
-inner join tbtipooperacion tip ON tip.idtipooperacion = i.reftipooperacion 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = i.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+inner join tbtipooperacion tiop ON tiop.idtipooperacion = i.reftipooperacion 
 inner join tbtitular tit ON tit.idtitular = i.reftitular 
-inner join tbtipoinversion tip ON tip.idtipoinversion = i.reftipoinversion 
+inner join tbtipoinversion ti ON ti.idtipoinversion = i.reftipoinversion
 order by 1"; 
 $res = $this->query($sql,0); 
 return $res; 
@@ -1754,6 +1932,37 @@ order by 1";
 $res = $this->query($sql,0); 
 return $res; 
 } 
+
+
+
+function traerInversionesPorCabeceraCURP($cabecera, $curp) { 
+$sql = "select 
+i.idinversion,
+i.refdeclaracionjuradacabecera,
+i.reftipooperacion,
+i.reftitular,
+i.numerocuenta,
+i.donde,
+i.razonsocial,
+i.pais,
+i.saldo,
+i.tipomoneda,
+i.reftipoinversion,
+i.especifica
+from dbinversiones i 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = i.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+inner join tbtipooperacion tiop ON tiop.idtipooperacion = i.reftipooperacion 
+inner join tbtitular tit ON tit.idtitular = i.reftitular 
+inner join tbtipoinversion ti ON ti.idtipoinversion = i.reftipoinversion
+where dj.curp = '".$curp."' and dj.iddeclaracionjuradacabecera = ".$cabecera."
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
 
 /* Fin */
 /* /* Fin de la Tabla: dbinversiones*/
@@ -1805,13 +2014,13 @@ v.reftitular,
 v.especificacionventa,
 v.especificacionsiniestro
 from dbvehiculos v 
-inner join dbdeclaracionjuradacabecera dec ON dec.iddeclaracionjuradacabecera = v.refdeclaracionjuradacabecera 
-inner join tbestadocivil es ON es.idestadocivil = dec.refestadocivil 
-inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dec.refregimenmatrimonial 
-inner join dbusuarios us ON us.idusuario = dec.refusuarios 
-inner join tbtipooperacion tip ON tip.idtipooperacion = v.reftipooperacion 
-inner join tbformaadquisicion for ON for.idformaadquisicion = v.refformaadquisicion 
-inner join tbtipocesionario tip ON tip.idtipocesionario = v.reftipocesionario 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = v.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+inner join tbtipooperacion tiop ON tiop.idtipooperacion = v.reftipooperacion 
+inner join tbformaadquisicion fa ON fa.idformaadquisicion = v.refformaadquisicion 
+inner join tbtipocesionario tc ON tc.idtipocesionario = v.reftipocesionario 
 inner join tbtitular tit ON tit.idtitular = v.reftitular 
 order by 1"; 
 $res = $this->query($sql,0); 
@@ -1861,6 +2070,41 @@ order by 1";
 $res = $this->query($sql,0); 
 return $res; 
 } 
+
+
+function traerVehiculosPorCabeceraCURP($cabecera, $curp) { 
+$sql = "select 
+v.idvehiculos,
+v.refdeclaracionjuradacabecera,
+v.reftipooperacion,
+v.vehiculo,
+v.donde,
+v.entidadfederativa,
+v.refformaadquisicion,
+v.cesionario,
+v.reftipocesionario,
+v.otrotipocesionario,
+v.valor,
+v.tipomoneda,
+v.fechaadquisicion,
+v.reftitular,
+v.especificacionventa,
+v.especificacionsiniestro
+from dbvehiculos v 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = v.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+inner join tbtipooperacion tiop ON tiop.idtipooperacion = v.reftipooperacion 
+inner join tbformaadquisicion fa ON fa.idformaadquisicion = v.refformaadquisicion 
+inner join tbtipocesionario tc ON tc.idtipocesionario = v.reftipocesionario 
+inner join tbtitular tit ON tit.idtitular = v.reftitular 
+where dj.curp = '".$curp."' and dj.iddeclaracionjuradacabecera = ".$cabecera."
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
 
 /* Fin */
 /* /* Fin de la Tabla: dbvehiculos*/

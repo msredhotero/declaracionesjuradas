@@ -90,7 +90,7 @@ $cabeceras 		= "	<th>Decl. Patri. Cab.</th>
 
 $formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
-$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerPublicacionGrillaPorUsuario($_SESSION['idusuario']),8);
+$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerPublicacionGrillaPorCabecera($id),8);
 
 
 

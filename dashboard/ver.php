@@ -28,18 +28,97 @@ if ($_SESSION['idroll_predio'] == 2) {
 	$resAgente = $serviciosReferencias->traerAgenteReal($_SESSION['curp_predio']);
 }
 
-if ($_SESSION['idroll_predio'] == 2) {
-	$lstDeclaraciones = $serviciosReferencias->traerDeclaracionjuradacabeceraGrillaPorCURP($_SESSION['curp_predio']);
+$id = $_GET['id'];
 
 
-	$cabeceras 		= "	<th>Apellidos</th>
-					<th>Nombres</th>
-					<th>CURP</th>
-					<th>Fecha Recepción</th>
-					<th>Email</th>";
+$frmDeclaracionAnual = $serviciosReferencias->traerDeclaracionanualinteresPorCabeceraCURP($id, $_SESSION['curp_predio']);
+$frmDependientesEconomicos = $serviciosReferencias->traerDependienteseconomicosPorCabeceraCURP($id, $_SESSION['curp_predio']);
+$frmIngresosAnuales = $serviciosReferencias->traerIngresosanualesPorCabeceraCURP($id, $_SESSION['curp_predio']);
+$frmPublicacion = $serviciosReferencias->traerPublicacionPorCabeceraCURP($id, $_SESSION['curp_predio']);
+$frmBienesInmuebles = $serviciosReferencias->traerBienesinmueblesPorCabeceraCURP($id, $_SESSION['curp_predio']);
+$frmBienesMuebles = $serviciosReferencias->traerBienesmueblesPorCabeceraCURP($id, $_SESSION['curp_predio']);
+$frmInversiones = $serviciosReferencias->traerInversionesPorCabeceraCURP($id, $_SESSION['curp_predio']);
+$frmVehiculos = $serviciosReferencias->traerVehiculosPorCabeceraCURP($id, $_SESSION['curp_predio']);
 
-	$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$lstDeclaraciones,90);
+$resResultado = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
+
+$tabla 			= "dbdeclaracionjuradacabecera";
+
+$lblCambio	 	= array('fecharecepcion',
+						'primerapellido',
+						'segundoapellido',
+						'curp',
+						'homoclave',
+						'emailinstitucional',
+						'emailalterno',
+						'refestadocivil',
+						'refregimenmatrimonial',
+						'paisnacimiento',
+						'nacionalidad',
+						'entidadnacimiento',
+						'numerocelular',
+						'lugarubica',
+						'domicilioparticular',
+						'localidad',
+						'municipio',
+						'telefono',
+						'entidadfederativa',
+						'codigopostal',
+						'estudios',
+						'cedulaprofesional',
+						'refusuarios');
+$lblreemplazo	= array('Fecha de Recepción',
+						'Primer Apellido',
+						'Segundo Apellido',
+						'CURP',
+						'RFC / Homoclave',
+						'Correo Electrónico Inst.',
+						'Correo Electrónico Alterno',
+						'Estado Civil',
+						'Regimen Matrimonial',
+						'País donde nació',
+						'Nacionalidad',
+						'Entidad donde nació',
+						'Nro de Celular',
+						'Lugar donde se ubica',
+						'Domicilio Particular',
+						'Localidad o colonia',
+						'Municipio o Alcaldía',
+						'Teléfono',
+						'Entidad Federativa',
+						'Codigo Postal',
+						'Grado Max. de estudios/Especialidad',
+						'Nro de cédula profesional',
+						'Usuario');
+
+
+$resEstadoCivil = $serviciosReferencias->traerEstadocivilPorId(mysql_result($resResultado,0,'refestadocivil'));
+$cadRef = $serviciosFunciones->devolverSelectBoxActivo($resEstadoCivil,array(1),'', mysql_result($resResultado,0,'refestadocivil'));
+
+$refRM = $serviciosReferencias->traerRegimenmatrimonialPorId(mysql_result($resResultado,0,'refregimenmatrimonial'));
+$cadRef2 = $serviciosFunciones->devolverSelectBoxActivo($refRM,array(1),' ', mysql_result($resResultado,0,'refregimenmatrimonial'));
+
+$refUsuarios = $serviciosReferencias->traerUsuariosPorId(mysql_result($resResultado,0,'refusuarios'));
+$cadRef3 = $serviciosFunciones->devolverSelectBoxActivo($refUsuarios,array(1),' ', mysql_result($resResultado,0,'refusuarios'));
+
+if (mysql_result($resResultado,0,'lugarubica') == '1') {
+	$cadRef4 = "<option value='1' selected>México</option>";
+} else {
+	$cadRef4 = "<option value='2' selected>Extranjero</option>";
 }
+
+if (mysql_result($resResultado,0,'sexo') == '1') {
+	$cadRef5 = "<option value='1' selected>Femenino</option>";
+} else {
+	$cadRef5 = "<option value='2' selected>Masculino</option>";
+}
+
+
+
+$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3,3=>$cadRef4,4=>$cadRef5);
+$refCampo 	=  array("refestadocivil","refregimenmatrimonial","refusuarios","lugarubica","sexo");
+
+$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera',$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
 ?>
 
@@ -57,11 +136,6 @@ if ($_SESSION['idroll_predio'] == 2) {
 <title>Gesti&oacute;n: Declaraciones Patrimoniales</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
-
-    
-
-    
     <script type="text/javascript" src="../js/jquery-1.8.3.min.js"></script>
     <link rel="stylesheet" href="../css/jquery-ui.css">
 
@@ -73,12 +147,12 @@ if ($_SESSION['idroll_predio'] == 2) {
     
     <script src="../js/jquery.easy-autocomplete.min.js"></script> 
 
-	<!-- CSS file 
+	<!-- CSS file -->
 	<link rel="stylesheet" href="../css/easy-autocomplete.min.css"> 
-	-->
-	<!-- Additional CSS Themes file - not required
+
+	<!-- Additional CSS Themes file - not required-->
 	<link rel="stylesheet" href="../css/easy-autocomplete.themes.min.css"> 
-    -->
+    
 	<!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css"/>
 	<!--<link href='http://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext' rel='stylesheet' type='text/css'>-->
@@ -126,7 +200,7 @@ if ($_SESSION['idroll_predio'] == 2) {
         	<?php if ($_SESSION['idroll_predio'] == 1) { ?>
         	<p style="color: #fff; font-size:18px; height:16px;">Buscar Agentes</p>
         	<?php } else { ?>
-        	<p style="color: #fff; font-size:18px; height:16px;">Declarante</p>
+        	<p style="color: #fff; font-size:18px; height:16px;">Declaración Patrimonial Cabecera</p>
 
         	<?php } ?>
         </div>
@@ -155,41 +229,14 @@ if ($_SESSION['idroll_predio'] == 2) {
                     </div>
                 </div>
                 <?php } else { ?>
-                <ul class="list-group">
-                  <li class="list-group-item list-group-item-info">Datos del Declarante</li>
-	              <li class="list-group-item list-group-item-default">Primer Apellido: <?php echo mysql_result($resAgente,0,'paterno'); ?></li>
-	              <li class="list-group-item list-group-item-default">Segundo Apellido: <?php echo mysql_result($resAgente,0,'materno'); ?></li>
-	              <li class="list-group-item list-group-item-default">Nombres: <?php echo mysql_result($resAgente,0,'nombre'); ?></li>
-	              <li class="list-group-item list-group-item-default">CURP: <?php echo mysql_result($resAgente,0,'curp'); ?></li>
-	              <li class="list-group-item list-group-item-default">Email: <?php echo mysql_result($resAgente,0,'email'); ?></li>
-
-	            </ul>
+                
 
 	            <div class="cuerpoBox">
-
 	            	<div class="row">
-	            		<a class="waves-effect green accent-4 btn agregarddpp" href="declaracionpatrimonial/"><i class="large material-icons left">add</i>Nueva Declaración</a>
-	            		<?php echo $lstCargados; ?>
-	            	</div>	
-	            		<!--
-						<div class="col s12 m4">
-							<div class="card teal lighten-2 darken-1">
-								<div class="card-content white-text">
-									<span class="card-title">DATOS GENERALES DEL DECLARANTE</span>
-									<p>En nombre y apellidos, deberá anotarlos sin abreviaciones con excepción de las personas que lo tengan
-registrado así en su acta de nacimiento. Utilizar todos los espacios disponibles para el RFC con
-HOMOCLAVE. De Igual forma para anotar su CURP. El lugar de nacimiento deberá indicar el municipio o
-delegación y separado por una coma, el Estado al que pertenece.
-Para el caso del Sexo, solo debe anotar la letra que corresponda: M para Masculino y F para Femenino.
-Si dispone de un correo electrónico personal, deberá anotarlo, esto con el objeto de que pueda recibir
-información por este medio, si fuera necesario.</p>
-								</div>
-								<div class="card-action">
-									<a href="declaracionpatrimonial/">Acceder</a>
-								</div>
-							</div>
-						</div>
-
+	            		<?php echo $frmDeclaracionCabecera; ?>
+	            	</div>
+	            	<div class="row">
+	            		
 						<div class="col s12 m4">
 							<div class="card light-blue lighten-2 darken-1">
 								<div class="card-content white-text">
@@ -204,7 +251,21 @@ ejemplo: Cargo: Jefe de Departamento de Recursos Materiales; área de Adscripci�
 Administrativa.</p>
 								</div>
 								<div class="card-action">
-									<a href="declaracionanual/">Acceder</a>
+									
+									<?php
+										if (mysql_num_rows($frmDeclaracionAnual) > 0) {
+									?>
+									<a href="declaracionanual/modificar.php?id=<?php echo $id; ?>">Acceder</a>
+									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
+									<?php
+										} else {
+									?>
+									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<a href="declaracionanual/index.php?id=<?php echo $id; ?>">Acceder</a>
+									
+									<?php
+										}
+									?>
 								</div>
 							</div>
 						</div>
@@ -217,16 +278,26 @@ Administrativa.</p>
 									<p>Seleccionará los datos que el declarante desee que sean públicos.</p>
 								</div>
 								<div class="card-action">
-									<a href="publicacion/">Acceder</a>
+	
+									<?php
+										if (mysql_num_rows($frmPublicacion) > 0) {
+									?>
+									<a href="publicacion/modificar.php?id=<?php echo $id; ?>">Acceder</a>
+									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
+									<?php
+										} else {
+									?>
+									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<a href="publicacion/index.php?id=<?php echo $id; ?>">Acceder</a>
+									
+									<?php
+										}
+									?>
 								</div>
 							</div>
 						</div>
-					</div>
 
 
-
-
-					<div class="row">
 						<div class="col s12 m4">
 							<div class="card teal lighten-2 darken-1">
 								<div class="card-content white-text">
@@ -237,10 +308,31 @@ criterios señalados en este párrafo, indicando en la sección XII.- OBSERVACIO
 el concepto de estos ingresos. Las cantidades deberán ser redondeados y sin centavos.</p>
 								</div>
 								<div class="card-action">
-									<a href="ingresosanuales/">Acceder</a>
+									
+									<?php
+										if (mysql_num_rows($frmIngresosAnuales) > 0) {
+									?>
+									<a href="ingresosanuales/modificar.php?id=<?php echo $id; ?>">Acceder</a>
+									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
+									<?php
+										} else {
+									?>
+									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<a href="ingresosanuales/index.php?id=<?php echo $id; ?>">Acceder</a>
+									
+									<?php
+										}
+									?>
 								</div>
 							</div>
 						</div>
+					</div>
+
+
+
+
+					<div class="row">
+						
 
 						<div class="col s12 m4">
 							<div class="card light-blue darken-4">
@@ -249,7 +341,21 @@ el concepto de estos ingresos. Las cantidades deberán ser redondeados y sin cen
 									<p>En caso de tener dependientes económicos, deberá anotar sus datos en esta sección.</p>
 								</div>
 								<div class="card-action">
-									<a href="dependienteseconomicos/">Acceder</a>
+									
+									<?php
+										if (mysql_num_rows($frmDependientesEconomicos) > 0) {
+									?>
+									<a href="dependienteseconomicos/index.php?id=<?php echo $id; ?>">Acceder</a>
+									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
+									<?php
+										} else {
+									?>
+									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<a href="dependienteseconomicos/index.php?id=<?php echo $id; ?>">Acceder</a>
+									
+									<?php
+										}
+									?>
 								</div>
 							</div>
 						</div>
@@ -265,15 +371,26 @@ valor del bien deberá ir redondeado y sin centavos.
 </p>
 								</div>
 								<div class="card-action">
-									<a href="bienesmuebles/">Acceder</a>
+
+									<?php
+										if (mysql_num_rows($frmBienesMuebles) > 0) {
+									?>
+									<a href="bienesmuebles/index.php?id=<?php echo $id; ?>">Acceder</a>
+									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
+									<?php
+										} else {
+									?>
+									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<a href="bienesmuebles/index.php?id=<?php echo $id; ?>">Acceder</a>
+									
+									<?php
+										}
+									?>
 								</div>
 							</div>
 						</div>
-					</div>
 
 
-
-					<div class="row">
 						<div class="col s12 m4">
 							<div class="card teal lighten-2 darken-1">
 								<div class="card-content white-text">
@@ -282,10 +399,30 @@ valor del bien deberá ir redondeado y sin centavos.
 avión, tractor, etc. deberá especificarlo también en esta sección.</p>
 								</div>
 								<div class="card-action">
-									<a href="vehiculos/">Acceder</a>
+
+									<?php
+										if (mysql_num_rows($frmVehiculos) > 0) {
+									?>
+									<a href="vehiculos/index.php?id=<?php echo $id; ?>">Acceder</a>
+									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
+									<?php
+										} else {
+									?>
+									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<a href="vehiculos/index.php?id=<?php echo $id; ?>">Acceder</a>
+									
+									<?php
+										}
+									?>
 								</div>
 							</div>
 						</div>
+					</div>
+
+
+
+					<div class="row">
+						
 
 						<div class="col s12 m4">
 							<div class="card teal lighten-2 darken-1">
@@ -296,7 +433,20 @@ el registro que se tenga ante el Registro Público de la Propiedad. En caso de t
 ejidales, deberá señalar en el mismo espacio la sesión de derechos correspondiente.</p>
 								</div>
 								<div class="card-action">
-									<a href="bienesinmuebles/">Acceder</a>
+									<?php
+									if (mysql_num_rows($frmBienesInmuebles) > 0) {
+									?>
+									<a href="bienesinmuebles/index.php?id=<?php echo $id; ?>">Acceder</a>
+									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
+									<?php
+										} else {
+									?>
+									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<a href="bienesinmuebles/index.php?id=<?php echo $id; ?>">Acceder</a>
+									
+									<?php
+										}
+									?>
 								</div>
 							</div>
 						</div>
@@ -310,13 +460,27 @@ ejidales, deberá señalar en el mismo espacio la sesión de derechos correspond
 deberá señalarlo en la sección VIII.- OTRO TIPO DE INVERSIÓN.</p>
 								</div>
 								<div class="card-action">
-									<a href="inversiones/">Acceder</a>
+
+									<?php
+									if (mysql_num_rows($frmBienesInmuebles) > 0) {
+									?>
+									<a href="inversiones/index.php?id=<?php echo $id; ?>">Acceder</a>
+									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
+									<?php
+										} else {
+									?>
+									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<a href="inversiones/index.php?id=<?php echo $id; ?>">Acceder</a>
+									
+									<?php
+										}
+									?>
 								</div>
 							</div>
 						</div>
 
 					</div>
-					-->
+					
                 </div>
 
                 <?php } ?>
@@ -435,7 +599,78 @@ $(document).ready(function(){
 	}
 
 
+	<?php if ($_SESSION['idroll_predio'] == 2) { ?>
+	function modificarCliente(id, apellido, nombre, cuit, direccion, telefono, celular) {
+		$.ajax({
+			data:  {id: id,
+					apellido: apellido,
+					nombre: nombre,
+					cuit: cuit,
+					direccion: direccion,
+					telefono: telefono, 
+					celular: celular, 
+					accion: 'modificarClientePorCliente'},
+			url:   '../ajax/ajax.php',
+			type:  'post',
+			beforeSend: function () {
+					
+			},
+			success:  function (response) {
+				if (response == '') {
+					$('#mensaje').html('<span style="color:#05E98D;">Se actualizaron sus datos</span>');
+				} else {
+					$('#mensaje').html('<span style="color:#E90C05;">'+ response + '</span>');
+				}
+				
+					
+			}
+		});
+	}
 
+	$('#modificarCliente').click(function() {
+		modificarCliente(<?php echo $idcliente; ?>, $('#apellido').val(), $('#nombre').val(), $('#cuit').val(), $('#direccion').val(), $('#telefono').val(), $('#celular').val());
+	});
+
+	
+		traerArchivos(<?php echo $idcliente; ?>);
+	<?php } ?>	
+
+
+	$('#selction-ajax').on("click",'.varClienteDocumentaciones', function(){
+	    usersid =  $(this).attr("id");
+	    traerArchivos(usersid);
+	});//fin del boton eliminar
+
+	$('#selction-ajax').on("click",'.varClienteModificar', function(){
+		  usersid =  $(this).attr("id");
+		  if (!isNaN(usersid)) {
+			
+			url = "clientes/modificar.php?id=" + usersid;
+			$(location).attr('href',url);
+		  } else {
+			alert("Error, vuelva a realizar la acción.");	
+		  }
+	});//fin del boton eliminar
+
+	$('#selction-ajax').on("click",'.varClienteArchivos', function(){
+		  usersid =  $(this).attr("id");
+		  if (!isNaN(usersid)) {
+			
+			url = "clientes/archivos.php?id=" + usersid;
+			$(location).attr('href',url);
+		  } else {
+			alert("Error, vuelva a realizar la acción.");	
+		  }
+	});//fin del boton eliminar
+
+	$('.agregarddpp').click(function() {
+
+		url = "declaracionpatrimonial/index.php";
+		$(location).attr('href',url);
+
+	})
+
+	
 
 
 	var months = ["Ene", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"];

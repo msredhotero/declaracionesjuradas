@@ -194,10 +194,11 @@ class Servicios {
 				$classMod = 'varmodificar';
 				$classEli = 'varborrar';
 				$classEditar = 'vargastos';
-				$classVer	  = 'varver';
+				$classVar1	  = 'varver';
 				$iconoEditar = 'glyphicon glyphicon-print';
+				$iconoVar1 = 'glyphicon glyphicon-search';
 				$lblEditar	  = 'Imprimir';
-				$lblVer = 'Ver';
+				$lblVar1 = 'Ver';
 				$idresultados = "resultados";
 				break;
 			default:
