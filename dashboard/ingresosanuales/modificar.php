@@ -27,7 +27,7 @@ $resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Ingreso
 
 $id = $_GET['id'];
 
-$resResultado = $serviciosReferencias->traerIngresosanualesPorId($id);
+$resResultado = $serviciosReferencias->traerIngresosanualesPorCabeceraCURP($id, $_SESSION['curp_predio']);
 
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
@@ -88,7 +88,7 @@ $refCampo 	=  array("refdeclaracionjuradacabecera");
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
-$formulario 	= $serviciosFunciones->camposTablaModificar($id, $idTabla, $modificar,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
+$formulario 	= $serviciosFunciones->camposTablaModificar(mysql_result($resResultado, 0,'idingresoanual'), $idTabla, $modificar,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
 
 if ($_SESSION['refroll_predio'] != 1) {
@@ -255,9 +255,19 @@ $(document).ready(function(){
 	$('#actividadprofesional').number( true, 2,'.','' );
 	$('#otros').number( true, 2,'.','' );
 
+	if ('<?php echo mysql_result($resResultado,0,'fueservidorpublico'); ?>'  == 'Si') {
+		$('#fueservidorpublico').prop("checked",true);
+	} else {
+		$('#fueservidorpublico').prop("checked",false);
+	}
+
+	$('.vtexto').keypress(function(tecla) {
+        if((tecla.charCode != 241) && (tecla.charCode != 209) && (tecla.charCode != 64) && (tecla.charCode < 48 || tecla.charCode > 57) && (tecla.charCode < 97 || tecla.charCode > 122) && (tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode != 45)) return false;
+    });
+
 	$('.volver').click(function(event){
 		 
-		url = "index.php";
+		url = "../ver.php?id=<?php echo mysql_result($resResultado, 0,'refdeclaracionjuradacabecera'); ?>";
 		$(location).attr('href',url);
 	});//fin del boton modificar
 

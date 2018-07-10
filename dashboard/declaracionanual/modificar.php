@@ -218,7 +218,7 @@ if ($_SESSION['refroll_predio'] != 1) {
 <script type="text/javascript" src="../../js/jquery.dataTables.min.js"></script>
 <script src="../../bootstrap/js/dataTables.bootstrap.js"></script>
 
-<script src="../../js/bootstrap-datetimepicker.min.js"></script>
+<script src="../../js/bootstrap-datetimepicker.js"></script>
 <script src="../../js/bootstrap-datetimepicker.es.js"></script>
 
 <script type="text/javascript">
@@ -226,9 +226,14 @@ $(document).ready(function(){
 
 	$('.volver').click(function(event){
 		 
-		url = "index.php";
+		url = "../ver.php?id=<?php echo mysql_result($resResultado, 0,'refdeclaracionjuradacabecera'); ?>";
 		$(location).attr('href',url);
 	});//fin del boton modificar
+
+
+	$('.vtexto').keypress(function(tecla) {
+        if((tecla.charCode != 241) && (tecla.charCode != 209) && (tecla.charCode != 64) && (tecla.charCode < 48 || tecla.charCode > 57) && (tecla.charCode < 97 || tecla.charCode > 122) && (tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode != 45)) return false;
+    });
 	
 	$('.varborrar').click(function(event){
 		  usersid =  $(this).attr("id");
@@ -349,6 +354,8 @@ $(document).ready(function(){
 		}
     });
 
+	
+
 });
 </script>
 
@@ -356,7 +363,7 @@ $(document).ready(function(){
 $('.form_date').datetimepicker({
 	language:  'es',
 	weekStart: 1,
-	todayBtn:  1,
+    todayBtn:  1,
 	autoclose: 1,
 	todayHighlight: 1,
 	startView: 2,
@@ -364,6 +371,9 @@ $('.form_date').datetimepicker({
 	forceParse: 0,
 	format: 'dd/mm/yyyy'
 });
+
+
+
 </script>
 <?php } ?>
 </body>

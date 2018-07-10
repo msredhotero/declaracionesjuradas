@@ -122,6 +122,7 @@ case 'traerArchivosPorCliente':
 	break; 
 	case 'insertarPublicacion': 
 		insertarPublicacion($serviciosReferencias); 
+
 	break; 
 	case 'modificarPublicacion': 
 		modificarPublicacion($serviciosReferencias); 
@@ -791,6 +792,7 @@ case 'traerArchivosPorCliente':
 		$registrofederalcontribuyente = $_POST['registrofederalcontribuyente']; 
 		$fechadeclaracionanterior = $_POST['fechadeclaracionanterior']; 
 		$fechatomaposesion = $_POST['fechatomaposesion']; 
+
 		$cargoactual = $_POST['cargoactual']; 
 		$cargoanterior = $_POST['cargoanterior']; 
 		$areaadquisicion = $_POST['areaadquisicion']; 
@@ -803,7 +805,7 @@ case 'traerArchivosPorCliente':
 		if ($res == true) { 
 			echo ''; 
 		} else { 
-			echo 'Hubo un error al modificar datos'; 
+			echo 'Hubo un error al modificar datos '; 
 		} 
 	} 
 
@@ -881,6 +883,10 @@ case 'traerArchivosPorCliente':
 		$vigenciahasta = $_POST['vigenciahasta']; 
 		$res = $serviciosReferencias->insertarIngresosanuales($refdeclaracionjuradacabecera,$remuneracionanualneta,$actividadindustrial,$razonsocialactividadindustrial,$actividadfinanciera,$razonsocialactividadfinanciera,$actividadprofesional,$descripcionactividadprofesional,$otros,$especifiqueotros,$ingresoanualconyuge,$especifiqueingresosconyuge,$fueservidorpublico,$vigenciadesde,$vigenciahasta); 
 		if ((integer)$res > 0) { 
+			if ($fueservidorpublico == 0) {
+				$serviciosReferencias->modificarVigencias($res);	
+			}
+			
 		echo ''; 
 		} else { 
 		echo 'Hubo un error al insertar datos';	 
@@ -908,8 +914,13 @@ case 'traerArchivosPorCliente':
 		} 
 		$vigenciadesde = $_POST['vigenciadesde']; 
 		$vigenciahasta = $_POST['vigenciahasta']; 
+
+
 		$res = $serviciosReferencias->modificarIngresosanuales($id,$refdeclaracionjuradacabecera,$remuneracionanualneta,$actividadindustrial,$razonsocialactividadindustrial,$actividadfinanciera,$razonsocialactividadfinanciera,$actividadprofesional,$descripcionactividadprofesional,$otros,$especifiqueotros,$ingresoanualconyuge,$especifiqueingresosconyuge,$fueservidorpublico,$vigenciadesde,$vigenciahasta); 
 		if ($res == true) { 
+			if ($fueservidorpublico == 0) {
+				$serviciosReferencias->modificarVigencias($id);	
+			}
 		echo ''; 
 		} else { 
 		echo 'Hubo un error al modificar datos'; 
@@ -967,6 +978,7 @@ case 'traerArchivosPorCliente':
 		echo 'Hubo un error al insertar datos';	 
 		} 
 	} 
+
 
 	function modificarPublicacion($serviciosReferencias) { 
 		$id = $_POST['id']; 

@@ -27,7 +27,7 @@ $resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Datos P
 
 $id = $_GET['id'];
 
-$resResultado = $serviciosReferencias->traerPublicacionPorId($id);
+$resResultado = $serviciosReferencias->traerPublicacionPorCabeceraCURP($id, $_SESSION['curp_predio']);
 
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
@@ -74,7 +74,7 @@ $refCampo 	=  array("refdeclaracionjuradacabecera");
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
-$formulario 	= $serviciosFunciones->camposTablaModificar($id, $idTabla, $modificar,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
+$formulario 	= $serviciosFunciones->camposTablaModificar(mysql_result($resResultado,0,'idpublicacion'), $idTabla, $modificar,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
 
 if ($_SESSION['refroll_predio'] != 1) {
@@ -211,7 +211,7 @@ $(document).ready(function(){
 
 	$('.volver').click(function(event){
 		 
-		url = "index.php";
+		url = "../ver.php?id=<?php echo mysql_result($resResultado, 0,'refdeclaracionjuradacabecera'); ?>";
 		$(location).attr('href',url);
 	});//fin del boton modificar
 

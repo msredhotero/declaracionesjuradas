@@ -447,6 +447,54 @@ return $res;
 /* /* Fin de la Tabla: images*/
 
 
+/* PARA Estados */
+
+function insertarEstados($estado) { 
+$sql = "insert into tbestados(idestado,estado) 
+values ('','".($estado)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarEstados($id,$estado) { 
+$sql = "update tbestados 
+set 
+estado = '".($estado)."' 
+where idestado =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarEstados($id) { 
+$sql = "delete from tbestados where idestado =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerEstados() { 
+$sql = "select 
+e.idestado,
+e.estado
+from tbestados e 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerEstadosPorId($id) { 
+$sql = "select idestado,estado from tbestados where idestado =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: tbestados*/
+
+
 function nuevoBuscador($busqueda) { 
 $sql = "select 
 c.idcliente,
@@ -626,7 +674,7 @@ return $res;
 
 function insertarDeclaracionanualinteres($refdeclaracionjuradacabecera,$essecretario,$esauditor,$ejercicio,$espublico,$refpoder,$registrofederalcontribuyente,$fechadeclaracionanterior,$fechatomaposesion,$cargoactual,$cargoanterior,$areaadquisicion,$areaadquisicionanterior,$dependencia,$dependenciaanterior) { 
 	$sql = "insert into dbdeclaracionanualinteres(iddeclaracionanualinteres,refdeclaracionjuradacabecera,essecretario,esauditor,ejercicio,espublico,refpoder,registrofederalcontribuyente,fechadeclaracionanterior,fechatomaposesion,cargoactual,cargoanterior,areaadquisicion,areaadquisicionanterior,dependencia,dependenciaanterior) 
-	values ('',".$refdeclaracionjuradacabecera.",".$essecretario.",".$esauditor.",".$ejercicio.",".$espublico.",".$refpoder.",'".($registrofederalcontribuyente)."','".($fechadeclaracionanterior)."','".($fechatomaposesion)."','".($cargoactual)."','".($cargoanterior)."','".($areaadquisicion)."','".($areaadquisicionanterior)."','".($dependencia)."','".($dependenciaanterior)."')"; 
+	values ('',".$refdeclaracionjuradacabecera.",".$essecretario.",".$esauditor.",".$ejercicio.",".$espublico.",".$refpoder.",'".($registrofederalcontribuyente)."','".($fechadeclaracionanterior == '' ? 'NULL' : "'".$fechadeclaracionanterior."'")."','".($fechatomaposesion == '' ? 'NULL' : "'".$fechatomaposesion."'")."','".($cargoactual)."','".($cargoanterior)."','".($areaadquisicion)."','".($areaadquisicionanterior)."','".($dependencia)."','".($dependenciaanterior)."')"; 
 	$res = $this->query($sql,1); 
 	return $res; 
 	} 
@@ -635,7 +683,7 @@ function insertarDeclaracionanualinteres($refdeclaracionjuradacabecera,$essecret
 	function modificarDeclaracionanualinteres($id,$refdeclaracionjuradacabecera,$essecretario,$esauditor,$ejercicio,$espublico,$refpoder,$registrofederalcontribuyente,$fechadeclaracionanterior,$fechatomaposesion,$cargoactual,$cargoanterior,$areaadquisicion,$areaadquisicionanterior,$dependencia,$dependenciaanterior) { 
 	$sql = "update dbdeclaracionanualinteres 
 	set 
-	refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",essecretario = ".$essecretario.",esauditor = ".$esauditor.",ejercicio = ".$ejercicio.",espublico = ".$espublico.",refpoder = ".$refpoder.",registrofederalcontribuyente = '".($registrofederalcontribuyente)."',fechadeclaracionanterior = '".($fechadeclaracionanterior)."',fechatomaposesion = '".($fechatomaposesion)."',cargoactual = '".($cargoactual)."',cargoanterior = '".($cargoanterior)."',areaadquisicion = '".($areaadquisicion)."',areaadquisicionanterior = '".($areaadquisicionanterior)."',dependencia = '".($dependencia)."',dependenciaanterior = '".($dependenciaanterior)."' 
+	refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",essecretario = ".$essecretario.",esauditor = ".$esauditor.",ejercicio = ".$ejercicio.",espublico = ".$espublico.",refpoder = ".$refpoder.",registrofederalcontribuyente = '".($registrofederalcontribuyente)."',fechadeclaracionanterior = ".($fechadeclaracionanterior == '' ? 'NULL' : "'".$fechadeclaracionanterior."'").",fechatomaposesion = ".($fechatomaposesion == '' ? 'NULL' : "'".$fechatomaposesion."'").",cargoactual = '".($cargoactual)."',cargoanterior = '".($cargoanterior)."',areaadquisicion = '".($areaadquisicion)."',areaadquisicionanterior = '".($areaadquisicionanterior)."',dependencia = '".($dependencia)."',dependenciaanterior = '".($dependenciaanterior)."' 
 	where iddeclaracionanualinteres =".$id; 
 	$res = $this->query($sql,0); 
 	return $res; 
@@ -919,8 +967,9 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 	
 	function insertarIngresosanuales($refdeclaracionjuradacabecera,$remuneracionanualneta,$actividadindustrial,$razonsocialactividadindustrial,$actividadfinanciera,$razonsocialactividadfinanciera,$actividadprofesional,$descripcionactividadprofesional,$otros,$especifiqueotros,$ingresoanualconyuge,$especifiqueingresosconyuge,$fueservidorpublico,$vigenciadesde,$vigenciahasta) { 
 	$sql = "insert into dbingresosanuales(idingresoanual,refdeclaracionjuradacabecera,remuneracionanualneta,actividadindustrial,razonsocialactividadindustrial,actividadfinanciera,razonsocialactividadfinanciera,actividadprofesional,descripcionactividadprofesional,otros,especifiqueotros,ingresoanualconyuge,especifiqueingresosconyuge,fueservidorpublico,vigenciadesde,vigenciahasta) 
-	values ('',".$refdeclaracionjuradacabecera.",".$remuneracionanualneta.",".$actividadindustrial.",'".($razonsocialactividadindustrial)."',".$actividadfinanciera.",'".($razonsocialactividadfinanciera)."',".$actividadprofesional.",'".($descripcionactividadprofesional)."',".$otros.",'".($especifiqueotros)."',".$ingresoanualconyuge.",'".($especifiqueingresosconyuge)."',".$fueservidorpublico.",'".($vigenciadesde)."','".($vigenciahasta)."')"; 
+	values ('',".$refdeclaracionjuradacabecera.",".$remuneracionanualneta.",".$actividadindustrial.",'".($razonsocialactividadindustrial)."',".$actividadfinanciera.",'".($razonsocialactividadfinanciera)."',".$actividadprofesional.",'".($descripcionactividadprofesional)."',".$otros.",'".($especifiqueotros)."',".$ingresoanualconyuge.",'".($especifiqueingresosconyuge)."',".$fueservidorpublico.",'".($vigenciadesde == '' ? NULL : $vigenciadesde)."','".($vigenciahasta == '' ? NULL : $vigenciahasta)."')"; 
 	$res = $this->query($sql,1); 
+
 	return $res; 
 	} 
 	
@@ -933,6 +982,15 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 	$res = $this->query($sql,0); 
 	return $res; 
 	} 
+
+	function modificarVigencias($id) {
+		$sql = "update dbingresosanuales 
+				set 
+				vigenciadesde = NULL,vigenciahasta = NULL
+				where idingresoanual =".$id; 
+		$res = $this->query($sql,0); 
+		return $res; 
+	}
 	
 	
 	function eliminarIngresosanuales($id) { 
@@ -957,7 +1015,7 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 	i.especifiqueotros,
 	i.ingresoanualconyuge,
 	i.especifiqueingresosconyuge,
-	i.fueservidorpublico,
+	(case when i.fueservidorpublico = 1 then 'Si' else 'No' end) as fueservidorpublico,
 	i.vigenciadesde,
 	i.vigenciahasta
 	from dbingresosanuales i 
@@ -968,7 +1026,7 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 	
 	
 	function traerIngresosanualesPorId($id) { 
-	$sql = "select idingresoanual,refdeclaracionjuradacabecera,remuneracionanualneta,actividadindustrial,razonsocialactividadindustrial,actividadfinanciera,razonsocialactividadfinanciera,actividadprofesional,descripcionactividadprofesional,otros,especifiqueotros,ingresoanualconyuge,especifiqueingresosconyuge,fueservidorpublico,vigenciadesde,vigenciahasta from dbingresosanuales where idingresoanual =".$id; 
+	$sql = "select idingresoanual,refdeclaracionjuradacabecera,remuneracionanualneta,actividadindustrial,razonsocialactividadindustrial,actividadfinanciera,razonsocialactividadfinanciera,actividadprofesional,descripcionactividadprofesional,otros,especifiqueotros,ingresoanualconyuge,especifiqueingresosconyuge,(case when fueservidorpublico = 1 then 'Si' else 'No' end) as fueservidorpublico,vigenciadesde,vigenciahasta from dbingresosanuales where idingresoanual =".$id; 
 	$res = $this->query($sql,0); 
 	return $res; 
 	} 
@@ -1019,7 +1077,7 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 					i.especifiqueotros,
 					i.ingresoanualconyuge,
 					i.especifiqueingresosconyuge,
-					i.fueservidorpublico,
+					(case when i.fueservidorpublico = 1 then 'Si' else 'No' end) as fueservidorpublico,
 					i.vigenciadesde,
 					i.vigenciahasta
 				from dbingresosanuales i 
@@ -1321,17 +1379,22 @@ function traerAgenteReal($curp) {
 }
 
 function insertarDeclaracionjuradacabecera($fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios) { 
-$sql = "insert into dbdeclaracionjuradacabecera(iddeclaracionjuradacabecera,fecharecepcion,primerapellido,segundoapellido,nombres,curp,homoclave,emailinstitucional,emailalterno,refestadocivil,refregimenmatrimonial,paisnacimiento,nacionalidad,entidadnacimiento,numerocelular,lugarubica,domicilioparticular,localidad,municipio,telefono,entidadfederativa,codigopostal,lada,sexo,estudios,cedulaprofesional,refusuarios) 
-values ('','".($fecharecepcion)."','".($primerapellido)."','".($segundoapellido)."','".($nombres)."','".($curp)."','".($homoclave)."','".($emailinstitucional)."','".($emailalterno)."',".$refestadocivil.",".$refregimenmatrimonial.",'".($paisnacimiento)."','".($nacionalidad)."','".($entidadnacimiento)."','".($numerocelular)."',".$lugarubica.",'".($domicilioparticular)."','".($localidad)."','".($municipio)."','".($telefono)."','".($entidadfederativa)."','".($codigopostal)."','".($lada)."',".$sexo.",'".($estudios)."','".($cedulaprofesional)."',".$refusuarios.")"; 
+$sql = "insert into dbdeclaracionjuradacabecera(iddeclaracionjuradacabecera,fecharecepcion,primerapellido,segundoapellido,nombres,curp,homoclave,emailinstitucional,emailalterno,refestadocivil,refregimenmatrimonial,paisnacimiento,nacionalidad,entidadnacimiento,numerocelular,lugarubica,domicilioparticular,localidad,municipio,telefono,entidadfederativa,codigopostal,lada,sexo,estudios,cedulaprofesional,refusuarios, refestados) 
+values ('','".($fecharecepcion)."','".($primerapellido)."','".($segundoapellido)."','".($nombres)."','".($curp)."','".($homoclave)."','".($emailinstitucional)."','".($emailalterno)."',".$refestadocivil.",".$refregimenmatrimonial.",'".($paisnacimiento)."','".($nacionalidad)."','".($entidadnacimiento)."','".($numerocelular)."',".$lugarubica.",'".($domicilioparticular)."','".($localidad)."','".($municipio)."','".($telefono)."','".($entidadfederativa)."','".($codigopostal)."','".($lada)."',".$sexo.",'".($estudios)."','".($cedulaprofesional)."',".$refusuarios.", 1)"; 
 $res = $this->query($sql,1); 
 return $res; 
 } 
 
 
-function modificarDeclaracionjuradacabecera($id,$fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios) { 
+function modificarDeclaracionjuradacabecera($id,$fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios, $refestados) { 
 $sql = "update dbdeclaracionjuradacabecera 
 set 
-fecharecepcion = '".($fecharecepcion)."',primerapellido = '".($primerapellido)."',segundoapellido = '".($segundoapellido)."',nombres = '".($nombres)."',curp = '".($curp)."',homoclave = '".($homoclave)."',emailinstitucional = '".($emailinstitucional)."',emailalterno = '".($emailalterno)."',refestadocivil = ".$refestadocivil.",refregimenmatrimonial = ".$refregimenmatrimonial.",paisnacimiento = '".($paisnacimiento)."',nacionalidad = '".($nacionalidad)."',entidadnacimiento = '".($entidadnacimiento)."',numerocelular = '".($numerocelular)."',lugarubica = ".$lugarubica.",domicilioparticular = '".($domicilioparticular)."',localidad = '".($localidad)."',municipio = '".($municipio)."',telefono = '".($telefono)."',entidadfederativa = '".($entidadfederativa)."',codigopostal = '".($codigopostal)."',lada = '".($lada)."',sexo = ".$sexo.",estudios = '".($estudios)."',cedulaprofesional = '".($cedulaprofesional)."',refusuarios = ".$refusuarios." 
+fecharecepcion = '".($fecharecepcion)."',primerapellido = '".($primerapellido)."',segundoapellido = '".($segundoapellido)."',nombres = '".($nombres)."',curp = '".($curp)."',homoclave = '".($homoclave)."',emailinstitucional = '".($emailinstitucional)."',emailalterno = '".($emailalterno)."',refestadocivil = ".$refestadocivil.",refregimenmatrimonial = ".$refregimenmatrimonial.",paisnacimiento = '".($paisnacimiento)."',nacionalidad = '".($nacionalidad)."',
+entidadnacimiento = '".($entidadnacimiento)."',numerocelular = '".($numerocelular)."',
+lugarubica = ".$lugarubica.",domicilioparticular = '".($domicilioparticular)."',localidad = '".($localidad)."',
+municipio = '".($municipio)."',telefono = '".($telefono)."',entidadfederativa = '".($entidadfederativa)."',
+codigopostal = '".($codigopostal)."',lada = '".($lada)."',sexo = ".$sexo.",estudios = '".($estudios)."',
+cedulaprofesional = '".($cedulaprofesional)."',refusuarios = ".$refusuarios.", refestados = ".$refestados." 
 where iddeclaracionjuradacabecera =".$id; 
 $res = $this->query($sql,0); 
 return $res; 
@@ -1387,7 +1450,7 @@ return $res;
 
 
 function traerDeclaracionjuradacabeceraPorId($id) { 
-$sql = "select iddeclaracionjuradacabecera,fecharecepcion,primerapellido,segundoapellido,nombres,curp,homoclave,emailinstitucional,emailalterno,refestadocivil,refregimenmatrimonial,paisnacimiento,nacionalidad,entidadnacimiento,numerocelular,lugarubica,domicilioparticular,localidad,municipio,telefono,entidadfederativa,codigopostal,lada,sexo,estudios,cedulaprofesional,refusuarios from dbdeclaracionjuradacabecera where iddeclaracionjuradacabecera =".$id; 
+$sql = "select iddeclaracionjuradacabecera,fecharecepcion,primerapellido,segundoapellido,nombres,curp,homoclave,emailinstitucional,emailalterno,refestadocivil,refregimenmatrimonial,paisnacimiento,nacionalidad,entidadnacimiento,numerocelular,lugarubica,domicilioparticular,localidad,municipio,telefono,entidadfederativa,codigopostal,lada,sexo,estudios,cedulaprofesional,refusuarios, refestados from dbdeclaracionjuradacabecera where iddeclaracionjuradacabecera =".$id; 
 $res = $this->query($sql,0); 
 return $res; 
 } 
@@ -1402,12 +1465,14 @@ function traerDeclaracionjuradacabeceraGrilla() {
 				d.curp,
 				d.fecharecepcion,
 				d.telefono,
-				d.emailinstitucional
+				d.emailinstitucional,
+				et.estado
 			from dbdeclaracionjuradacabecera d 
 			inner join tbestadocivil est ON est.idestadocivil = d.refestadocivil 
 			inner join tbregimenmatrimonial reg ON reg.idregimenmatrimonial = d.refregimenmatrimonial 
 			inner join dbusuarios usu ON usu.idusuario = d.refusuarios 
 			inner join tbroles ro ON ro.idrol = usu.refroles 
+			inner join tbestados et on et.idestado = d.refestados
 			order by 1"; 
 	$res = $this->query($sql,0); 
 	return $res; 
@@ -1422,13 +1487,14 @@ function traerDeclaracionjuradacabeceraGrillaPorCURP($curp) {
 				d.nombres,
 				d.curp,
 				d.fecharecepcion,
-				d.telefono,
-				d.emailinstitucional
+				d.emailinstitucional,
+				et.estado
 			from dbdeclaracionjuradacabecera d 
 			inner join tbestadocivil est ON est.idestadocivil = d.refestadocivil 
 			inner join tbregimenmatrimonial reg ON reg.idregimenmatrimonial = d.refregimenmatrimonial 
 			inner join dbusuarios usu ON usu.idusuario = d.refusuarios 
 			inner join tbroles ro ON ro.idrol = usu.refroles 
+			inner join tbestados et on et.idestado = d.refestados
 			where d.curp = '".$curp."'
 			order by 1"; 
 	$res = $this->query($sql,0); 

@@ -190,7 +190,7 @@ class Servicios {
 				break;
 			case 90:
 				//funciones
-				$cantidad = 5;
+				$cantidad = 6;
 				$classMod = 'varmodificar';
 				$classEli = 'varborrar';
 				$classEditar = 'vargastos';
@@ -407,6 +407,7 @@ class Servicios {
 		$sql	=	"show columns from ".$tabla;
 		$res 	=	$this->query($sql,0);
 		$label  = '';
+		$lblObligatorio = '';
 		$ocultar = array("fechacrea","fechacreacion","fechamodi","usuacrea","usuamodi","tipoimagen","utilidad","type");
 		
 		$geoposicionamiento = array("latitud","longitud");
@@ -432,6 +433,13 @@ class Servicios {
 			
 			while ($row = mysql_fetch_array($res)) {
 				$label = $row[0];
+
+				if ($row[2]=='NO') {
+					$lblObligatorio = ' <span style="color:#FF0000">*</span> ';
+				} else {
+					$lblObligatorio = '';
+				}
+
 				$i = 0;
 				foreach ($lblcambio as $cambio) {
 					if ($row[0] == $cambio) {
@@ -472,7 +480,7 @@ class Servicios {
 							$form	=	$form.'
 							
 							<div class="form-group col-md-6 col-xs-6" style="display:'.$lblOculta.'">
-								<label for="'.$label.'" class="control-label" style="text-align:left">'.ucwords($label).'</label>
+								<label for="'.$label.'" class="control-label" style="text-align:left">'.ucwords($label).$lblObligatorio.'</label>
 								<div class="input-group col-md-12 col-xs-12">
 									<span class="input-group-addon">$</span>
 									<input type="text" class="form-control" id="'.strtolower($row[0]).'" name="'.strtolower($row[0]).'" value="0" required>
@@ -507,7 +515,7 @@ class Servicios {
 								$form	=	$form.'
 							
 								<div class="form-group col-md-6 col-xs-6" style="display:'.$lblOculta.'">
-									<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.'</label>
+									<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
 									<div class="input-group col-md-12 col-xs-12">
 										
 										<select data-placeholder="selecione el '.$label.'..." id="'.strtolower($campo).'" name="'.strtolower($campo).'" class="chosen-select" tabindex="2">
@@ -526,7 +534,7 @@ class Servicios {
 								$form	=	$form.'
 								
 								<div class="form-group col-md-6 col-xs-6" style="display:'.$lblOculta.'">
-									<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.'</label>
+									<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
 									<div class="input-group col-md-12 col-xs-12">
 										<select class="form-control" id="'.strtolower($campo).'" name="'.strtolower($campo).'">
 											';
@@ -549,7 +557,7 @@ class Servicios {
 								$form	=	$form.'
 								
 								<div class="form-group col-md-6 col-xs-6" style="display:'.$lblOculta.'">
-									<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.'</label>
+									<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
 									<div class="input-group col-md-12 fontcheck col-xs-12">
 										<input type="checkbox" class="form-control" id="'.$campo.'" name="'.$campo.'" style="width:50px;" required> <p>Si/No</p>
 									</div>
@@ -568,7 +576,7 @@ class Servicios {
 										$form	=	$form.'
 														
 										<div class="form-group col-md-6 col-xs-6">
-											<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.'</label>
+											<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
 											<div class="input-group col-md-6 col-xs-12">
 												<input class="form-control" type="text" value="" name="'.$campo.'" id="'.$campo.'"/>
 											</div>
@@ -580,7 +588,7 @@ class Servicios {
 										$form	=	$form.'
 										
 										<div class="form-group col-md-6 col-xs-6" style="display:'.$lblOculta.'">
-											<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.'</label>
+											<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
 											<div class="input-group date form_date col-md-6 col-xs-6" data-date="" data-date-format="dd MM yyyy" data-link-field="'.$campo.'" data-link-format="yyyy-mm-dd">
 												<input class="form-control" size="50" type="text" value="" readonly>
 												<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
@@ -613,7 +621,7 @@ class Servicios {
 										$form	=	$form.'
 										
 										<div class="form-group col-md-6 col-xs-6" style="display:'.$lblOculta.'">
-											<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.'</label>
+											<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
 											<div class="input-group bootstrap-timepicker col-md-6 col-xs-6">
 												<input id="'.$campo.'" name="'.$campo.'" class="form-control">
 												<span class="input-group-addon">
@@ -633,7 +641,7 @@ class Servicios {
 											$form	=	$form.'
 											
 											<div class="form-group col-md-12 col-xs-12" style="display:'.$lblOculta.'">
-												<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.'</label>
+												<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
 												<div class="input-group col-md-12 col-xs-12">
 													<textarea name="'.$campo.'" id="'.$campo.'" rows="200" cols="160">
 														Ingrese la noticia.
@@ -655,7 +663,7 @@ class Servicios {
 												$form	=	$form.'
 												
 												<div class="form-group col-md-6 col-xs-6" style="display:'.$lblOculta.'">
-													<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.'</label>
+													<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
 													<div class="input-group col-md-12 col-xs-12">
 														<textarea type="text" rows="10" cols="6" class="form-control" id="'.$campo.'" name="'.$campo.'" placeholder="Ingrese el '.$label.'..." required></textarea>
 													</div>
@@ -716,9 +724,9 @@ class Servicios {
 													$form	=	$form.'
 													
 													<div class="form-group col-md-6 col-xs-6" style="display:'.$lblOculta.'">
-														<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.'</label>
+														<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
 														<div class="input-group col-md-12 col-xs-12">
-															<input type="text" class="form-control" id="'.$campo.'" name="'.$campo.'" placeholder="Ingrese el '.$label.'..." required>
+															<input type="text" class="form-control vtexto" id="'.$campo.'" name="'.$campo.'" placeholder="Ingrese el '.$label.'..." required>
 														</div>
 													</div>
 													
@@ -1086,6 +1094,7 @@ class Servicios {
 		$ocultar = array("fechacrea","fechacreacion","fechamodi","usuacrea","usuamodi","tipoimagen","utilidad","refviejo","reftipopago");
 		
 		$camposEscondido = "";
+		$lblObligatorio = '';
 		/* Analizar para despues */
 		/*if (count($refencias) > 0) {
 			$j = 0;
@@ -1106,6 +1115,13 @@ class Servicios {
 			
 			while ($row = mysql_fetch_array($res)) {
 				$label = $row[0];
+
+				if ($row[2]=='NO') {
+					$lblObligatorio = ' <span style="color:#FF0000">*</span> ';
+				} else {
+					$lblObligatorio = '';
+				}
+				
 				$i = 0;
 				foreach ($lblcambio as $cambio) {
 					if ($row[0] == $cambio) {
@@ -1129,7 +1145,7 @@ class Servicios {
 						$form	=	$form.'
 						
 						<div class="form-group col-md-6" style="display:'.$lblOculta.'">
-							<label for="'.$label.'" class="control-label" style="text-align:left">'.ucwords($label).'</label>
+							<label for="'.$label.'" class="control-label" style="text-align:left">'.ucwords($label).$lblObligatorio.'</label>
 							<div class="input-group col-md-12">
 								<span class="input-group-addon">$</span>
 								<input type="text" class="form-control" id="'.strtolower($row[0]).'" name="'.strtolower($row[0]).'" value="'.mysql_result($resMod,0,$row[0]).'" required>
@@ -1160,7 +1176,7 @@ class Servicios {
 							$form	=	$form.'
 							
 							<div class="form-group col-md-6" style="display:'.$lblOculta.'">
-								<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.'</label>
+								<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
 								<div class="input-group col-md-12">
 									<select class="form-control" id="'.strtolower($campo).'" name="'.strtolower($campo).'">
 										';
@@ -1187,7 +1203,7 @@ class Servicios {
 								$form	=	$form.'
 								
 								<div class="form-group col-md-6" style="display:'.$lblOculta.'">
-									<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.'</label>
+									<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
 									<div class="input-group col-md-12 fontcheck">
 										<input type="checkbox" '.$activo.' class="form-control" id="'.$campo.'" name="'.$campo.'" style="width:50px;" required> <p>Si/No</p>
 									</div>
@@ -1204,11 +1220,11 @@ class Servicios {
 									
 									
 
-									if (($row[0] == "fechapago") || ($row[0] == "vigenciadesde") || ($row[0] == "vigenciahasta") || ($row[0] == "fechaalta") || ($row[0] == "fechabaja") || ($row[0] == "fechabajatentativa")) {
+									if (($row[0] == "fechapago") || ($row[0] == "fechaalta") || ($row[0] == "fechabaja") || ($row[0] == "fechabajatentativa")) {
 										$form	=	$form.'
 														
 										<div class="form-group col-md-6 col-xs-6">
-											<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.'</label>
+											<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
 											<div class="input-group col-md-6 col-xs-12">
 												<input class="form-control '.$campo.'" type="text" name="'.$campo.'" id="'.$campo.'"/>
 											</div>
@@ -1220,10 +1236,11 @@ class Servicios {
 										$form	=	$form.'
 									
 										<div class="form-group col-md-6" style="display:'.$lblOculta.'">
-											<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.'</label>
+											<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
 											<div class="input-group date form_date col-md-6" data-date="" data-date-format="dd MM yyyy" data-link-field="'.$campo.'" data-link-format="yyyy-mm-dd">
 												<input class="form-control" value="'.mysql_result($resMod,0,$row[0]).'" size="50" type="text" value="" readonly>
 												<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+												<span class="input-group-addon"><span class="glyphicon glyphicon-remove"></span></span>
 											</div>
 											<input type="hidden" name="'.$campo.'" id="'.$campo.'" value="'.mysql_result($resMod,0,$row[0]).'" />
 										</div>
@@ -1253,7 +1270,7 @@ class Servicios {
 										$form	=	$form.'
 										
 										<div class="form-group col-md-6" style="display:'.$lblOculta.'">
-											<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.'</label>
+											<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
 											<div class="input-group bootstrap-timepicker col-md-6">
 												<input id="'.$campo.'" value="'.mysql_result($resMod,0,$row[0]).'" name="'.$campo.'" class="form-control">
 												<span class="input-group-addon">
@@ -1273,9 +1290,9 @@ class Servicios {
 											$form	=	$form.'
 											
 											<div class="form-group col-md-6" style="display:'.$lblOculta.'">
-												<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.'</label>
+												<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
 												<div class="input-group col-md-12">
-													<textarea type="text" rows="10" cols="6" class="form-control" id="'.$campo.'" name="'.$campo.'" placeholder="Ingrese el '.$label.'..." required>'.(mysql_result($resMod,0,$row[0])).'</textarea>
+													<textarea type="text" rows="10" cols="6" class="form-control vtexto" id="'.$campo.'" name="'.$campo.'" placeholder="Ingrese el '.$label.'..." required>'.(mysql_result($resMod,0,$row[0])).'</textarea>
 												</div>
 												
 											</div>
@@ -1291,7 +1308,7 @@ class Servicios {
 											$form	=	$form.'
 											
 											<div class="form-group col-md-12" style="display:'.$lblOculta.'">
-												<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.'</label>
+												<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
 												<div class="input-group col-md-12">
 													<textarea name="'.$campo.'" id="'.$campo.'" rows="200" cols="160">
 														Ingrese la noticia.
@@ -1427,9 +1444,9 @@ class Servicios {
 														$form	=	$form.'
 														
 														<div class="form-group col-md-6" style="display:'.$lblOculta.'">
-															<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.'</label>
+															<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
 															<div class="input-group col-md-12">
-																<input type="text" value="'.(mysql_result($resMod,0,$row[0])).'" class="form-control" id="'.$campo.'" name="'.$campo.'" placeholder="Ingrese el '.$label.'..." required>
+																<input type="text" value="'.(mysql_result($resMod,0,$row[0])).'" class="form-control vtexto" id="'.$campo.'" name="'.$campo.'" placeholder="Ingrese el '.$label.'..." required>
 															</div>
 														</div>
 														

@@ -228,7 +228,7 @@ if ($_SESSION['refroll_predio'] != 1) {
 <script type="text/javascript" src="../../js/jquery.dataTables.min.js"></script>
 <script src="../../bootstrap/js/dataTables.bootstrap.js"></script>
 
-<script src="../../js/bootstrap-datetimepicker.min.js"></script>
+<script src="../../js/bootstrap-datetimepicker.js"></script>
 <script src="../../js/bootstrap-datetimepicker.es.js"></script>
 
 <script type="text/javascript">
@@ -236,9 +236,13 @@ $(document).ready(function(){
 
 	$('.volver').click(function(event){
 		 
-		url = "index.php";
+		url = "../ver.php?id=<?php echo mysql_result($resResultado, 0,'refdeclaracionjuradacabecera'); ?>";
 		$(location).attr('href',url);
 	});//fin del boton modificar
+
+	$('.vtexto').keypress(function(tecla) {
+        if((tecla.charCode != 241) && (tecla.charCode != 209) && (tecla.charCode != 64) && (tecla.charCode < 48 || tecla.charCode > 57) && (tecla.charCode < 97 || tecla.charCode > 122) && (tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode != 45)) return false;
+    });
 	
 	$('.varborrar').click(function(event){
 		  usersid =  $(this).attr("id");
@@ -303,59 +307,67 @@ $(document).ready(function(){
 	
 	//al enviar el formulario
     $('#cargar').click(function(){
-		
-		if (validador() == "")
-        {
-			//información del formulario
-			var formData = new FormData($(".formulario")[0]);
-			var message = "";
-			//hacemos la petición ajax  
-			$.ajax({
-				url: '../../ajax/ajax.php',  
-				type: 'POST',
-				// Form data
-				//datos del formulario
-				data: formData,
-				//necesario para subir archivos via ajax
-				cache: false,
-				contentType: false,
-				processData: false,
-				//mientras enviamos el archivo
-				beforeSend: function(){
-					$("#load").html('<img src="../../imagenes/load13.gif" width="50" height="50" />');       
-				},
-				//una vez finalizado correctamente
-				success: function(data){
+		if ($('#fechaadquisicion').val() != '') {
+			if (validador() == "") 
+	        {
+				//información del formulario
+				var formData = new FormData($(".formulario")[0]);
+				var message = "";
+				//hacemos la petición ajax  
+				$.ajax({
+					url: '../../ajax/ajax.php',  
+					type: 'POST',
+					// Form data
+					//datos del formulario
+					data: formData,
+					//necesario para subir archivos via ajax
+					cache: false,
+					contentType: false,
+					processData: false,
+					//mientras enviamos el archivo
+					beforeSend: function(){
+						$("#load").html('<img src="../../imagenes/load13.gif" width="50" height="50" />');  
+						$(".alert").html('');     
+					},
+					//una vez finalizado correctamente
+					success: function(data){
 
-					if (data == '') {
-                                            $(".alert").removeClass("alert-danger");
-											$(".alert").removeClass("alert-info");
-                                            $(".alert").addClass("alert-success");
-                                            $(".alert").html('<strong>Ok!</strong> Se modifico exitosamente el <strong><?php echo $singular; ?></strong>. ');
-											$(".alert").delay(3000).queue(function(){
-												/*aca lo que quiero hacer 
-												  después de los 2 segundos de retraso*/
-												$(this).dequeue(); //continúo con el siguiente ítem en la cola
+						if (data == '') {
+	                                            $(".alert").removeClass("alert-danger");
+												$(".alert").removeClass("alert-info");
+	                                            $(".alert").addClass("alert-success");
+	                                            $(".alert").html('<strong>Ok!</strong> Se modifico exitosamente el <strong><?php echo $singular; ?></strong>. ');
+												$(".alert").delay(3000).queue(function(){
+													/*aca lo que quiero hacer 
+													  después de los 2 segundos de retraso*/
+													$(this).dequeue(); //continúo con el siguiente ítem en la cola
+													
+												});
+												$("#load").html('');
+												//url = "index.php";
+												//$(location).attr('href',url);
+	                                            
 												
-											});
-											$("#load").html('');
-											//url = "index.php";
-											//$(location).attr('href',url);
-                                            
-											
-                                        } else {
-                                        	$(".alert").removeClass("alert-danger");
-                                            $(".alert").addClass("alert-danger");
-                                            $(".alert").html('<strong>Error!</strong> '+data);
-                                            $("#load").html('');
-                                        }
-				},
-				//si ha ocurrido un error
-				error: function(){
-					$(".alert").html('<strong>Error!</strong> Actualice la pagina');
-                    $("#load").html('');
-				}
-			});
+	                                        } else {
+	                                        	$(".alert").removeClass("alert-danger");
+	                                            $(".alert").addClass("alert-danger");
+	                                            $(".alert").html('<strong>Error!</strong> '+data);
+	                                            $("#load").html('');
+	                                        }
+					},
+					//si ha ocurrido un error
+					error: function(){
+						$(".alert").html('<strong>Error!</strong> Actualice la pagina');
+	                    $("#load").html('');
+					}
+				});
+			
+			}
+		} else {
+			$(".alert").removeClass("alert-danger");
+	        $(".alert").addClass("alert-danger");
+			$(".alert").html('<strong>Error!</strong> La fecha de Adquisicion es obligatoria');
+            $("#load").html('');
 		}
     });
 

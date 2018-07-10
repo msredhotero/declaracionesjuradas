@@ -70,7 +70,8 @@ $lblCambio	 	= array('fecharecepcion',
 						'codigopostal',
 						'estudios',
 						'cedulaprofesional',
-						'refusuarios');
+						'refusuarios'
+						,"refestados");
 $lblreemplazo	= array('Fecha de Recepción',
 						'Primer Apellido',
 						'Segundo Apellido',
@@ -93,7 +94,8 @@ $lblreemplazo	= array('Fecha de Recepción',
 						'Codigo Postal',
 						'Grado Max. de estudios/Especialidad',
 						'Nro de cédula profesional',
-						'Usuario');
+						'Usuario',
+						'Estados');
 
 
 $resEstadoCivil = $serviciosReferencias->traerEstadocivil();
@@ -117,15 +119,19 @@ if (mysql_result($resResultado,0,'sexo') == '1') {
 	$cadRef5 = "<option value='1'>Femenino</option><option value='2' selected>Masculino</option>";
 }
 
+$resEstado = $serviciosReferencias->traerEstadosPorId(mysql_result($resResultado,0,'refestados'));
+$cadRef6 = $serviciosFunciones->devolverSelectBoxActivo($resEstado,array(1),'', mysql_result($resResultado,0,'refestados'));
 
 
-$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3,3=>$cadRef4,4=>$cadRef5);
-$refCampo 	=  array("refestadocivil","refregimenmatrimonial","refusuarios","lugarubica","sexo"); 
+
+$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3,3=>$cadRef4,4=>$cadRef5,5=>$cadRef6);
+$refCampo 	=  array("refestadocivil","refregimenmatrimonial","refusuarios","lugarubica","sexo","refestados"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
 $formulario 	= $serviciosFunciones->camposTablaModificar($id, $idTabla, $modificar,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
+$declaracionReal = $serviciosReferencias->traerAgenteReal($_SESSION['curp_predio']);
 
 if ($_SESSION['refroll_predio'] != 1) {
 
@@ -261,9 +267,38 @@ $(document).ready(function(){
 
 	$('.volver').click(function(event){
 		 
-		url = "index.php";
+		url = "../ver.php?id=<?php echo $id; ?>";
 		$(location).attr('href',url);
 	});//fin del boton modificar
+
+	$('.vtexto').keypress(function(tecla) {
+        if((tecla.charCode != 241) && (tecla.charCode != 209) && (tecla.charCode != 64) && (tecla.charCode < 48 || tecla.charCode > 57) && (tecla.charCode < 97 || tecla.charCode > 122) && (tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode != 45)) return false;
+    });
+
+
+	$('#primerapellido').val('<?php echo mysql_result($declaracionReal,0,'paterno'); ?>');
+	$('#primerapellido').prop('readonly', true);
+
+	$('#segundoapellido').val('<?php echo mysql_result($declaracionReal,0,'materno'); ?>');
+	$('#segundoapellido').prop('readonly', true);
+
+	$('#nombres').val('<?php echo mysql_result($declaracionReal,0,'nombre'); ?>');
+	$('#nombres').prop('readonly', true);
+
+	$('#curp').val('<?php echo mysql_result($declaracionReal,0,'curp'); ?>');
+	$('#curp').prop('readonly', true);
+
+	$('#homoclave').val('<?php echo mysql_result($declaracionReal,0,'rfc'); ?>');
+	$('#homoclave').prop('readonly', true);
+
+	$('#emailinstitucional').val('<?php echo mysql_result($declaracionReal,0,'email'); ?>');
+	$('#emailinstitucional').prop('readonly', true);
+
+	$('#numerocelular').val('<?php echo mysql_result($declaracionReal,0,'celular'); ?>');
+	$('#numerocelular').prop('readonly', true);
+
+	$('#domicilioparticular').val('<?php echo mysql_result($declaracionReal,0,'domicilio_particular'); ?>');
+	$('#domicilioparticular').prop('readonly', true);
 	
 	$('.varborrar').click(function(event){
 		  usersid =  $(this).attr("id");

@@ -58,6 +58,7 @@ $tablasAr	= array("declaracionjuradacabecera"        => "dbdeclaracionjuradacabe
 "bienesinmuebles"			=> "dbbienesinmuebles",
 "inversiones"				=> "dbinversiones",
 "tipoinversion"				=> "tbtipoinversion",
+"estados"				=> "tbestados",
 "regimenmatrimonial" 		=> "tbregimenmatrimonial");
 
 
@@ -86,6 +87,7 @@ function recursiveTablas($ar, $tabla, $aliasTablaMadre) {
 	"bienesinmuebles"			=> "dbbienesinmuebles",
 	"inversiones"				=> "dbinversiones",
 	"tipoinversion"				=> "tbtipoinversion",
+	"estados"				=> "tbestados",
 	"regimenmatrimonial" 		=> "tbregimenmatrimonial");
 
 	$tablasArAux	= array("declaracionjuradacabecera"        => 3,                
@@ -111,6 +113,7 @@ function recursiveTablas($ar, $tabla, $aliasTablaMadre) {
 "bienesinmuebles"			=> 7,
 "inversiones"				=> 4,
 "tipoinversion"				=> 1,
+"estados"				=> 1,
 "regimenmatrimonial" => 1);
 	
 	$inner= '';

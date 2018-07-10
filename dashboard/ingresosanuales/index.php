@@ -26,7 +26,7 @@ $resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Ingreso
 
 
 ///////////////////////   id de la cabecera de la declaracion /////////////////////////
-$id = 1;
+$id = $_GET['id'];
 ///////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -107,6 +107,7 @@ $formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lb
 
 $lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerIngresosanualesGrilla(),8);
 
+$frmIngresosAnuales = $serviciosReferencias->traerIngresosanualesPorCabeceraCURP($id, $_SESSION['curp_predio']);
 
 
 if ($_SESSION['refroll_predio'] != 1) {
@@ -227,9 +228,27 @@ if ($_SESSION['refroll_predio'] != 1) {
             <div class="row">
                 <div class="col-md-12">
                 <ul class="list-inline" style="margin-top:15px;">
+
+                	<?php
+						if (mysql_num_rows($frmIngresosAnuales) > 0) {
+					?>
+
                     <li>
+                        <button type="button" class="btn btn-default volver" style="margin-left:0px;">Volver</button>
+                    </li>
+                    <?php
+						} else {
+					?>
+					<li>
                         <button type="button" class="btn btn-primary" id="cargar" style="margin-left:0px;">Guardar</button>
                     </li>
+                    <li>
+                        <button type="button" class="btn btn-default volver" style="margin-left:0px;">Volver</button>
+                    </li>
+					<?php
+						}
+					?>
+                    
                 </ul>
                 </div>
             </div>
@@ -272,6 +291,19 @@ if ($_SESSION['refroll_predio'] != 1) {
 
 <script type="text/javascript">
 $(document).ready(function(){
+
+
+	$('.volver').click(function(event){
+		 
+		url = "../ver.php?id=<?php echo $id; ?>";
+		$(location).attr('href',url);
+	});//fin del boton modificar
+
+	$('.vtexto').keypress(function(tecla) {
+        if((tecla.charCode != 241) && (tecla.charCode != 209) && (tecla.charCode != 64) && (tecla.charCode < 48 || tecla.charCode > 57) && (tecla.charCode < 97 || tecla.charCode > 122) && (tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode != 45)) return false;
+    });
+
+	
 	$('#example').dataTable({
 		"order": [[ 0, "asc" ]],
 		"language": {
@@ -473,7 +505,8 @@ $(document).ready(function(){
 				processData: false,
 				//mientras enviamos el archivo
 				beforeSend: function(){
-					$("#load").html('<img src="../../imagenes/load13.gif" width="50" height="50" />');       
+					$("#load").html('<img src="../../imagenes/load13.gif" width="50" height="50" />'); 
+					$('#cargar').hide();       
 				},
 				//una vez finalizado correctamente
 				success: function(data){
@@ -490,8 +523,8 @@ $(document).ready(function(){
 												
 											});
 											$("#load").html('');
-											url = "index.php";
-											$(location).attr('href',url);
+											//url = "index.php";
+											//$(location).attr('href',url);
                                             
 											
                                         } else {

@@ -36,7 +36,8 @@ if ($_SESSION['idroll_predio'] == 2) {
 					<th>Nombres</th>
 					<th>CURP</th>
 					<th>Fecha Recepción</th>
-					<th>Email</th>";
+					<th>Email</th>
+					<th>Estado</th>";
 
 	$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$lstDeclaraciones,90);
 }

@@ -47,8 +47,7 @@ $servicios = new Servicios();
       <script type="text/javascript">
 		
 			$(document).ready(function(){
-				
-				
+
 					$("#email").click(function(event) {
         			$("#email").removeClass("alert alert-danger");
 					$("#email").attr('placeholder','Ingrese el CURP');

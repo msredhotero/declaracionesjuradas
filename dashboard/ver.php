@@ -487,6 +487,18 @@ deberá señalarlo en la sección VIII.- OTRO TIPO DE INVERSIÓN.</p>
         	</div>
 
             </div>
+
+
+            <div class="row">
+                <div class="col-md-12">
+                <ul class="list-inline" style="margin-top:15px;">
+
+                    <li>
+                        <button type="button" class="btn btn-default volver" style="margin-left:0px;">Volver</button>
+                    </li>
+                </ul>
+                </div>
+            </div>
             
             
             </form>
@@ -542,6 +554,12 @@ deberá señalarlo en la sección VIII.- OTRO TIPO DE INVERSIÓN.</p>
 <script src="../js/bootstrap-datetimepicker.es.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
+
+	$('.volver').click(function(event){
+		 
+		url = "index.php";
+		$(location).attr('href',url);
+	});//fin del boton modificar
 
 
 	var options = {
@@ -599,41 +617,7 @@ $(document).ready(function(){
 	}
 
 
-	<?php if ($_SESSION['idroll_predio'] == 2) { ?>
-	function modificarCliente(id, apellido, nombre, cuit, direccion, telefono, celular) {
-		$.ajax({
-			data:  {id: id,
-					apellido: apellido,
-					nombre: nombre,
-					cuit: cuit,
-					direccion: direccion,
-					telefono: telefono, 
-					celular: celular, 
-					accion: 'modificarClientePorCliente'},
-			url:   '../ajax/ajax.php',
-			type:  'post',
-			beforeSend: function () {
-					
-			},
-			success:  function (response) {
-				if (response == '') {
-					$('#mensaje').html('<span style="color:#05E98D;">Se actualizaron sus datos</span>');
-				} else {
-					$('#mensaje').html('<span style="color:#E90C05;">'+ response + '</span>');
-				}
-				
-					
-			}
-		});
-	}
-
-	$('#modificarCliente').click(function() {
-		modificarCliente(<?php echo $idcliente; ?>, $('#apellido').val(), $('#nombre').val(), $('#cuit').val(), $('#direccion').val(), $('#telefono').val(), $('#celular').val());
-	});
-
 	
-		traerArchivos(<?php echo $idcliente; ?>);
-	<?php } ?>	
 
 
 	$('#selction-ajax').on("click",'.varClienteDocumentaciones', function(){
