@@ -22,66 +22,89 @@ $serviciosReferencias 	= new ServiciosReferencias();
 $fecha = date('Y-m-d');
 
 //$resProductos = $serviciosProductos->traerProductosLimite(6);
-$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Datos Publicos",$_SESSION['refroll_predio'],'');
+$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Adeudos",$_SESSION['refroll_predio'],'');
 
 
 ///////////////////////   id de la cabecera de la declaracion /////////////////////////
 $id = $_GET['id'];
+// recordar validar que no entren con otro id.
 ///////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
-$singular = "Datos Publicos";
+$singular = "Adeudo";
 
-$plural = "Datos Publicos";
+$plural = "Adeudos";
 
-$eliminar = "eliminarPublicacion";
+$eliminar = "eliminarAdeudos";
 
-$insertar = "insertarPublicacion";
+$insertar = "insertarAdeudos";
 
 $tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
-$tabla 			= "dbpublicacion";
+$tabla 			= "dbadeudos";
 
 $lblCambio	 	= array("refdeclaracionjuradacabecera",
-						"estadeacuerdo",
-						"eningresosnetos",
-						"enbienesinmuebles",
-						"enbienesmuebles",
-						"envehiculos",
-						"eninversiones",
-						"enadeudos");
+						"reftipooperacion",
+						"reftitular",
+						"numerocuenta",
+						"donde",
+						"razonsocial",
+						"pais",
+						"saldo",
+						"tipomoneda",
+						"reftipoadeudo",
+						"fechaotorgamiento",
+						"montooritginal",
+						"montopagos",
+						"tipomonedasaldo");
 $lblreemplazo	= array('Declaración Patrimonial Cabecera',
-						'¿Esta de acuerdo en hacer publicos sus datos personales?',
-						'En ingresos netos, los correspondientes a los recibidos por actividad industrial y/o comercial, financiera y otros, asi como el monto total de los ingresos considerados a los antes citados',
-						'En bienes inmuebles, el valor de la contraprestación y moneda',
-						'En bienes muebles, el valor de la contraprestación y moneda',
-						'En vehiculos, el valor de la contraprestación y moneda',
-						'En inversiones, cuentas bancarias y otros tipos de valores, el saldo',
-						'En adeudos, el monto original, el saldo y el monto de los pagos realizados');
+						'Tipo de Operacion',
+						'Titular',
+						'Nro de Cuenta',
+						'¿Donde se localiza la inversion?',
+						'Institucion o Razon Social',
+						'En caso de elegir extrangero, indicar el Pais',
+						'Saldo insoluto al 31 de diciembre del año anterior',
+						'Tipo de Moneda',
+						'Tipo de Adeudo',
+						'Fecha Otorgamiento',
+						'Monto Original del adeudo',
+						'Monto de los pagos realizados en el año anterior',
+						'Tipo de Moneda');
 
 
 $resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
 $cadRef = $serviciosFunciones->devolverSelectBoxObligatorio($resVar1,array(2,3,4),' ');
 
-$refdescripcion = array(0 => $cadRef);
-$refCampo 	=  array("refdeclaracionjuradacabecera"); 
+$refVar2 = $serviciosReferencias->traerTipooperacion();
+$cadRef2 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar2,array(1),' ');
+
+$refVar6 = $serviciosReferencias->traerTipoadeudo();
+$cadRef6 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar6,array(1),' ');
+
+$refVar5 = $serviciosReferencias->traerTitular();
+$cadRef5 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar5,array(1),' ');
+
+$cadRef3 = '<option value="Mexico">Mexico</option><option value="Extrangero">Extrangero</option>';
+
+$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef6, 3=>$cadRef5, 4=>$cadRef3);
+$refCampo 	=  array("refdeclaracionjuradacabecera","reftipooperacion","reftipoadeudo","reftitular","donde"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
 
 
 /////////////////////// Opciones para la creacion del view  apellido,nombre,nrodocumento,fechanacimiento,direccion,telefono,email/////////////////////
-$cabeceras 		= "	<th>Decl. Patri. Cab.</th>
-					<th>Datos Publicos</th>
-					<th>Ingresos Netos</th>
-					<th>Bienes Inmuebles</th>
-					<th>Bienes Muebles</th>
-					<th>Vehiculos</th>
-					<th>Inversiones</th>
-					<th>Adeudos</th>";
+$cabeceras 		= "	<th>Declaración Patr. Cab.</th>
+					<th>Tipo de Operacion</th>
+					<th>Tipo de Adeudo</th>
+					<th>Titular</th>
+					<th>Nro de Cuenta</th>
+					<th>¿Donde se localiza la inversion?</th>
+					<th>Institucion o Razon Social</th>";
 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
@@ -90,10 +113,7 @@ $cabeceras 		= "	<th>Decl. Patri. Cab.</th>
 
 $formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
-$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerPublicacionGrillaPorCabecera($id),8);
-
-
-$frmPublicacion = $serviciosReferencias->traerPublicacionPorCabeceraCURP($id, $_SESSION['curp_predio']);
+$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerInversionesGridPorCabecera($id),6);
 
 
 
@@ -129,6 +149,8 @@ if ($_SESSION['refroll_predio'] != 1) {
     <script type="text/javascript" src="../../js/jquery-1.8.3.min.js"></script>
     <link rel="stylesheet" href="../../css/jquery-ui.css">
 
+
+
     <script src="../../js/jquery-ui.js"></script>
     
 	<!-- Latest compiled and minified CSS -->
@@ -137,7 +159,8 @@ if ($_SESSION['refroll_predio'] != 1) {
     <!-- Latest compiled and minified JavaScript -->
     <script src="../../bootstrap/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="../../css/bootstrap-datetimepicker.min.css">
-	
+
+	<script src="../../js/jquery.number.min.js"></script>
     
    
    <link href="../../css/perfect-scrollbar.css" rel="stylesheet">
@@ -167,7 +190,7 @@ if ($_SESSION['refroll_predio'] != 1) {
         </div>
     	<div class="cuerpoBox">
         	<form class="form-inline formulario" role="form">
-        	<div class="row">
+        	<div class="row" style="font-size:0.8em;">
 			<?php echo $formulario; ?>
             </div>
             <!--
@@ -188,25 +211,12 @@ if ($_SESSION['refroll_predio'] != 1) {
             <div class="row">
                 <div class="col-md-12">
                 <ul class="list-inline" style="margin-top:15px;">
-                    <?php
-						if (mysql_num_rows($frmPublicacion) > 0) {
-					?>
-
                     <li>
-                        <button type="button" class="btn btn-default volver" style="margin-left:0px;">Volver</button>
-                    </li>
-                    <?php
-						} else {
-					?>
-					<li>
                         <button type="button" class="btn btn-primary" id="cargar" style="margin-left:0px;">Guardar</button>
                     </li>
                     <li>
                         <button type="button" class="btn btn-default volver" style="margin-left:0px;">Volver</button>
                     </li>
-					<?php
-						}
-					?>
                 </ul>
                 </div>
             </div>
@@ -250,12 +260,16 @@ if ($_SESSION['refroll_predio'] != 1) {
 <script type="text/javascript">
 $(document).ready(function(){
 
-
 	$('.volver').click(function(event){
 		 
 		url = "../ver.php?id=<?php echo $id; ?>";
 		$(location).attr('href',url);
 	});//fin del boton modificar
+
+
+	$('.vtexto').keypress(function(tecla) {
+        if((tecla.charCode != 241) && (tecla.charCode != 209) && (tecla.charCode != 64) && (tecla.charCode < 48 || tecla.charCode > 57) && (tecla.charCode < 97 || tecla.charCode > 122) && (tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode != 45)) return false;
+    });
 
 	
 	$('#example').dataTable({
@@ -284,6 +298,8 @@ $(document).ready(function(){
 			}
 		  }
 	} );
+
+	$('#valor').number( true, 0,'.','' );
 	
 
 	$("#example").on("click",'.varborrar', function(){
@@ -390,8 +406,7 @@ $(document).ready(function(){
 				processData: false,
 				//mientras enviamos el archivo
 				beforeSend: function(){
-					$("#load").html('<img src="../../imagenes/load13.gif" width="50" height="50" />');  
-					$('#cargar').hide();     
+					$("#load").html('<img src="../../imagenes/load13.gif" width="50" height="50" />');       
 				},
 				//una vez finalizado correctamente
 				success: function(data){
@@ -408,8 +423,8 @@ $(document).ready(function(){
 												
 											});
 											$("#load").html('');
-											//url = "index.php";
-											//$(location).attr('href',url);
+											url = "index.php";
+											$(location).attr('href',url);
                                             
 											
                                         } else {

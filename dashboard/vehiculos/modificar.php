@@ -29,7 +29,6 @@ $id = $_GET['id'];
 
 $resResultado = $serviciosReferencias->traerVehiculosPorId($id);
 
-
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
 $singular = "Vehiculo";
 
@@ -139,7 +138,7 @@ if ($_SESSION['refroll_predio'] != 1) {
     
 	<!-- Latest compiled and minified CSS -->
     <link rel="stylesheet" href="../../bootstrap/css/bootstrap.min.css"/>
-	171
+	
     <!-- Latest compiled and minified JavaScript -->
     <script src="../../bootstrap/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="../../css/bootstrap-datetimepicker.min.css">
