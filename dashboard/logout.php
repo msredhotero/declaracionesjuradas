@@ -19,7 +19,7 @@ session_destroy();
 
 
 
-<title>Sistema: Estudio Contable</title>
+<title>Sistema: Declaraciones Patrimoniales</title>
 
 
 

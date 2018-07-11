@@ -40,6 +40,18 @@ if ($_SESSION['idroll_predio'] == 2) {
 					<th>Estado</th>";
 
 	$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$lstDeclaraciones,90);
+} else {
+	$lstDeclaraciones = $serviciosReferencias->traerDeclaracionjuradacabeceraGrilla($_SESSION['curp_predio']);
+
+
+	$cabeceras 		= "	<th>Apellidos</th>
+					<th>Nombres</th>
+					<th>CURP</th>
+					<th>Fecha Recepción</th>
+					<th>Email</th>
+					<th>Estado</th>";
+
+	$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$lstDeclaraciones,100);
 }
 
 ?>
@@ -136,24 +148,13 @@ if ($_SESSION['idroll_predio'] == 2) {
         	<div class="row">
         	<div class="col-md-12">	
         		<?php if ($_SESSION['idroll_predio'] == 1) { ?>
-	        	<div class="form-group col-md-12">
-                     <h4>Busqueda por Nombre Completo o CURP</h4>
-                    
-						
-					<input id="lstjugadores" style="width:75%;">
-						
-					
-					<div id="selction-ajax" style="margin-top: 10px;"></div>
-                </div>
-                
-                <div class="form-group col-md-12">
-                    <div class="cuerpoBox" id="resultadosJuagadores">
-    
-                    </div>
+	        	<div class="cuerpoBox">
 
-                    <div class="cuerpoBox" id="resultadosArchivos">
-    
-                    </div>
+	            	<div class="row">
+	            		
+	            		<?php echo $lstCargados; ?>
+	            	</div>	
+	            		
                 </div>
                 <?php } else { ?>
                 <ul class="list-group">

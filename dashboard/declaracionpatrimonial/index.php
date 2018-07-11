@@ -287,14 +287,14 @@ $(document).ready(function(){
 	function validarRFC(){
 		
 		//Almacenamos los valores
-		nombre = $('#rfc').val();
+		nombre = $('#homoclave').val();
 		
 	   //Comprobamos la longitud de caracteres
 		if (nombre.length==3){
 			return true;
 		}
 		else {
-			alert('El RFC debe tener 3 caracteres');
+			alert('La Homoclave debe tener 3 caracteres');
 			return false;
 			
 		}
@@ -341,8 +341,8 @@ $(document).ready(function(){
 	$('#curp').val('<?php echo mysql_result($declaracionReal,0,'curp'); ?>');
 	$('#curp').prop('readonly', true);
 
-	$('#homoclave').val('<?php echo mysql_result($declaracionReal,0,'rfc'); ?>');
-	$('#homoclave').prop('readonly', true);
+	$('#rfc').val('<?php echo mysql_result($declaracionReal,0,'rfc'); ?>');
+	$('#rfc').prop('readonly', true);
 
 	$('#emailinstitucional').val('<?php echo mysql_result($declaracionReal,0,'email'); ?>');
 	$('#emailinstitucional').prop('readonly', true);

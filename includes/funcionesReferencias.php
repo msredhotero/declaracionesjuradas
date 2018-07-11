@@ -1467,7 +1467,6 @@ function traerDeclaracionjuradacabeceraGrilla() {
 				d.curp,
 				d.fecharecepcion,
 				d.telefono,
-				d.emailinstitucional,
 				et.estado
 			from dbdeclaracionjuradacabecera d 
 			inner join tbestadocivil est ON est.idestadocivil = d.refestadocivil 

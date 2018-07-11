@@ -76,7 +76,12 @@ function login($usuario,$pass) {
 			$_SESSION['nombre_predio'] = mysql_result($resppass,0,0);
 			$_SESSION['email_predio'] = mysql_result($resppass,0,1);
 			$_SESSION['idroll_predio'] = mysql_result($resppass,0,2);
-			$_SESSION['refroll_predio'] = 'Usuario';
+			if (mysql_result($resppass,0,2) == 2) {
+				$_SESSION['refroll_predio'] = 'Usuario';
+			} else {
+				$_SESSION['refroll_predio'] = 'Administrador';
+			}
+			
 			$_SESSION['curp_predio'] = mysql_result($resppass,0,3);
 
 			$_SESSION['idusuario'] = $idUsua;

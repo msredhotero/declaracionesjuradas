@@ -20,16 +20,13 @@ $serviciosReferencias 	= new ServiciosReferencias();
 
 $fecha = date('Y-m-d');
 
+$id = $_GET['id'];
+
 //$resProductos = $serviciosProductos->traerProductosLimite(6);
 $resMenu = $serviciosHTML->menu($_SESSION['nombre_predio'],"Dashboard",$_SESSION['refroll_predio'],'');
 
 
-if ($_SESSION['idroll_predio'] == 2) {
-	$resAgente = $serviciosReferencias->traerAgenteReal($_SESSION['curp_predio']);
-}
-
-$id = $_GET['id'];
-
+$resAgente = $serviciosReferencias->traerAgenteReal($_SESSION['curp_predio']);
 
 $frmDeclaracionAnual = $serviciosReferencias->traerDeclaracionanualinteresPorCabeceraCURP($id, $_SESSION['curp_predio']);
 $frmDependientesEconomicos = $serviciosReferencias->traerDependienteseconomicosPorCabeceraCURP($id, $_SESSION['curp_predio']);
@@ -45,6 +42,32 @@ $frmRecursos = $serviciosReferencias->traerRecursosPorCabeceraCURP($id, $_SESSIO
 $frmDecrementos = $serviciosReferencias->traerDecrementosPorCabeceraCURP($id, $_SESSION['curp_predio']);
 $frmObservaciones = $serviciosReferencias->traerObservacionesPorCabeceraCURP($id, $_SESSION['curp_predio']);
 
+if ($_SESSION['idroll_predio'] == 1) {
+
+	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbdeclaracionanualinteres',$lblCambio2,$lblreemplazo2,$refdescripcion2,$refCampo2, $frmDeclaracionAnual);
+
+	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbdependienteseconomicos',$lblCambio3,$lblreemplazo3,$refdescripcion2,$refCampo2, $frmDependientesEconomicos);
+
+	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbingresosanuales',$lblCambio4,$lblreemplazo4,$refdescripcion2,$refCampo2, $ingresosanuales);
+	
+	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbpublicacion',$lblCambio5,$lblreemplazo5,$refdescripcion2,$refCampo2, $frmPublicacion);
+
+	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbbienesinmuebles',$lblCambio6,$lblreemplazo6,$refdescripcion2,$refCampo2, $bienesinmuebles);
+	
+	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbbienesmuebles',$lblCambio7,$lblreemplazo7,$refdescripcion2,$refCampo2, $frmBienesMuebles);
+
+	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbinversiones',$lblCambio8,$lblreemplazo8,$refdescripcion2,$refCampo2, $frmInversiones);
+
+	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbvehiculos',$lblCambio9,$lblreemplazo9,$refdescripcion2,$refCampo2, $frmVehiculos);
+
+	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbadeudos',$lblCambio10,$lblreemplazo10,$refdescripcion2,$refCampo2, $frmAdeudos);
+
+	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbrecursos',$lblCambio11,$lblreemplazo11,$refdescripcion2,$refCampo2, $frmRecursos);
+
+	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbdecrementos',$lblCambio12,$lblreemplazo12,$refdescripcion2,$refCampo2, $frmDecrementos);
+
+	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbobservaciones',$lblCambio13,$lblreemplazo13,$refdescripcion2,$refCampo2, $frmObservaciones);	
+}
 
 $resResultado = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
 

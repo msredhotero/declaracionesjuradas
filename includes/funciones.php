@@ -113,6 +113,13 @@ class Servicios {
 				$classEli = 'varborrar';
 				$idresultados = "resultados";
 				break;
+			case 100:
+				$cambio = 1;
+				$cantidad = 6;
+				$classMod = '';
+				$classEli = 'varver';
+				$idresultados = "resultados";
+				break;
 			case 99:
 				$cantidad = 6;
 				$classMod = '';
@@ -326,7 +333,7 @@ class Servicios {
 											<ul class="dropdown-menu" role="menu">
 											
 												<li>
-												<a href="javascript:void(0)" class="'.$classEli.'" id="'.$row[0].'">Delete</a>
+												<a href="javascript:void(0)" class="'.$classEli.'" id="'.$row[0].'">Ver</a>
 												</li>
 												
 											</ul>
@@ -764,7 +771,7 @@ class Servicios {
 	}
 
 
-	function camposTablaVer($id,$lblid,$tabla,$lblcambio,$lblreemplazo,$refdescripcion,$refCampo) {
+	function camposTablaVer($id,$lblid,$tabla,$lblcambio,$lblreemplazo,$refdescripcion,$refCampo, $datos = '') {
 		
 		switch ($tabla) {
 			case 'dbtorneos':
@@ -774,6 +781,9 @@ class Servicios {
 			default:
 				$sqlMod = "select * from ".$tabla." where ".$lblid." = ".$id;
 				$resMod = $this->query($sqlMod,0);
+		}
+		if ($datos != '') {
+			$resMod = $datos;
 		}
 		/*if ($tabla == 'dbtorneos') {
 			$resMod = $this->TraerIdTorneos($id);
