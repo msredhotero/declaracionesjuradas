@@ -53,6 +53,7 @@ $lblCambio	 	= array('fecharecepcion',
 						'segundoapellido',
 						'curp',
 						'homoclave',
+						'rfc',
 						'emailinstitucional',
 						'emailalterno',
 						'refestadocivil',
@@ -76,7 +77,8 @@ $lblreemplazo	= array('Fecha de Recepción',
 						'Primer Apellido',
 						'Segundo Apellido',
 						'CURP',
-						'RFC / Homoclave',
+						'Homoclave',
+						'RFC',
 						'Correo Electrónico Inst.',
 						'Correo Electrónico Alterno',
 						'Estado Civil',
@@ -271,9 +273,7 @@ $(document).ready(function(){
 		$(location).attr('href',url);
 	});//fin del boton modificar
 
-	$('.vtexto').keypress(function(tecla) {
-        if((tecla.charCode != 241) && (tecla.charCode != 209) && (tecla.charCode != 64) && (tecla.charCode < 48 || tecla.charCode > 57) && (tecla.charCode < 97 || tecla.charCode > 122) && (tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode != 45)) return false;
-    });
+	<?php echo $serviciosFunciones->teclasAceptadas(); ?>
 
 
 	$('#primerapellido').val('<?php echo mysql_result($declaracionReal,0,'paterno'); ?>');
@@ -299,6 +299,27 @@ $(document).ready(function(){
 
 	$('#domicilioparticular').val('<?php echo mysql_result($declaracionReal,0,'domicilio_particular'); ?>');
 	$('#domicilioparticular').prop('readonly', true);
+
+	
+
+	function validarRFC(){
+		
+		//Almacenamos los valores
+		nombre = $('#rfc').val();
+		
+	   //Comprobamos la longitud de caracteres
+		if (nombre.length==3){
+			return true;
+		}
+		else {
+			alert('El RFC debe tener 3 caracteres');
+			return false;
+			
+		}
+
+	}
+
+
 	
 	$('.varborrar').click(function(event){
 		  usersid =  $(this).attr("id");
@@ -363,59 +384,60 @@ $(document).ready(function(){
 	
 	//al enviar el formulario
     $('#cargar').click(function(){
-		
-		if (validador() == "")
-        {
-			//información del formulario
-			var formData = new FormData($(".formulario")[0]);
-			var message = "";
-			//hacemos la petición ajax  
-			$.ajax({
-				url: '../../ajax/ajax.php',  
-				type: 'POST',
-				// Form data
-				//datos del formulario
-				data: formData,
-				//necesario para subir archivos via ajax
-				cache: false,
-				contentType: false,
-				processData: false,
-				//mientras enviamos el archivo
-				beforeSend: function(){
-					$("#load").html('<img src="../../imagenes/load13.gif" width="50" height="50" />');       
-				},
-				//una vez finalizado correctamente
-				success: function(data){
+		if (validarRFC() == true) {
+			if (validador() == "")
+	        {
+				//información del formulario
+				var formData = new FormData($(".formulario")[0]);
+				var message = "";
+				//hacemos la petición ajax  
+				$.ajax({
+					url: '../../ajax/ajax.php',  
+					type: 'POST',
+					// Form data
+					//datos del formulario
+					data: formData,
+					//necesario para subir archivos via ajax
+					cache: false,
+					contentType: false,
+					processData: false,
+					//mientras enviamos el archivo
+					beforeSend: function(){
+						$("#load").html('<img src="../../imagenes/load13.gif" width="50" height="50" />');       
+					},
+					//una vez finalizado correctamente
+					success: function(data){
 
-					if (data == '') {
-                                            $(".alert").removeClass("alert-danger");
-											$(".alert").removeClass("alert-info");
-                                            $(".alert").addClass("alert-success");
-                                            $(".alert").html('<strong>Ok!</strong> Se modifico exitosamente el <strong><?php echo $singular; ?></strong>. ');
-											$(".alert").delay(3000).queue(function(){
-												/*aca lo que quiero hacer 
-												  después de los 2 segundos de retraso*/
-												$(this).dequeue(); //continúo con el siguiente ítem en la cola
+						if (data == '') {
+	                                            $(".alert").removeClass("alert-danger");
+												$(".alert").removeClass("alert-info");
+	                                            $(".alert").addClass("alert-success");
+	                                            $(".alert").html('<strong>Ok!</strong> Se modifico exitosamente el <strong><?php echo $singular; ?></strong>. ');
+												$(".alert").delay(3000).queue(function(){
+													/*aca lo que quiero hacer 
+													  después de los 2 segundos de retraso*/
+													$(this).dequeue(); //continúo con el siguiente ítem en la cola
+													
+												});
+												$("#load").html('');
+												//url = "index.php";
+												//$(location).attr('href',url);
+	                                            
 												
-											});
-											$("#load").html('');
-											//url = "index.php";
-											//$(location).attr('href',url);
-                                            
-											
-                                        } else {
-                                        	$(".alert").removeClass("alert-danger");
-                                            $(".alert").addClass("alert-danger");
-                                            $(".alert").html('<strong>Error!</strong> '+data);
-                                            $("#load").html('');
-                                        }
-				},
-				//si ha ocurrido un error
-				error: function(){
-					$(".alert").html('<strong>Error!</strong> Actualice la pagina');
-                    $("#load").html('');
-				}
-			});
+	                                        } else {
+	                                        	$(".alert").removeClass("alert-danger");
+	                                            $(".alert").addClass("alert-danger");
+	                                            $(".alert").html('<strong>Error!</strong> '+data);
+	                                            $("#load").html('');
+	                                        }
+					},
+					//si ha ocurrido un error
+					error: function(){
+						$(".alert").html('<strong>Error!</strong> Actualice la pagina');
+	                    $("#load").html('');
+					}
+				});
+			}
 		}
     });
 

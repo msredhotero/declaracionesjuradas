@@ -78,7 +78,7 @@ $lblreemplazo	= array('Declaración Patrimonial Cabecera',
 						'Tipo de Moneda');
 
 
-$resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
+$resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId(mysql_result($resResultado, 0, 'refdeclaracionjuradacabecera'));
 $cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(2,3,4),' ', mysql_result($resResultado, 0, 'refdeclaracionjuradacabecera'));
 
 $refVar2 = $serviciosReferencias->traerTipooperacion();
@@ -145,11 +145,7 @@ if ($_SESSION['refroll_predio'] != 1) {
     <!-- Latest compiled and minified JavaScript -->
     <script src="../../bootstrap/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="../../css/bootstrap-datetimepicker.min.css">
-	<style type="text/css">
-		
-  
-		
-	</style>
+	<script src="../../js/jquery.number.min.js"></script>
     
    
    <link href="../../css/perfect-scrollbar.css" rel="stylesheet">
@@ -243,9 +239,12 @@ $(document).ready(function(){
 		$(location).attr('href',url);
 	});//fin del boton modificar
 
-	$('.vtexto').keypress(function(tecla) {
-        if((tecla.charCode != 241) && (tecla.charCode != 209) && (tecla.charCode != 64) && (tecla.charCode < 48 || tecla.charCode > 57) && (tecla.charCode < 97 || tecla.charCode > 122) && (tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode != 45)) return false;
-    });
+	<?php echo $serviciosFunciones->teclasAceptadas(); ?>
+
+
+	$('#montooritginal').number( true, 2,'.','' );
+	$('#montopagos').number( true, 2,'.','' );
+	$('#saldo').number( true, 2,'.','' );
 	
 	$('.varborrar').click(function(event){
 		  usersid =  $(this).attr("id");
@@ -310,59 +309,67 @@ $(document).ready(function(){
 	
 	//al enviar el formulario
     $('#cargar').click(function(){
-		
-		if (validador() == "")
-        {
-			//información del formulario
-			var formData = new FormData($(".formulario")[0]);
-			var message = "";
-			//hacemos la petición ajax  
-			$.ajax({
-				url: '../../ajax/ajax.php',  
-				type: 'POST',
-				// Form data
-				//datos del formulario
-				data: formData,
-				//necesario para subir archivos via ajax
-				cache: false,
-				contentType: false,
-				processData: false,
-				//mientras enviamos el archivo
-				beforeSend: function(){
-					$("#load").html('<img src="../../imagenes/load13.gif" width="50" height="50" />');       
-				},
-				//una vez finalizado correctamente
-				success: function(data){
+		if ($('#fechaotorgamiento').val() != '') {
+			if (validador() == "") 
+	        {
+				//información del formulario
+				var formData = new FormData($(".formulario")[0]);
+				var message = "";
+				//hacemos la petición ajax  
+				$.ajax({
+					url: '../../ajax/ajax.php',  
+					type: 'POST',
+					// Form data
+					//datos del formulario
+					data: formData,
+					//necesario para subir archivos via ajax
+					cache: false,
+					contentType: false,
+					processData: false,
+					//mientras enviamos el archivo
+					beforeSend: function(){
+						$("#load").html('<img src="../../imagenes/load13.gif" width="50" height="50" />');  
+						$(".alert").html('');     
+					},
+					//una vez finalizado correctamente
+					success: function(data){
 
-					if (data == '') {
-                                            $(".alert").removeClass("alert-danger");
-											$(".alert").removeClass("alert-info");
-                                            $(".alert").addClass("alert-success");
-                                            $(".alert").html('<strong>Ok!</strong> Se modifico exitosamente el <strong><?php echo $singular; ?></strong>. ');
-											$(".alert").delay(3000).queue(function(){
-												/*aca lo que quiero hacer 
-												  después de los 2 segundos de retraso*/
-												$(this).dequeue(); //continúo con el siguiente ítem en la cola
+						if (data == '') {
+	                                            $(".alert").removeClass("alert-danger");
+												$(".alert").removeClass("alert-info");
+	                                            $(".alert").addClass("alert-success");
+	                                            $(".alert").html('<strong>Ok!</strong> Se modifico exitosamente el <strong><?php echo $singular; ?></strong>. ');
+												$(".alert").delay(3000).queue(function(){
+													/*aca lo que quiero hacer 
+													  después de los 2 segundos de retraso*/
+													$(this).dequeue(); //continúo con el siguiente ítem en la cola
+													
+												});
+												$("#load").html('');
+												//url = "index.php";
+												//$(location).attr('href',url);
+	                                            
 												
-											});
-											$("#load").html('');
-											//url = "index.php";
-											//$(location).attr('href',url);
-                                            
-											
-                                        } else {
-                                        	$(".alert").removeClass("alert-danger");
-                                            $(".alert").addClass("alert-danger");
-                                            $(".alert").html('<strong>Error!</strong> '+data);
-                                            $("#load").html('');
-                                        }
-				},
-				//si ha ocurrido un error
-				error: function(){
-					$(".alert").html('<strong>Error!</strong> Actualice la pagina');
-                    $("#load").html('');
-				}
-			});
+	                                        } else {
+	                                        	$(".alert").removeClass("alert-danger");
+	                                            $(".alert").addClass("alert-danger");
+	                                            $(".alert").html('<strong>Error!</strong> '+data);
+	                                            $("#load").html('');
+	                                        }
+					},
+					//si ha ocurrido un error
+					error: function(){
+						$(".alert").html('<strong>Error!</strong> Actualice la pagina');
+	                    $("#load").html('');
+					}
+				});
+			
+			}
+		} else {
+			$(".alert").removeClass("alert-danger");
+	        $(".alert").addClass("alert-danger");
+			$(".alert").html('<strong>Error!</strong> La fecha de Otorgamiento es obligatoria');
+            $("#load").html('');
 		}
     });
 

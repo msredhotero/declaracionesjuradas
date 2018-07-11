@@ -70,7 +70,7 @@ $lblreemplazo	= array('Declaración Patrimonial Cabecera',
 						'Tipo de Inversion');
 
 
-$resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
+$resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId(mysql_result($resResultado, 0, 'refdeclaracionjuradacabecera'));
 $cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(2,3,4),' ', mysql_result($resResultado, 0, 'refdeclaracionjuradacabecera'));
 
 $refVar2 = $serviciosReferencias->traerTipooperacion();
@@ -137,11 +137,7 @@ if ($_SESSION['refroll_predio'] != 1) {
     <!-- Latest compiled and minified JavaScript -->
     <script src="../../bootstrap/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="../../css/bootstrap-datetimepicker.min.css">
-	<style type="text/css">
-		
-  
-		
-	</style>
+	<script src="../../js/jquery.number.min.js"></script>
     
    
    <link href="../../css/perfect-scrollbar.css" rel="stylesheet">
@@ -229,15 +225,15 @@ if ($_SESSION['refroll_predio'] != 1) {
 <script type="text/javascript">
 $(document).ready(function(){
 
+	$('#valor').number( true, 0,'.','' );
+
 	$('.volver').click(function(event){
 		 
 		url = "../ver.php?id=<?php echo mysql_result($resResultado, 0,'refdeclaracionjuradacabecera'); ?>";
 		$(location).attr('href',url);
 	});//fin del boton modificar
 
-	$('.vtexto').keypress(function(tecla) {
-        if((tecla.charCode != 241) && (tecla.charCode != 209) && (tecla.charCode != 64) && (tecla.charCode < 48 || tecla.charCode > 57) && (tecla.charCode < 97 || tecla.charCode > 122) && (tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode != 45)) return false;
-    });
+	<?php echo $serviciosFunciones->teclasAceptadas(); ?>
 	
 	$('.varborrar').click(function(event){
 		  usersid =  $(this).attr("id");

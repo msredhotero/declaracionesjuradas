@@ -341,7 +341,7 @@ $(document).ready(function(){
 											
 									},
 									success:  function (response) {
-											url = "index.php";
+											url = "index.php?id=<?php echo $id; ?>";
 											$(location).attr('href',url);
 											
 									}

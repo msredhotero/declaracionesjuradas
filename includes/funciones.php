@@ -17,6 +17,12 @@ class Servicios {
 			return "$('#".$campo."').prop( 'checked', false );";
 		}
 	}
+
+	function teclasAceptadas() {
+		return "$('.vtexto').keypress(function(tecla) {
+        if((tecla.charCode != 32) && (tecla.charCode != 241) && (tecla.charCode != 209) && (tecla.charCode != 64) && (tecla.charCode < 48 || tecla.charCode > 57) && (tecla.charCode < 97 || tecla.charCode > 122) && (tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode != 45)) return false;
+    });";
+	}
 	
 	function devolverSelectBoxArray($datos, $ar, $delimitador, $titulo) {
 		
@@ -195,10 +201,13 @@ class Servicios {
 				$classEli = 'varborrar';
 				$classEditar = 'vargastos';
 				$classVar1	  = 'varver';
-				$iconoEditar = 'glyphicon glyphicon-print';
 				$iconoVar1 = 'glyphicon glyphicon-search';
-				$lblEditar	  = 'Imprimir';
 				$lblVar1 = 'Ver';
+				$classVar2	  = 'varimprmiracuse';
+				$iconoVar2 = 'glyphicon glyphicon-print';
+				$lblVar2 = 'Generar Acuse';
+				$iconoEditar = 'glyphicon glyphicon-print';
+				$lblEditar	  = 'Imprimir';
 				$idresultados = "resultados";
 				break;
 			default:

@@ -14,52 +14,70 @@ include ('../../includes/funcionesUsuarios.php');
 include ('../../includes/funcionesHTML.php');
 include ('../../includes/funcionesReferencias.php');
 
-$serviciosFunciones = new Servicios();
-$serviciosUsuario 	= new ServiciosUsuarios();
-$serviciosHTML 		= new ServiciosHTML();
+$serviciosFunciones 	= new Servicios();
+$serviciosUsuario 		= new ServiciosUsuarios();
+$serviciosHTML 			= new ServiciosHTML();
 $serviciosReferencias 	= new ServiciosReferencias();
 
 $fecha = date('Y-m-d');
 
 //$resProductos = $serviciosProductos->traerProductosLimite(6);
-$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Tipo de Cesionario",$_SESSION['refroll_predio'],'');
+$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Decrementos",$_SESSION['refroll_predio'],'');
 
 
+///////////////////////   id de la cabecera de la declaracion /////////////////////////
 $id = $_GET['id'];
-
-$resResultado = $serviciosReferencias->traerTipocesionarioPorId($id);
-
+///////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
-$singular = "Tipo de Cesionario";
+$singular = "Decremento";
 
-$plural = "Tipos de Cesionarios";
+$plural = "Decrementos";
 
-$eliminar = "eliminarTipocesionario";
+$eliminar = "eliminarDecrementos";
 
-$modificar = "modificarTipocesionario";
-
-$idTabla = "idtipocesionario";
+$insertar = "insertarDecrementos";
 
 $tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
-$tabla 			= "tbtipocesionario";
+$tabla 			= "dbdecrementos";
 
-$lblCambio	 	= array('tipocesionario');
-$lblreemplazo	= array('Tipo de Cesionario');
+$lblCambio	 	= array("refdeclaracionjuradacabecera","donaciones","robo","siniestros","otros");
+$lblreemplazo	= array('Declaración Patrimonial Cabecera','A_ Donaciones','B_ Robo','C_ Siniestros','D_ Otros');
 
 
-$cadRef 	= '';
+$resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
+$cadRef = $serviciosFunciones->devolverSelectBoxObligatorio($resVar1,array(2,3,4),' ');
 
-$refdescripcion = array();
-$refCampo 	=  array();
+$refdescripcion = array(0 => $cadRef);
+$refCampo 	=  array("refdeclaracionjuradacabecera"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
-$formulario 	= $serviciosFunciones->camposTablaModificar($id, $idTabla, $modificar,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
+
+
+/////////////////////// Opciones para la creacion del view  apellido,nombre,nrodocumento,fechanacimiento,direccion,telefono,email/////////////////////
+$cabeceras 		= "	<th>Decl. Patri. Cab.</th>
+					<th>Donaciones</th>
+					<th>Robo</th>
+					<th>Siniestro</th>
+					<th>Otros</th>";
+
+//////////////////////////////////////////////  FIN de los opciones //////////////////////////
+
+
+
+
+$formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
+
+$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerDecrementosGridPorCabecera($id),5);
+
+
+$frmPublicacion = $serviciosReferencias->traerDecrementosPorCabeceraCURP($id, $_SESSION['curp_predio']);
+
 
 
 if ($_SESSION['refroll_predio'] != 1) {
@@ -102,11 +120,8 @@ if ($_SESSION['refroll_predio'] != 1) {
     <!-- Latest compiled and minified JavaScript -->
     <script src="../../bootstrap/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="../../css/bootstrap-datetimepicker.min.css">
-	<style type="text/css">
-		
-  
-		
-	</style>
+	<script src="../../js/jquery.number.min.js"></script>
+	
     
    
    <link href="../../css/perfect-scrollbar.css" rel="stylesheet">
@@ -119,6 +134,8 @@ if ($_SESSION['refroll_predio'] != 1) {
         $('#navigation').perfectScrollbar();
       });
     </script>
+    
+ 
 </head>
 
 <body>
@@ -127,21 +144,34 @@ if ($_SESSION['refroll_predio'] != 1) {
 
 <div id="content">
 
-<h3><?php echo $plural; ?></h3>
-
     <div class="boxInfoLargo">
         <div id="headBoxInfo">
-        	<p style="color: #fff; font-size:18px; height:16px;">Modificar <?php echo $singular; ?></p>
+        	<p style="color: #fff; font-size:18px; height:16px;">Carga de <?php echo $plural; ?></p>
         	
         </div>
     	<div class="cuerpoBox">
         	<form class="form-inline formulario" role="form">
-        	
-			<div class="row">
+        	<div class="row">
 			<?php echo $formulario; ?>
+				
             </div>
-            
-            
+
+            <div class="row" style="padding: 0 0;">
+					<div class="col-md-6">
+						<div class="input-group col-md-12 col-xs-12">
+							<span class="input-group-addon">Suma de A + B + C + D  $</span>
+							<input type="text" class="form-control" id="total" name="total" value="0" readonly />
+						</div>
+					</div>
+					
+				</div>
+
+            <!--
+            <div class="row">
+            	<div id="map" ></div>
+
+            </div>
+            -->
             <div class='row' style="margin-left:25px; margin-right:25px;">
                 <div class='alert'>
                 
@@ -154,15 +184,25 @@ if ($_SESSION['refroll_predio'] != 1) {
             <div class="row">
                 <div class="col-md-12">
                 <ul class="list-inline" style="margin-top:15px;">
+                    <?php
+						if (mysql_num_rows($frmPublicacion) > 0) {
+					?>
+
                     <li>
-                        <button type="button" class="btn btn-warning" id="cargar" style="margin-left:0px;">Modificar</button>
+                        <button type="button" class="btn btn-default volver" style="margin-left:0px;">Volver</button>
                     </li>
-                    <li>
-                        <button type="button" class="btn btn-danger varborrar" id="<?php echo $id; ?>" style="margin-left:0px;">Eliminar</button>
+                    <?php
+						} else {
+					?>
+					<li>
+                        <button type="button" class="btn btn-primary" id="cargar" style="margin-left:0px;">Guardar</button>
                     </li>
                     <li>
                         <button type="button" class="btn btn-default volver" style="margin-left:0px;">Volver</button>
                     </li>
+					<?php
+						}
+					?>
                 </ul>
                 </div>
             </div>
@@ -170,19 +210,31 @@ if ($_SESSION['refroll_predio'] != 1) {
     	</div>
     </div>
     
+    <div class="boxInfoLargo">
+        <div id="headBoxInfo">
+        	<p style="color: #fff; font-size:18px; height:16px;"><?php echo $plural; ?> Cargados</p>
+        	
+        </div>
+    	<div class="cuerpoBox">
+        	<?php echo $lstCargados; ?>
+    	</div>
+    </div>
+    
+    
+
+    
     
    
 </div>
 
 
 </div>
-
 <div id="dialog2" title="Eliminar <?php echo $singular; ?>">
     	<p>
         	<span class="ui-icon ui-icon-alert" style="float: left; margin: 0 7px 20px 0;"></span>
             ¿Esta seguro que desea eliminar el <?php echo $singular; ?>?.<span id="proveedorEli"></span>
         </p>
-        <p><strong>Importante: </strong>Si elimina el equipo se perderan todos los datos de este</p>
+        <p><strong>Importante: </strong>Si elimina el <?php echo $singular; ?> se perderan todos los datos de este</p>
         <input type="hidden" value="" id="idEliminar" name="idEliminar">
 </div>
 <script type="text/javascript" src="../../js/jquery.dataTables.min.js"></script>
@@ -194,13 +246,77 @@ if ($_SESSION['refroll_predio'] != 1) {
 <script type="text/javascript">
 $(document).ready(function(){
 
+
 	$('.volver').click(function(event){
 		 
-		url = "index.php";
+		url = "../ver.php?id=<?php echo $id; ?>";
 		$(location).attr('href',url);
 	});//fin del boton modificar
+
 	
-	$('.varborrar').click(function(event){
+	$('#example').dataTable({
+		"order": [[ 0, "asc" ]],
+		"language": {
+			"emptyTable":     "No hay datos cargados",
+			"info":           "Mostrar _START_ hasta _END_ del total de _TOTAL_ filas",
+			"infoEmpty":      "Mostrar 0 hasta 0 del total de 0 filas",
+			"infoFiltered":   "(filtrados del total de _MAX_ filas)",
+			"infoPostFix":    "",
+			"thousands":      ",",
+			"lengthMenu":     "Mostrar _MENU_ filas",
+			"loadingRecords": "Cargando...",
+			"processing":     "Procesando...",
+			"search":         "Buscar:",
+			"zeroRecords":    "No se encontraron resultados",
+			"paginate": {
+				"first":      "Primero",
+				"last":       "Ultimo",
+				"next":       "Siguiente",
+				"previous":   "Anterior"
+			},
+			"aria": {
+				"sortAscending":  ": activate to sort column ascending",
+				"sortDescending": ": activate to sort column descending"
+			}
+		  }
+	} );
+	
+
+	$('#donaciones').number( true, 0,'.','' );
+	$('#robo').number( true, 0,'.','' );
+	$('#siniestros').number( true, 0,'.','' );
+	$('#otros').number( true, 0,'.','' );
+
+
+	$('#donaciones').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		$('#total').val(parseFloat($('#donaciones').val()) + parseFloat($('#robo').val()) + parseFloat($('#siniestros').val()) + parseFloat($('#otros').val()));
+	});
+
+	$('#robo').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		$('#total').val(parseFloat($('#donaciones').val()) + parseFloat($('#robo').val()) + parseFloat($('#siniestros').val()) + parseFloat($('#otros').val()));
+	});
+
+	$('#siniestros').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		$('#total').val(parseFloat($('#donaciones').val()) + parseFloat($('#robo').val()) + parseFloat($('#siniestros').val()) + parseFloat($('#otros').val()));
+	});
+
+	$('#otros').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		$('#total').val(parseFloat($('#donaciones').val()) + parseFloat($('#robo').val()) + parseFloat($('#siniestros').val()) + parseFloat($('#otros').val()));
+	});
+
+	$("#example").on("click",'.varborrar', function(){
 		  usersid =  $(this).attr("id");
 		  if (!isNaN(usersid)) {
 			$("#idEliminar").val(usersid);
@@ -213,8 +329,29 @@ $(document).ready(function(){
 			alert("Error, vuelva a realizar la acción.");	
 		  }
 	});//fin del boton eliminar
+	
+	$("#example").on("click",'.varmodificar', function(){
+		  usersid =  $(this).attr("id");
+		  if (!isNaN(usersid)) {
+			
+			url = "modificar.php?id=" + usersid;
+			$(location).attr('href',url);
+		  } else {
+			alert("Error, vuelva a realizar la acción.");	
+		  }
+	});//fin del boton modificar
 
-	<?php echo $serviciosFunciones->teclasAceptadas(); ?>
+
+	$("#example").on("click",'.vararchivos', function(){
+		  usersid =  $(this).attr("id");
+		  if (!isNaN(usersid)) {
+			
+			url = "archivos.php?id=" + usersid;
+			$(location).attr('href',url);
+		  } else {
+			alert("Error, vuelva a realizar la acción.");	
+		  }
+	});//fin del boton archivos
 
 	 $( "#dialog2" ).dialog({
 		 	
@@ -234,7 +371,7 @@ $(document).ready(function(){
 											
 									},
 									success:  function (response) {
-											url = "index.php";
+											url = "index.php?id=<?php echo $id; ?>";
 											$(location).attr('href',url);
 											
 									}
@@ -253,8 +390,7 @@ $(document).ready(function(){
 		 
 		 
 	 		}); //fin del dialogo para eliminar
-	
-	
+			
 	<?php 
 		echo $serviciosHTML->validacion($tabla);
 	
@@ -284,7 +420,8 @@ $(document).ready(function(){
 				processData: false,
 				//mientras enviamos el archivo
 				beforeSend: function(){
-					$("#load").html('<img src="../../imagenes/load13.gif" width="50" height="50" />');       
+					$("#load").html('<img src="../../imagenes/load13.gif" width="50" height="50" />');  
+					$('#cargar').hide();     
 				},
 				//una vez finalizado correctamente
 				success: function(data){
@@ -293,7 +430,7 @@ $(document).ready(function(){
                                             $(".alert").removeClass("alert-danger");
 											$(".alert").removeClass("alert-info");
                                             $(".alert").addClass("alert-success");
-                                            $(".alert").html('<strong>Ok!</strong> Se modifico exitosamente el <strong><?php echo $singular; ?></strong>. ');
+                                            $(".alert").html('<strong>Ok!</strong> Se cargo exitosamente el <strong><?php echo $singular; ?></strong>. ');
 											$(".alert").delay(3000).queue(function(){
 												/*aca lo que quiero hacer 
 												  después de los 2 segundos de retraso*/

@@ -261,9 +261,7 @@ $(document).ready(function(){
 		$('#fueservidorpublico').prop("checked",false);
 	}
 
-	$('.vtexto').keypress(function(tecla) {
-        if((tecla.charCode != 241) && (tecla.charCode != 209) && (tecla.charCode != 64) && (tecla.charCode < 48 || tecla.charCode > 57) && (tecla.charCode < 97 || tecla.charCode > 122) && (tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode != 45)) return false;
-    });
+	<?php echo $serviciosFunciones->teclasAceptadas(); ?>
 
 	$('.volver').click(function(event){
 		 

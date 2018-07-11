@@ -22,44 +22,45 @@ $serviciosReferencias 	= new ServiciosReferencias();
 $fecha = date('Y-m-d');
 
 //$resProductos = $serviciosProductos->traerProductosLimite(6);
-$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Tipo de Cesionario",$_SESSION['refroll_predio'],'');
+$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Decrementos",$_SESSION['refroll_predio'],'');
 
 
 $id = $_GET['id'];
 
-$resResultado = $serviciosReferencias->traerTipocesionarioPorId($id);
+$resResultado = $serviciosReferencias->traerDecrementosPorCabeceraCURP($id, $_SESSION['curp_predio']);
 
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
-$singular = "Tipo de Cesionario";
+$singular = "Decrementos";
 
-$plural = "Tipos de Cesionarios";
+$plural = "Decrementos";
 
-$eliminar = "eliminarTipocesionario";
+$eliminar = "eliminarDecrementos";
 
-$modificar = "modificarTipocesionario";
+$modificar = "modificarDecrementos";
 
-$idTabla = "idtipocesionario";
+$idTabla = "iddecremento";
 
 $tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
-$tabla 			= "tbtipocesionario";
+$tabla 			= "dbdecrementos";
 
-$lblCambio	 	= array('tipocesionario');
-$lblreemplazo	= array('Tipo de Cesionario');
+$lblCambio	 	= array("refdeclaracionjuradacabecera","donaciones","robo","siniestros","otros");
+$lblreemplazo	= array('Declaración Patrimonial Cabecera','A_ Donaciones','B_ Robo','C_ Siniestros','D_ Otros');
 
 
-$cadRef 	= '';
+$resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
+$cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(2,3,4),' ', mysql_result($resResultado,0,'refdeclaracionjuradacabecera'));
 
-$refdescripcion = array();
-$refCampo 	=  array();
+$refdescripcion = array(0 => $cadRef);
+$refCampo 	=  array("refdeclaracionjuradacabecera"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
-$formulario 	= $serviciosFunciones->camposTablaModificar($id, $idTabla, $modificar,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
+$formulario 	= $serviciosFunciones->camposTablaModificar(mysql_result($resResultado,0,'iddecremento'), $idTabla, $modificar,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
 
 if ($_SESSION['refroll_predio'] != 1) {
@@ -102,11 +103,7 @@ if ($_SESSION['refroll_predio'] != 1) {
     <!-- Latest compiled and minified JavaScript -->
     <script src="../../bootstrap/js/bootstrap.min.js"></script>
 	<link rel="stylesheet" href="../../css/bootstrap-datetimepicker.min.css">
-	<style type="text/css">
-		
-  
-		
-	</style>
+	<script src="../../js/jquery.number.min.js"></script>
     
    
    <link href="../../css/perfect-scrollbar.css" rel="stylesheet">
@@ -139,7 +136,17 @@ if ($_SESSION['refroll_predio'] != 1) {
         	
 			<div class="row">
 			<?php echo $formulario; ?>
+
             </div>
+            <div class="row" style="padding: 0 0;">
+					<div class="col-md-6">
+						<div class="input-group col-md-12 col-xs-12">
+							<span class="input-group-addon">Suma de A + B  $</span>
+							<input type="text" class="form-control" id="total" name="total" value="0" readonly />
+						</div>
+					</div>
+					
+				</div>
             
             
             <div class='row' style="margin-left:25px; margin-right:25px;">
@@ -196,9 +203,11 @@ $(document).ready(function(){
 
 	$('.volver').click(function(event){
 		 
-		url = "index.php";
+		url = "../ver.php?id=<?php echo mysql_result($resResultado, 0,'refdeclaracionjuradacabecera'); ?>";
 		$(location).attr('href',url);
 	});//fin del boton modificar
+
+	
 	
 	$('.varborrar').click(function(event){
 		  usersid =  $(this).attr("id");
@@ -214,7 +223,57 @@ $(document).ready(function(){
 		  }
 	});//fin del boton eliminar
 
-	<?php echo $serviciosFunciones->teclasAceptadas(); ?>
+	$('#donaciones').number( true, 0,'.','' );
+	$('#robo').number( true, 0,'.','' );
+	$('#siniestros').number( true, 0,'.','' );
+	$('#otros').number( true, 0,'.','' );
+
+
+	$('#donaciones').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		$('#total').val(parseFloat($('#donaciones').val()) + parseFloat($('#robo').val()) + parseFloat($('#siniestros').val()) + parseFloat($('#otros').val()));
+	});
+
+	$('#robo').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		$('#total').val(parseFloat($('#donaciones').val()) + parseFloat($('#robo').val()) + parseFloat($('#siniestros').val()) + parseFloat($('#otros').val()));
+	});
+
+	$('#siniestros').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		$('#total').val(parseFloat($('#donaciones').val()) + parseFloat($('#robo').val()) + parseFloat($('#siniestros').val()) + parseFloat($('#otros').val()));
+	});
+
+	$('#otros').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		$('#total').val(parseFloat($('#donaciones').val()) + parseFloat($('#robo').val()) + parseFloat($('#siniestros').val()) + parseFloat($('#otros').val()));
+	});
+
+
+	$('#pagos').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		$('#total').val(parseFloat($('#pagos').val()) + parseFloat($('#otros').val()));
+	});
+
+	$('#otros').change(function() {
+		if ($(this).val() == '') {
+			$(this).val('0');
+		}
+		$('#total').val(parseFloat($('#pagos').val()) + parseFloat($('#otros').val()));
+		
+	});
+
+	$('#total').val(parseFloat($('#donaciones').val()) + parseFloat($('#robo').val()) + parseFloat($('#siniestros').val()) + parseFloat($('#otros').val()));
 
 	 $( "#dialog2" ).dialog({
 		 	
@@ -234,7 +293,7 @@ $(document).ready(function(){
 											
 									},
 									success:  function (response) {
-											url = "index.php";
+											url = "index.php?id=<?php echo mysql_result($resResultado, 0,'refdeclaracionjuradacabecera'); ?>";
 											$(location).attr('href',url);
 											
 									}

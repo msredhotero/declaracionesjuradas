@@ -257,11 +257,277 @@ case 'traerArchivosPorCliente':
 	break; 
 	case 'eliminarTitular': 
 		eliminarTitular($serviciosReferencias); 
+	break;
+
+	case 'insertarTipoadeudo': 
+		insertarTipoadeudo($serviciosReferencias); 
 	break; 
+	case 'modificarTipoadeudo': 
+		modificarTipoadeudo($serviciosReferencias); 
+	break; 
+	case 'eliminarTipoadeudo': 
+		eliminarTipoadeudo($serviciosReferencias); 
+	break; 
+
+
+	case 'insertarAdeudos': 
+		insertarAdeudos($serviciosReferencias); 
+	break; 
+	case 'modificarAdeudos': 
+		modificarAdeudos($serviciosReferencias); 
+	break; 
+	case 'eliminarAdeudos': 
+		eliminarAdeudos($serviciosReferencias); 
+	break; 
+
+	case 'insertarRecursos': 
+		insertarRecursos($serviciosReferencias); 
+	break; 
+	case 'modificarRecursos': 
+		modificarRecursos($serviciosReferencias); 
+	break; 
+	case 'eliminarRecursos': 
+		eliminarRecursos($serviciosReferencias); 
+	break; 
+
+	case 'insertarDecrementos': 
+		insertarDecrementos($serviciosReferencias); 
+	break; 
+	case 'modificarDecrementos': 
+		modificarDecrementos($serviciosReferencias); 
+	break; 
+	case 'eliminarDecrementos': 
+		eliminarDecrementos($serviciosReferencias); 
+	break; 
+
+
+	case 'insertarObservaciones': 
+		insertarObservaciones($serviciosReferencias); 
+	break; 
+	case 'modificarObservaciones': 
+		modificarObservaciones($serviciosReferencias); 
+	break; 
+	case 'eliminarObservaciones': 
+		eliminarObservaciones($serviciosReferencias); 
+	break; 
+
+
 }
 
 /* Fin */
 
+
+	function insertarRecursos($serviciosReferencias) { 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$pagos = $_POST['pagos']; 
+		$otros = $_POST['otros']; 
+		
+		$res = $serviciosReferencias->insertarRecursos($refdeclaracionjuradacabecera,$pagos,$otros); 
+		
+		if ((integer)$res > 0) { 
+			echo ''; 
+		} else { 
+			echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+
+	function modificarRecursos($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$pagos = $_POST['pagos']; 
+		$otros = $_POST['otros']; 
+		
+		$res = $serviciosReferencias->modificarRecursos($id,$refdeclaracionjuradacabecera,$pagos,$otros); 
+		
+		if ($res == true) { 
+			echo ''; 
+		} else { 
+			echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+
+	function eliminarRecursos($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarRecursos($id); 
+		echo $res; 
+	} 
+
+
+
+	function insertarDecrementos($serviciosReferencias) { 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$donaciones = $_POST['donaciones']; 
+		$robo = $_POST['robo']; 
+		$siniestros = $_POST['siniestros']; 
+		$otros = $_POST['otros']; 
+		
+		$res = $serviciosReferencias->insertarDecrementos($refdeclaracionjuradacabecera,$donaciones,$robo,$siniestros,$otros); 
+		
+		if ((integer)$res > 0) { 
+			echo ''; 
+		} else { 
+			echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+
+	function modificarDecrementos($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$donaciones = $_POST['donaciones']; 
+		$robo = $_POST['robo']; 
+		$siniestros = $_POST['siniestros']; 
+		$otros = $_POST['otros']; 
+		
+		$res = $serviciosReferencias->modificarDecrementos($id,$refdeclaracionjuradacabecera,$donaciones,$robo,$siniestros,$otros); 
+		
+		if ($res == true) { 
+			echo ''; 
+		} else { 
+			echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+
+	function eliminarDecrementos($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarDecrementos($id); 
+		echo $res; 
+	} 
+
+
+
+	function insertarObservaciones($serviciosReferencias) { 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$observacion = $_POST['observacion']; 
+		
+		$res = $serviciosReferencias->insertarObservaciones($refdeclaracionjuradacabecera,$observacion); 
+		
+		if ((integer)$res > 0) { 
+			echo ''; 
+		} else { 
+			echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+
+	function modificarObservaciones($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$observacion = $_POST['observacion']; 
+		
+		$res = $serviciosReferencias->modificarObservaciones($id,$refdeclaracionjuradacabecera,$observacion); 
+		
+		if ($res == true) { 
+			echo ''; 
+		} else { 
+			echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+
+	function eliminarObservaciones($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarObservaciones($id); 
+		echo $res; 
+	} 
+
+
+
+	
+	function insertarAdeudos($serviciosReferencias) { 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$reftipooperacion = $_POST['reftipooperacion']; 
+		$reftipoadeudo = $_POST['reftipoadeudo']; 
+		$numerocuenta = $_POST['numerocuenta']; 
+		$donde = $_POST['donde']; 
+		$razonsocial = $_POST['razonsocial']; 
+		$pais = $_POST['pais']; 
+		$fechaotorgamiento = $_POST['fechaotorgamiento']; 
+		$montooritginal = $_POST['montooritginal']; 
+		$tipomoneda = $_POST['tipomoneda']; 
+		$montopagos = $_POST['montopagos']; 
+		$saldo = $_POST['saldo']; 
+		$tipomonedasaldo = $_POST['tipomonedasaldo']; 
+		$reftitular = $_POST['reftitular']; 
+		
+		$res = $serviciosReferencias->insertarAdeudos($refdeclaracionjuradacabecera,$reftipooperacion,$reftipoadeudo,$numerocuenta,$donde,$razonsocial,$pais,$fechaotorgamiento,$montooritginal,$tipomoneda,$montopagos,$saldo,$tipomonedasaldo,$reftitular); 
+		
+		if ((integer)$res > 0) { 
+			echo ''; 
+		} else { 
+			echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+
+	function modificarAdeudos($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$reftipooperacion = $_POST['reftipooperacion']; 
+		$reftipoadeudo = $_POST['reftipoadeudo']; 
+		$numerocuenta = $_POST['numerocuenta']; 
+		$donde = $_POST['donde']; 
+		$razonsocial = $_POST['razonsocial']; 
+		$pais = $_POST['pais']; 
+		$fechaotorgamiento = $_POST['fechaotorgamiento']; 
+		$montooritginal = $_POST['montooritginal']; 
+		$tipomoneda = $_POST['tipomoneda']; 
+		$montopagos = $_POST['montopagos']; 
+		$saldo = $_POST['saldo']; 
+		$tipomonedasaldo = $_POST['tipomonedasaldo']; 
+		$reftitular = $_POST['reftitular']; 
+		
+		$res = $serviciosReferencias->modificarAdeudos($id,$refdeclaracionjuradacabecera,$reftipooperacion,$reftipoadeudo,$numerocuenta,$donde,$razonsocial,$pais,$fechaotorgamiento,$montooritginal,$tipomoneda,$montopagos,$saldo,$tipomonedasaldo,$reftitular); 
+		
+		if ($res == true) { 
+			echo ''; 
+		} else { 
+			echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+
+	function eliminarAdeudos($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarAdeudos($id); 
+		echo $res; 
+	} 
+
+
+
+	function insertarTipoadeudo($serviciosReferencias) { 
+		$tipoadeudo = $_POST['tipoadeudo']; 
+		$res = $serviciosReferencias->insertarTipoadeudo($tipoadeudo); 
+		
+		if ((integer)$res > 0) { 
+			echo ''; 
+		} else { 
+			echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+
+	function modificarTipoadeudo($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$tipoadeudo = $_POST['tipoadeudo']; 
+		$res = $serviciosReferencias->modificarTipoadeudo($id,$tipoadeudo); 
+		
+		if ($res == true) { 
+			echo ''; 
+		} else { 
+			echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+
+	function eliminarTipoadeudo($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarTipoadeudo($id); 
+		echo $res; 
+	} 
 	
 
 	function insertarBienesinmuebles($serviciosReferencias) { 
@@ -1207,8 +1473,10 @@ function insertarDeclaracionjuradacabecera($serviciosReferencias) {
 	$estudios = $_POST['estudios']; 
 	$cedulaprofesional = $_POST['cedulaprofesional']; 
 	$refusuarios = $_POST['refusuarios']; 
+
+	$rfc = $_POST['rfc']; 
 	
-	$res = $serviciosReferencias->insertarDeclaracionjuradacabecera($fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios); 
+	$res = $serviciosReferencias->insertarDeclaracionjuradacabecera($fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$rfc,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios); 
 	
 	if ((integer)$res > 0) { 
 		echo ''; 
@@ -1246,8 +1514,11 @@ function modificarDeclaracionjuradacabecera($serviciosReferencias) {
 	$estudios = $_POST['estudios']; 
 	$cedulaprofesional = $_POST['cedulaprofesional']; 
 	$refusuarios = $_POST['refusuarios']; 
+
+	$refestados = $_POST['refestados']; 
+	$rfc = $_POST['rfc']; 
 	
-	$res = $serviciosReferencias->modificarDeclaracionjuradacabecera($id,$fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios); 
+	$res = $serviciosReferencias->modificarDeclaracionjuradacabecera($id,$fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$rfc,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios,$refestados); 
 	
 	if ($res == true) { 
 		echo ''; 

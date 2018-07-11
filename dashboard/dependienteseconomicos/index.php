@@ -236,9 +236,7 @@ $(document).ready(function(){
 		$(location).attr('href',url);
 	});//fin del boton modificar
 
-	$('.vtexto').keypress(function(tecla) {
-        if((tecla.charCode != 241) && (tecla.charCode != 209) && (tecla.charCode != 64) && (tecla.charCode < 48 || tecla.charCode > 57) && (tecla.charCode < 97 || tecla.charCode > 122) && (tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode != 45)) return false;
-    });
+	<?php echo $serviciosFunciones->teclasAceptadas(); ?>
 	
 	$('#example').dataTable({
 		"order": [[ 0, "asc" ]],
@@ -323,7 +321,7 @@ $(document).ready(function(){
 											
 									},
 									success:  function (response) {
-											url = "index.php";
+											url = "index.php?id=<?php echo $id; ?>";
 											$(location).attr('href',url);
 											
 									}
@@ -389,7 +387,7 @@ $(document).ready(function(){
 												
 											});
 											$("#load").html('');
-											url = "index.php";
+											url = "index.php?id=<?php echo $id; ?>";
 											$(location).attr('href',url);
                                             
 											

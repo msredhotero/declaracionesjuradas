@@ -113,7 +113,7 @@ $cabeceras 		= "	<th>Declaración Patr. Cab.</th>
 
 $formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
-$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerInversionesGridPorCabecera($id),6);
+$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerAdeudosGridPorCabecera($id),7);
 
 
 
@@ -267,9 +267,7 @@ $(document).ready(function(){
 	});//fin del boton modificar
 
 
-	$('.vtexto').keypress(function(tecla) {
-        if((tecla.charCode != 241) && (tecla.charCode != 209) && (tecla.charCode != 64) && (tecla.charCode < 48 || tecla.charCode > 57) && (tecla.charCode < 97 || tecla.charCode > 122) && (tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode != 45)) return false;
-    });
+	<?php echo $serviciosFunciones->teclasAceptadas(); ?>
 
 	
 	$('#example').dataTable({
@@ -299,7 +297,9 @@ $(document).ready(function(){
 		  }
 	} );
 
-	$('#valor').number( true, 0,'.','' );
+	$('#montooritginal').number( true, 2,'.','' );
+	$('#montopagos').number( true, 2,'.','' );
+	$('#saldo').number( true, 2,'.','' );
 	
 
 	$("#example").on("click",'.varborrar', function(){
@@ -357,7 +357,7 @@ $(document).ready(function(){
 											
 									},
 									success:  function (response) {
-											url = "index.php";
+											url = "index.php?id=<?php echo $id; ?>";
 											$(location).attr('href',url);
 											
 									}
@@ -423,7 +423,7 @@ $(document).ready(function(){
 												
 											});
 											$("#load").html('');
-											url = "index.php";
+											url = "index.php?id=<?php echo $id; ?>";
 											$(location).attr('href',url);
                                             
 											
@@ -458,6 +458,9 @@ $('.form_date').datetimepicker({
 	forceParse: 0,
 	format: 'dd/mm/yyyy'
 });
+
+$('.form_date').datetimepicker("setDate", new Date());
+
 </script>
 <?php } ?>
 </body>

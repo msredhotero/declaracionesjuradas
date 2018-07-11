@@ -1378,18 +1378,19 @@ function traerAgenteReal($curp) {
 	return $res; 
 }
 
-function insertarDeclaracionjuradacabecera($fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios) { 
-$sql = "insert into dbdeclaracionjuradacabecera(iddeclaracionjuradacabecera,fecharecepcion,primerapellido,segundoapellido,nombres,curp,homoclave,emailinstitucional,emailalterno,refestadocivil,refregimenmatrimonial,paisnacimiento,nacionalidad,entidadnacimiento,numerocelular,lugarubica,domicilioparticular,localidad,municipio,telefono,entidadfederativa,codigopostal,lada,sexo,estudios,cedulaprofesional,refusuarios, refestados) 
-values ('','".($fecharecepcion)."','".($primerapellido)."','".($segundoapellido)."','".($nombres)."','".($curp)."','".($homoclave)."','".($emailinstitucional)."','".($emailalterno)."',".$refestadocivil.",".$refregimenmatrimonial.",'".($paisnacimiento)."','".($nacionalidad)."','".($entidadnacimiento)."','".($numerocelular)."',".$lugarubica.",'".($domicilioparticular)."','".($localidad)."','".($municipio)."','".($telefono)."','".($entidadfederativa)."','".($codigopostal)."','".($lada)."',".$sexo.",'".($estudios)."','".($cedulaprofesional)."',".$refusuarios.", 1)"; 
+function insertarDeclaracionjuradacabecera($fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$rfc,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios) { 
+$sql = "insert into dbdeclaracionjuradacabecera(iddeclaracionjuradacabecera,fecharecepcion,primerapellido,segundoapellido,nombres,curp,homoclave,rfc,emailinstitucional,emailalterno,refestadocivil,refregimenmatrimonial,paisnacimiento,nacionalidad,entidadnacimiento,numerocelular,lugarubica,domicilioparticular,localidad,municipio,telefono,entidadfederativa,codigopostal,lada,sexo,estudios,cedulaprofesional,refusuarios, refestados) 
+values ('','".($fecharecepcion)."','".($primerapellido)."','".($segundoapellido)."','".($nombres)."','".($curp)."','".($homoclave)."','".($rfc)."','".($emailinstitucional)."','".($emailalterno)."',".$refestadocivil.",".$refregimenmatrimonial.",'".($paisnacimiento)."','".($nacionalidad)."','".($entidadnacimiento)."','".($numerocelular)."',".$lugarubica.",'".($domicilioparticular)."','".($localidad)."','".($municipio)."','".($telefono)."','".($entidadfederativa)."','".($codigopostal)."','".($lada)."',".$sexo.",'".($estudios)."','".($cedulaprofesional)."',".$refusuarios.", 1)"; 
 $res = $this->query($sql,1); 
 return $res; 
 } 
 
 
-function modificarDeclaracionjuradacabecera($id,$fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios, $refestados) { 
+function modificarDeclaracionjuradacabecera($id,$fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$rfc,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios, $refestados) { 
 $sql = "update dbdeclaracionjuradacabecera 
 set 
-fecharecepcion = '".($fecharecepcion)."',primerapellido = '".($primerapellido)."',segundoapellido = '".($segundoapellido)."',nombres = '".($nombres)."',curp = '".($curp)."',homoclave = '".($homoclave)."',emailinstitucional = '".($emailinstitucional)."',emailalterno = '".($emailalterno)."',refestadocivil = ".$refestadocivil.",refregimenmatrimonial = ".$refregimenmatrimonial.",paisnacimiento = '".($paisnacimiento)."',nacionalidad = '".($nacionalidad)."',
+fecharecepcion = '".($fecharecepcion)."',primerapellido = '".($primerapellido)."',segundoapellido = '".($segundoapellido)."',
+nombres = '".($nombres)."',curp = '".($curp)."',homoclave = '".($homoclave)."',rfc = '".($rfc)."',emailinstitucional = '".($emailinstitucional)."',emailalterno = '".($emailalterno)."',refestadocivil = ".$refestadocivil.",refregimenmatrimonial = ".$refregimenmatrimonial.",paisnacimiento = '".($paisnacimiento)."',nacionalidad = '".($nacionalidad)."',
 entidadnacimiento = '".($entidadnacimiento)."',numerocelular = '".($numerocelular)."',
 lugarubica = ".$lugarubica.",domicilioparticular = '".($domicilioparticular)."',localidad = '".($localidad)."',
 municipio = '".($municipio)."',telefono = '".($telefono)."',entidadfederativa = '".($entidadfederativa)."',
@@ -1418,6 +1419,7 @@ d.segundoapellido,
 d.nombres,
 d.curp,
 d.homoclave,
+d.rfc,
 d.emailinstitucional,
 d.emailalterno,
 d.refestadocivil,
@@ -1450,7 +1452,7 @@ return $res;
 
 
 function traerDeclaracionjuradacabeceraPorId($id) { 
-$sql = "select iddeclaracionjuradacabecera,fecharecepcion,primerapellido,segundoapellido,nombres,curp,homoclave,emailinstitucional,emailalterno,refestadocivil,refregimenmatrimonial,paisnacimiento,nacionalidad,entidadnacimiento,numerocelular,lugarubica,domicilioparticular,localidad,municipio,telefono,entidadfederativa,codigopostal,lada,sexo,estudios,cedulaprofesional,refusuarios, refestados from dbdeclaracionjuradacabecera where iddeclaracionjuradacabecera =".$id; 
+$sql = "select iddeclaracionjuradacabecera,fecharecepcion,primerapellido,segundoapellido,nombres,curp,homoclave,rfc,emailinstitucional,emailalterno,refestadocivil,refregimenmatrimonial,paisnacimiento,nacionalidad,entidadnacimiento,numerocelular,lugarubica,domicilioparticular,localidad,municipio,telefono,entidadfederativa,codigopostal,lada,sexo,estudios,cedulaprofesional,refusuarios, refestados from dbdeclaracionjuradacabecera where iddeclaracionjuradacabecera =".$id; 
 $res = $this->query($sql,0); 
 return $res; 
 } 
@@ -2511,6 +2513,478 @@ return $res;
 
 /* Fin */
 /* /* Fin de la Tabla: tbtitular*/
+
+
+
+/* PARA Adeudos */
+
+function insertarAdeudos($refdeclaracionjuradacabecera,$reftipooperacion,$reftipoadeudo,$numerocuenta,$donde,$razonsocial,$pais,$fechaotorgamiento,$montooritginal,$tipomoneda,$montopagos,$saldo,$tipomonedasaldo,$reftitular) { 
+$sql = "insert into dbadeudos(idadeudo,refdeclaracionjuradacabecera,reftipooperacion,reftipoadeudo,numerocuenta,donde,razonsocial,pais,fechaotorgamiento,montooritginal,tipomoneda,montopagos,saldo,tipomonedasaldo,reftitular) 
+values ('',".$refdeclaracionjuradacabecera.",".$reftipooperacion.",".$reftipoadeudo.",'".($numerocuenta)."','".($donde)."','".($razonsocial)."','".($pais)."','".($fechaotorgamiento)."',".$montooritginal.",'".($tipomoneda)."',".$montopagos.",".$saldo.",'".($tipomonedasaldo)."',".$reftitular.")"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarAdeudos($id,$refdeclaracionjuradacabecera,$reftipooperacion,$reftipoadeudo,$numerocuenta,$donde,$razonsocial,$pais,$fechaotorgamiento,$montooritginal,$tipomoneda,$montopagos,$saldo,$tipomonedasaldo,$reftitular) { 
+$sql = "update dbadeudos 
+set 
+refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",reftipooperacion = ".$reftipooperacion.",reftipoadeudo = ".$reftipoadeudo.",numerocuenta = '".($numerocuenta)."',donde = '".($donde)."',razonsocial = '".($razonsocial)."',pais = '".($pais)."',fechaotorgamiento = '".($fechaotorgamiento)."',montooritginal = ".$montooritginal.",tipomoneda = '".($tipomoneda)."',montopagos = ".$montopagos.",saldo = ".$saldo.",tipomonedasaldo = '".($tipomonedasaldo)."',reftitular = ".$reftitular." 
+where idadeudo =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarAdeudos($id) { 
+$sql = "delete from dbadeudos where idadeudo =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerAdeudos() { 
+$sql = "select 
+a.idadeudo,
+a.refdeclaracionjuradacabecera,
+a.reftipooperacion,
+a.reftipoadeudo,
+a.numerocuenta,
+a.donde,
+a.razonsocial,
+a.pais,
+a.fechaotorgamiento,
+a.montooritginal,
+a.tipomoneda,
+a.montopagos,
+a.saldo,
+a.tipomonedasaldo,
+a.reftitular
+from dbadeudos a 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = a.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+inner join tbtipooperacion tiop ON tiop.idtipooperacion = a.reftipooperacion 
+inner join tbtipoadeudo ta ON ta.idtipoadeudo = a.reftipoadeudo 
+inner join tbtitular tit ON tit.idtitular = a.reftitular 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerAdeudosPorId($id) { 
+$sql = "select idadeudo,refdeclaracionjuradacabecera,reftipooperacion,reftipoadeudo,numerocuenta,donde,razonsocial,pais,fechaotorgamiento,montooritginal,tipomoneda,montopagos,saldo,tipomonedasaldo,reftitular from dbadeudos where idadeudo =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerAdeudosGridPorCabecera($cabecera) { 
+$sql = "select 
+a.idadeudo,
+concat(dj.primerapellido, ' ', dj.segundoapellido, ' ', dj.nombres) as declaracioncabecera,
+tiop.tipooperacion,
+ta.tipoadeudo,
+tit.titular,
+a.numerocuenta,
+a.donde,
+a.razonsocial,
+a.pais,
+a.fechaotorgamiento,
+a.montooritginal,
+a.tipomoneda,
+a.montopagos,
+a.saldo,
+a.tipomonedasaldo,
+a.refdeclaracionjuradacabecera,
+a.reftipooperacion,
+a.reftipoadeudo
+from dbadeudos a 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = a.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+inner join tbtipooperacion tiop ON tiop.idtipooperacion = a.reftipooperacion 
+inner join tbtipoadeudo ta ON ta.idtipoadeudo = a.reftipoadeudo 
+inner join tbtitular tit ON tit.idtitular = a.reftitular
+where dj.iddeclaracionjuradacabecera = ".$cabecera." 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+
+function traerAdeudosPorCabeceraCURP($cabecera, $curp) { 
+$sql = "select 
+a.idadeudo,
+concat(dj.primerapellido, ' ', dj.segundoapellido, ' ', dj.nombres) as declaracioncabecera,
+tiop.tipooperacion,
+tit.titular,
+a.numerocuenta,
+a.donde,
+a.razonsocial,
+a.pais,
+a.fechaotorgamiento,
+a.montooritginal,
+a.tipomoneda,
+a.montopagos,
+a.saldo,
+a.tipomonedasaldo,
+a.refdeclaracionjuradacabecera,
+a.reftipooperacion,
+a.reftipoadeudo
+from dbadeudos a 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = a.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+inner join tbtipooperacion tiop ON tiop.idtipooperacion = a.reftipooperacion 
+inner join tbtipoadeudo ta ON ta.idtipoadeudo = a.reftipoadeudo 
+inner join tbtitular tit ON tit.idtitular = a.reftitular
+where dj.curp = '".$curp."' and dj.iddeclaracionjuradacabecera = ".$cabecera."
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: dbadeudos*/
+
+
+
+/* PARA Tipoadeudo */
+
+function insertarTipoadeudo($tipoadeudo) { 
+$sql = "insert into tbtipoadeudo(idtipoadeudo,tipoadeudo) 
+values ('','".($tipoadeudo)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarTipoadeudo($id,$tipoadeudo) { 
+$sql = "update tbtipoadeudo 
+set 
+tipoadeudo = '".($tipoadeudo)."' 
+where idtipoadeudo =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarTipoadeudo($id) { 
+$sql = "delete from tbtipoadeudo where idtipoadeudo =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerTipoadeudo() { 
+$sql = "select 
+t.idtipoadeudo,
+t.tipoadeudo
+from tbtipoadeudo t 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerTipoadeudoPorId($id) { 
+$sql = "select idtipoadeudo,tipoadeudo from tbtipoadeudo where idtipoadeudo =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: tbtipoadeudo*/
+
+
+/* PARA Recursos */
+
+function insertarRecursos($refdeclaracionjuradacabecera,$pagos,$otros) { 
+$sql = "insert into dbrecursos(idrecurso,refdeclaracionjuradacabecera,pagos,otros) 
+values ('',".$refdeclaracionjuradacabecera.",".$pagos.",".$otros.")"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarRecursos($id,$refdeclaracionjuradacabecera,$pagos,$otros) { 
+$sql = "update dbrecursos 
+set 
+refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",pagos = ".$pagos.",otros = ".$otros." 
+where idrecurso =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarRecursos($id) { 
+$sql = "delete from dbrecursos where idrecurso =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerRecursos() { 
+$sql = "select 
+r.idrecurso,
+r.refdeclaracionjuradacabecera,
+r.pagos,
+r.otros
+from dbrecursos r 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = r.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerRecursosPorId($id) { 
+$sql = "select idrecurso,refdeclaracionjuradacabecera,pagos,otros from dbrecursos where idrecurso =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerRecursosGridPorCabecera($cabecera) { 
+$sql = "select 
+r.idrecurso,
+concat(dj.primerapellido, ' ', dj.segundoapellido, ' ', dj.nombres) as declaracioncabecera,
+r.pagos,
+r.otros,
+r.refdeclaracionjuradacabecera 
+from dbrecursos r 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = r.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+where dj.iddeclaracionjuradacabecera = ".$cabecera." 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+
+function traerRecursosPorCabeceraCURP($cabecera, $curp) { 
+$sql = "select 
+r.idrecurso,
+concat(dj.primerapellido, ' ', dj.segundoapellido, ' ', dj.nombres) as declaracioncabecera,
+r.pagos,
+r.otros,
+r.refdeclaracionjuradacabecera 
+from dbrecursos r 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = r.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+where dj.curp = '".$curp."' and dj.iddeclaracionjuradacabecera = ".$cabecera."
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: dbrecursos*/
+
+
+/* PARA Decrementos */
+
+function insertarDecrementos($refdeclaracionjuradacabecera,$donaciones,$robo,$siniestros,$otros) { 
+$sql = "insert into dbdecrementos(iddecremento,refdeclaracionjuradacabecera,donaciones,robo,siniestros,otros) 
+values ('',".$refdeclaracionjuradacabecera.",".$donaciones.",".$robo.",".$siniestros.",".$otros.")"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarDecrementos($id,$refdeclaracionjuradacabecera,$donaciones,$robo,$siniestros,$otros) { 
+$sql = "update dbdecrementos 
+set 
+refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",donaciones = ".$donaciones.",robo = ".$robo.",siniestros = ".$siniestros.",otros = ".$otros." 
+where iddecremento =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarDecrementos($id) { 
+$sql = "delete from dbdecrementos where iddecremento =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerDecrementos() { 
+$sql = "select 
+d.iddecremento,
+d.refdeclaracionjuradacabecera,
+d.donaciones,
+d.robo,
+d.siniestros,
+d.otros
+from dbdecrementos d 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerDecrementosPorId($id) { 
+$sql = "select iddecremento,refdeclaracionjuradacabecera,donaciones,robo,siniestros,otros from dbdecrementos where iddecremento =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerDecrementosGridPorCabecera($cabecera) { 
+$sql = "select 
+d.iddecremento,
+concat(dj.primerapellido, ' ', dj.segundoapellido, ' ', dj.nombres) as declaracioncabecera,
+d.donaciones,
+d.robo,
+d.siniestros,
+d.otros,
+d.refdeclaracionjuradacabecera 
+from dbdecrementos d 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+where dj.iddeclaracionjuradacabecera = ".$cabecera." 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+
+function traerDecrementosPorCabeceraCURP($cabecera, $curp) { 
+$sql = "select 
+d.iddecremento,
+concat(dj.primerapellido, ' ', dj.segundoapellido, ' ', dj.nombres) as declaracioncabecera,
+d.donaciones,
+d.robo,
+d.siniestros,
+d.otros,
+d.refdeclaracionjuradacabecera 
+from dbdecrementos d 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+where dj.curp = '".$curp."' and dj.iddeclaracionjuradacabecera = ".$cabecera."
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: dbdecrementos*/
+
+
+/* PARA Observaciones */
+
+function insertarObservaciones($refdeclaracionjuradacabecera,$observacion) { 
+$sql = "insert into dbobservaciones(idobservacion,refdeclaracionjuradacabecera,observacion) 
+values ('',".$refdeclaracionjuradacabecera.",'".($observacion)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarObservaciones($id,$refdeclaracionjuradacabecera,$observacion) { 
+$sql = "update dbobservaciones 
+set 
+refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",observacion = '".($observacion)."' 
+where idobservacion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarObservaciones($id) { 
+$sql = "delete from dbobservaciones where idobservacion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerObservaciones() { 
+$sql = "select 
+o.idobservacion,
+o.refdeclaracionjuradacabecera,
+o.observacion
+from dbobservaciones o 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = o.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerObservacionesPorId($id) { 
+$sql = "select idobservacion,refdeclaracionjuradacabecera,observacion from dbobservaciones where idobservacion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerObservacionesGridPorCabecera($cabecera) { 
+$sql = "select 
+o.idobservacion,
+concat(dj.primerapellido, ' ', dj.segundoapellido, ' ', dj.nombres) as declaracioncabecera,
+o.observacion,
+o.refdeclaracionjuradacabecera 
+from dbobservaciones o 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = o.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+where dj.iddeclaracionjuradacabecera = ".$cabecera." 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+
+function traerObservacionesPorCabeceraCURP($cabecera, $curp) { 
+$sql = "select 
+o.idobservacion,
+concat(dj.primerapellido, ' ', dj.segundoapellido, ' ', dj.nombres) as declaracioncabecera,
+o.observacion,
+o.refdeclaracionjuradacabecera 
+from dbobservaciones o 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = o.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+where dj.curp = '".$curp."' and dj.iddeclaracionjuradacabecera = ".$cabecera."
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: dbobservaciones*/
+
+
 
 
 function query($sql,$accion) {

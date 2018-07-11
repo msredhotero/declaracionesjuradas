@@ -232,6 +232,8 @@ $(document).ready(function(){
 			}
 		  }
 	} );
+
+	<?php echo $serviciosFunciones->teclasAceptadas(); ?>
 	
 
 	$("#example").on("click",'.varborrar', function(){

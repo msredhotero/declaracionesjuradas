@@ -39,6 +39,12 @@ $frmBienesInmuebles = $serviciosReferencias->traerBienesinmueblesPorCabeceraCURP
 $frmBienesMuebles = $serviciosReferencias->traerBienesmueblesPorCabeceraCURP($id, $_SESSION['curp_predio']);
 $frmInversiones = $serviciosReferencias->traerInversionesPorCabeceraCURP($id, $_SESSION['curp_predio']);
 $frmVehiculos = $serviciosReferencias->traerVehiculosPorCabeceraCURP($id, $_SESSION['curp_predio']);
+$frmAdeudos = $serviciosReferencias->traerAdeudosPorCabeceraCURP($id, $_SESSION['curp_predio']);
+
+$frmRecursos = $serviciosReferencias->traerRecursosPorCabeceraCURP($id, $_SESSION['curp_predio']);
+$frmDecrementos = $serviciosReferencias->traerDecrementosPorCabeceraCURP($id, $_SESSION['curp_predio']);
+$frmObservaciones = $serviciosReferencias->traerObservacionesPorCabeceraCURP($id, $_SESSION['curp_predio']);
+
 
 $resResultado = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
 
@@ -478,6 +484,128 @@ deberá señalarlo en la sección VIII.- OTRO TIPO DE INVERSIÓN.</p>
 								</div>
 							</div>
 						</div>
+
+
+						<div class="col s12 m4">
+							<div class="card teal lighten-2 darken-1">
+								<div class="card-content white-text">
+									<span class="card-title">ADEUDOS</span>
+									<p>Anotará la clave del tipo de gravamen o adeudo que tenga al momento de la presentación de
+esta Declaración Patrimonial.
+Si el adeudo es con una persona particular, deberá anotar en el espacio de “Institución o
+Acreedor” el nombre completo de esa persona.</p>
+								</div>
+								<div class="card-action">
+
+									<?php
+									if (mysql_num_rows($frmAdeudos) > 0) {
+									?>
+									<a href="adeudos/index.php?id=<?php echo $id; ?>">Acceder</a>
+									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
+									<?php
+										} else {
+									?>
+									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<a href="adeudos/index.php?id=<?php echo $id; ?>">Acceder</a>
+									
+									<?php
+										}
+									?>
+								</div>
+							</div>
+						</div>
+
+						
+
+					</div>
+
+
+
+
+					<div class="row">
+						
+
+						<div class="col s12 m4">
+							<div class="card teal lighten-2 darken-1">
+								<div class="card-content white-text">
+									<span class="card-title">APLICACION DE RECURSOS</span>
+									<p>Anote solo las cantidades correspondientes.</p>
+								</div>
+								<div class="card-action">
+									<?php
+									if (mysql_num_rows($frmRecursos) > 0) {
+									?>
+									<a href="recursos/modificar.php?id=<?php echo $id; ?>">Acceder</a>
+									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
+									<?php
+										} else {
+									?>
+									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<a href="recursos/index.php?id=<?php echo $id; ?>">Acceder</a>
+									
+									<?php
+										}
+									?>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col s12 m4">
+							<div class="card teal lighten-2 darken-1">
+								<div class="card-content white-text">
+									<span class="card-title">DECREMENTOS</span>
+									<p>Anote solo las cantidades correspondientes.</p>
+								</div>
+								<div class="card-action">
+
+									<?php
+									if (mysql_num_rows($frmDecrementos) > 0) {
+									?>
+									<a href="decrementos/modificar.php?id=<?php echo $id; ?>">Acceder</a>
+									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
+									<?php
+										} else {
+									?>
+									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<a href="decrementos/index.php?id=<?php echo $id; ?>">Acceder</a>
+									
+									<?php
+										}
+									?>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col s12 m4">
+							<div class="card teal lighten-2 darken-1">
+								<div class="card-content white-text">
+									<span class="card-title">OBSERVACIONES</span>
+									<p>Si requiere hacer alguna anotación especial o aclaración, esta la podrá realizar en esta
+sección.</p>
+								</div>
+								<div class="card-action">
+
+									<?php
+									if (mysql_num_rows($frmObservaciones) > 0) {
+									?>
+									<a href="observaciones/modificar.php?id=<?php echo $id; ?>">Acceder</a>
+									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
+									<?php
+										} else {
+									?>
+									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<a href="observaciones/index.php?id=<?php echo $id; ?>">Acceder</a>
+									
+									<?php
+										}
+									?>
+								</div>
+							</div>
+						</div>
+
+						
 
 					</div>
 					

@@ -63,7 +63,8 @@ $lblCambio	 	= array('fecharecepcion',
 						'codigopostal',
 						'estudios',
 						'cedulaprofesional',
-						'refusuarios');
+						'refusuarios',
+						'refestados');
 $lblreemplazo	= array('Fecha de Recepción',
 						'Primer Apellido',
 						'Segundo Apellido',
@@ -86,7 +87,8 @@ $lblreemplazo	= array('Fecha de Recepción',
 						'Codigo Postal',
 						'Grado Max. de estudios/Especialidad',
 						'Nro de cédula profesional',
-						'Usuario');
+						'Usuario',
+						'Estado');
 
 
 $resEstadoCivil = $serviciosReferencias->traerEstadocivil();
@@ -101,8 +103,11 @@ $cadRef3 = $serviciosFunciones->devolverSelectBoxObligatorio($refUsuarios,array(
 $cadRef4 = "<option value='1'>México</option><option value='2'>Extranjero</option>";
 $cadRef5 = "<option value='1'>Femenino</option><option value='2'>Masculino</option>";
 
-$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3,3=>$cadRef4,4=>$cadRef5);
-$refCampo 	=  array("refestadocivil","refregimenmatrimonial","refusuarios","lugarubica","sexo"); 
+$resEstado = $serviciosReferencias->traerEstadosPorId(1);
+$cadRef6 = $serviciosFunciones->devolverSelectBoxActivo($resEstado,array(1),'', 1);
+
+$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3,3=>$cadRef4,4=>$cadRef5,5=>$cadRef6);
+$refCampo 	=  array("refestadocivil","refregimenmatrimonial","refusuarios","lugarubica","sexo","refestados"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 $declaracionReal = $serviciosReferencias->traerAgenteReal($_SESSION['curp_predio']);
@@ -277,9 +282,24 @@ $(document).ready(function(){
 		$(location).attr('href',url);
 	});//fin del boton modificar
 
-	$('.vtexto').keypress(function(tecla) {
-        if((tecla.charCode != 241) && (tecla.charCode != 209) && (tecla.charCode != 64) && (tecla.charCode < 48 || tecla.charCode > 57) && (tecla.charCode < 97 || tecla.charCode > 122) && (tecla.charCode < 65 || tecla.charCode > 90) && (tecla.charCode != 45)) return false;
-    });
+	<?php echo $serviciosFunciones->teclasAceptadas(); ?>
+
+	function validarRFC(){
+		
+		//Almacenamos los valores
+		nombre = $('#rfc').val();
+		
+	   //Comprobamos la longitud de caracteres
+		if (nombre.length==3){
+			return true;
+		}
+		else {
+			alert('El RFC debe tener 3 caracteres');
+			return false;
+			
+		}
+
+	}
 
 	
 	$('#example').dataTable({
@@ -420,7 +440,7 @@ $(document).ready(function(){
 	//al enviar el formulario
     $('#cargar').click(function(){
 		
-		if (validador() == "")
+		if ((validador() == "") && (validarRFC()))
         {
 			//información del formulario
 			var formData = new FormData($(".formulario")[0]);

@@ -214,6 +214,8 @@ $(document).ready(function(){
 		  }
 	});//fin del boton eliminar
 
+	<?php echo $serviciosFunciones->teclasAceptadas(); ?>
+
 	 $( "#dialog2" ).dialog({
 		 	
 			    autoOpen: false,
