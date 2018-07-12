@@ -27,8 +27,11 @@ $resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Observa
 
 $id = $_GET['id'];
 
-$resResultado = $serviciosReferencias->traerObservacionesPorCabeceraCURP($id, $_SESSION['curp_predio']);
-
+if ($_SESSION['idroll_predio'] == 1) {
+	$resResultado = $serviciosReferencias->traerObservacionesPorCabecera($id);
+} else {
+	$resResultado = $serviciosReferencias->traerObservacionesPorCabeceraCURP($id, $_SESSION['curp_predio']);
+}
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
 $singular = "Observacion";
@@ -53,7 +56,7 @@ $lblreemplazo	= array('Declaración Patrimonial Cabecera');
 
 
 $resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
-$cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(2,3,4),' ', mysql_result($resResultado,0,'refdeclaracionjuradacabecera'));
+$cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(2,3,4),' ', $id);
 
 $refdescripcion = array(0 => $cadRef);
 $refCampo 	=  array("refdeclaracionjuradacabecera"); 

@@ -28,45 +28,37 @@ $resMenu = $serviciosHTML->menu($_SESSION['nombre_predio'],"Dashboard",$_SESSION
 
 $resAgente = $serviciosReferencias->traerAgenteReal($_SESSION['curp_predio']);
 
-$frmDeclaracionAnual = $serviciosReferencias->traerDeclaracionanualinteresPorCabeceraCURP($id, $_SESSION['curp_predio']);
-$frmDependientesEconomicos = $serviciosReferencias->traerDependienteseconomicosPorCabeceraCURP($id, $_SESSION['curp_predio']);
-$frmIngresosAnuales = $serviciosReferencias->traerIngresosanualesPorCabeceraCURP($id, $_SESSION['curp_predio']);
-$frmPublicacion = $serviciosReferencias->traerPublicacionPorCabeceraCURP($id, $_SESSION['curp_predio']);
-$frmBienesInmuebles = $serviciosReferencias->traerBienesinmueblesPorCabeceraCURP($id, $_SESSION['curp_predio']);
-$frmBienesMuebles = $serviciosReferencias->traerBienesmueblesPorCabeceraCURP($id, $_SESSION['curp_predio']);
-$frmInversiones = $serviciosReferencias->traerInversionesPorCabeceraCURP($id, $_SESSION['curp_predio']);
-$frmVehiculos = $serviciosReferencias->traerVehiculosPorCabeceraCURP($id, $_SESSION['curp_predio']);
-$frmAdeudos = $serviciosReferencias->traerAdeudosPorCabeceraCURP($id, $_SESSION['curp_predio']);
-
-$frmRecursos = $serviciosReferencias->traerRecursosPorCabeceraCURP($id, $_SESSION['curp_predio']);
-$frmDecrementos = $serviciosReferencias->traerDecrementosPorCabeceraCURP($id, $_SESSION['curp_predio']);
-$frmObservaciones = $serviciosReferencias->traerObservacionesPorCabeceraCURP($id, $_SESSION['curp_predio']);
 
 if ($_SESSION['idroll_predio'] == 1) {
+	$frmDeclaracionAnual = $serviciosReferencias->traerDeclaracionanualinteresPorCabecera($id);
+	$frmDependientesEconomicos = $serviciosReferencias->traerDependienteseconomicosPorCabecera($id);
+	$frmIngresosAnuales = $serviciosReferencias->traerIngresosanualesPorCabecera($id);
+	$frmPublicacion = $serviciosReferencias->traerPublicacionPorCabecera($id);
+	$frmBienesInmuebles = $serviciosReferencias->traerBienesinmueblesPorCabecera($id);
+	$frmBienesMuebles = $serviciosReferencias->traerBienesmueblesPorCabecera($id);
+	$frmInversiones = $serviciosReferencias->traerInversionesPorCabecera($id);
+	$frmVehiculos = $serviciosReferencias->traerVehiculosPorCabecera($id);
+	$frmAdeudos = $serviciosReferencias->traerAdeudosPorCabecera($id);
 
-	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbdeclaracionanualinteres',$lblCambio2,$lblreemplazo2,$refdescripcion2,$refCampo2, $frmDeclaracionAnual);
+	$frmRecursos = $serviciosReferencias->traerRecursosPorCabecera($id);
+	$frmDecrementos = $serviciosReferencias->traerDecrementosPorCabecera($id);
+	$frmObservaciones = $serviciosReferencias->traerObservacionesPorCabecera($id);
 
-	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbdependienteseconomicos',$lblCambio3,$lblreemplazo3,$refdescripcion2,$refCampo2, $frmDependientesEconomicos);
+} else {
+	$frmDeclaracionAnual = $serviciosReferencias->traerDeclaracionanualinteresPorCabeceraCURP($id, $_SESSION['curp_predio']);
+	$frmDependientesEconomicos = $serviciosReferencias->traerDependienteseconomicosPorCabeceraCURP($id, $_SESSION['curp_predio']);
+	$frmIngresosAnuales = $serviciosReferencias->traerIngresosanualesPorCabeceraCURP($id, $_SESSION['curp_predio']);
+	$frmPublicacion = $serviciosReferencias->traerPublicacionPorCabeceraCURP($id, $_SESSION['curp_predio']);
+	$frmBienesInmuebles = $serviciosReferencias->traerBienesinmueblesPorCabeceraCURP($id, $_SESSION['curp_predio']);
+	$frmBienesMuebles = $serviciosReferencias->traerBienesmueblesPorCabeceraCURP($id, $_SESSION['curp_predio']);
+	$frmInversiones = $serviciosReferencias->traerInversionesPorCabeceraCURP($id, $_SESSION['curp_predio']);
+	$frmVehiculos = $serviciosReferencias->traerVehiculosPorCabeceraCURP($id, $_SESSION['curp_predio']);
+	$frmAdeudos = $serviciosReferencias->traerAdeudosPorCabeceraCURP($id, $_SESSION['curp_predio']);
 
-	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbingresosanuales',$lblCambio4,$lblreemplazo4,$refdescripcion2,$refCampo2, $ingresosanuales);
-	
-	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbpublicacion',$lblCambio5,$lblreemplazo5,$refdescripcion2,$refCampo2, $frmPublicacion);
+	$frmRecursos = $serviciosReferencias->traerRecursosPorCabeceraCURP($id, $_SESSION['curp_predio']);
+	$frmDecrementos = $serviciosReferencias->traerDecrementosPorCabeceraCURP($id, $_SESSION['curp_predio']);
+	$frmObservaciones = $serviciosReferencias->traerObservacionesPorCabeceraCURP($id, $_SESSION['curp_predio']);
 
-	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbbienesinmuebles',$lblCambio6,$lblreemplazo6,$refdescripcion2,$refCampo2, $bienesinmuebles);
-	
-	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbbienesmuebles',$lblCambio7,$lblreemplazo7,$refdescripcion2,$refCampo2, $frmBienesMuebles);
-
-	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbinversiones',$lblCambio8,$lblreemplazo8,$refdescripcion2,$refCampo2, $frmInversiones);
-
-	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbvehiculos',$lblCambio9,$lblreemplazo9,$refdescripcion2,$refCampo2, $frmVehiculos);
-
-	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbadeudos',$lblCambio10,$lblreemplazo10,$refdescripcion2,$refCampo2, $frmAdeudos);
-
-	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbrecursos',$lblCambio11,$lblreemplazo11,$refdescripcion2,$refCampo2, $frmRecursos);
-
-	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbdecrementos',$lblCambio12,$lblreemplazo12,$refdescripcion2,$refCampo2, $frmDecrementos);
-
-	$frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera','dbobservaciones',$lblCambio13,$lblreemplazo13,$refdescripcion2,$refCampo2, $frmObservaciones);	
 }
 
 $resResultado = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
@@ -78,6 +70,7 @@ $lblCambio	 	= array('fecharecepcion',
 						'segundoapellido',
 						'curp',
 						'homoclave',
+						'rfc',
 						'emailinstitucional',
 						'emailalterno',
 						'refestadocivil',
@@ -100,7 +93,8 @@ $lblreemplazo	= array('Fecha de Recepción',
 						'Primer Apellido',
 						'Segundo Apellido',
 						'CURP',
-						'RFC / Homoclave',
+						'Homoclave',
+						'RFC',
 						'Correo Electrónico Inst.',
 						'Correo Electrónico Alterno',
 						'Estado Civil',
@@ -226,38 +220,16 @@ $frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracio
 <div id="content">
 	<div class="boxInfoLargo">
         <div id="headBoxInfo">
-        	<?php if ($_SESSION['idroll_predio'] == 1) { ?>
-        	<p style="color: #fff; font-size:18px; height:16px;">Buscar Agentes</p>
-        	<?php } else { ?>
+        	
         	<p style="color: #fff; font-size:18px; height:16px;">Declaración Patrimonial Cabecera</p>
 
-        	<?php } ?>
+        	
         </div>
     	<div class="cuerpoBox">
         	<form class="form-inline formulario" role="form" enctype="multipart/form-data">
         	<div class="row">
         	<div class="col-md-12">	
-        		<?php if ($_SESSION['idroll_predio'] == 1) { ?>
-	        	<div class="form-group col-md-12">
-                     <h4>Busqueda por Nombre Completo o CURP</h4>
-                    
-						
-					<input id="lstjugadores" style="width:75%;">
-						
-					
-					<div id="selction-ajax" style="margin-top: 10px;"></div>
-                </div>
-                
-                <div class="form-group col-md-12">
-                    <div class="cuerpoBox" id="resultadosJuagadores">
-    
-                    </div>
-
-                    <div class="cuerpoBox" id="resultadosArchivos">
-    
-                    </div>
-                </div>
-                <?php } else { ?>
+        		
                 
 
 	            <div class="cuerpoBox">
@@ -634,7 +606,7 @@ sección.</p>
 					
                 </div>
 
-                <?php } ?>
+               
         	</div>
 
             </div>

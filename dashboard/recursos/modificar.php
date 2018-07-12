@@ -27,8 +27,11 @@ $resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Recurso
 
 $id = $_GET['id'];
 
-$resResultado = $serviciosReferencias->traerRecursosPorCabeceraCURP($id, $_SESSION['curp_predio']);
-
+if ($_SESSION['idroll_predio'] == 1) {
+	$resResultado = $serviciosReferencias->traerRecursosPorCabecera($id);
+} else {
+	$resResultado = $serviciosReferencias->traerRecursosPorCabeceraCURP($id, $_SESSION['curp_predio']);
+}
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
 $singular = "Aplicacion de Recurso";

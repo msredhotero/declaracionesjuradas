@@ -27,8 +27,11 @@ $resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Datos P
 
 $id = $_GET['id'];
 
-$resResultado = $serviciosReferencias->traerPublicacionPorCabeceraCURP($id, $_SESSION['curp_predio']);
-
+if ($_SESSION['idroll_predio'] == 1) {
+	$resResultado = $serviciosReferencias->traerPublicacionPorCabecera($id, $_SESSION['curp_predio']);
+} else {
+	$resResultado = $serviciosReferencias->traerPublicacionPorCabeceraCURP($id);
+}
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
 $singular = "Datos Publicos";
@@ -67,7 +70,7 @@ $lblreemplazo	= array('Declaración Patrimonial Cabecera',
 
 
 $resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
-$cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(2,3,4),' ', mysql_result($resResultado,0,'refdeclaracionjuradacabecera'));
+$cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(2,3,4),' ', $id);
 
 $refdescripcion = array(0 => $cadRef);
 $refCampo 	=  array("refdeclaracionjuradacabecera"); 

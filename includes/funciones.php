@@ -736,17 +736,30 @@ class Servicios {
 													$label = ucwords($label);
 													$campo = strtolower($row[0]);
 													
-	
-													$form	=	$form.'
-													
-													<div class="form-group col-md-6 col-xs-6" style="display:'.$lblOculta.'">
-														<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
-														<div class="input-group col-md-12 col-xs-12">
-															<input type="text" class="form-control vtexto" id="'.$campo.'" name="'.$campo.'" placeholder="Ingrese el '.$label.'..." required>
+													if (($row[0] == 'emailinstitucional') || ($row[0] == 'emailalterno')) {
+														$form	=	$form.'
+														
+														<div class="form-group col-md-6 col-xs-6" style="display:'.$lblOculta.'">
+															<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
+															<div class="input-group col-md-12 col-xs-12">
+																<input type="text" class="form-control" id="'.$campo.'" name="'.$campo.'" placeholder="Ingrese el '.$label.'..." required>
+															</div>
 														</div>
-													</div>
+														
+														';
+													} else {
+														$form	=	$form.'
+														
+														<div class="form-group col-md-6 col-xs-6" style="display:'.$lblOculta.'">
+															<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
+															<div class="input-group col-md-12 col-xs-12">
+																<input type="text" class="form-control vtexto" id="'.$campo.'" name="'.$campo.'" placeholder="Ingrese el '.$label.'..." required>
+															</div>
+														</div>
+														
+														';
+													}
 													
-													';
 												}
 												
 											}
@@ -782,17 +795,18 @@ class Servicios {
 				$sqlMod = "select * from ".$tabla." where ".$lblid." = ".$id;
 				$resMod = $this->query($sqlMod,0);
 		}
-		if ($datos != '') {
-			$resMod = $datos;
-		}
+		
 		/*if ($tabla == 'dbtorneos') {
 			$resMod = $this->TraerIdTorneos($id);
 		} else {
 			$sqlMod = "select * from ".$tabla." where ".$lblid." = ".$id;
 			$resMod = $this->query($sqlMod,0);
 		}*/
+		
 		$sql	=	"show columns from ".$tabla;
 		$res 	=	$this->query($sql,0);
+		
+		
 		
 		$camposEscondido = "";
 		/* Analizar para despues */
@@ -1460,7 +1474,20 @@ class Servicios {
 														$label = ucwords($label);
 														$campo = strtolower($row[0]);
 														
-														$form	=	$form.'
+
+														if (($row[0] == 'emailinstitucional') || ($row[0] == 'emailalterno')) {
+															$form	=	$form.'
+														
+														<div class="form-group col-md-6" style="display:'.$lblOculta.'">
+															<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
+															<div class="input-group col-md-12">
+																<input type="text" value="'.(mysql_result($resMod,0,$row[0])).'" class="form-control" id="'.$campo.'" name="'.$campo.'" placeholder="Ingrese el '.$label.'..." required>
+															</div>
+														</div>
+														
+														';
+														} else {
+															$form	=	$form.'
 														
 														<div class="form-group col-md-6" style="display:'.$lblOculta.'">
 															<label for="'.$campo.'" class="control-label" style="text-align:left">'.$label.$lblObligatorio.'</label>
@@ -1470,6 +1497,8 @@ class Servicios {
 														</div>
 														
 														';
+														}
+														
 													}
 												}
 											}

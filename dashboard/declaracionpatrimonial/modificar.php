@@ -308,11 +308,11 @@ $(document).ready(function(){
 		nombre = $('#homoclave').val();
 		
 	   //Comprobamos la longitud de caracteres
-		if (nombre.length==3){
+		if (nombre.length==10){
 			return true;
 		}
 		else {
-			alert('La Homoclave debe tener 3 caracteres');
+			alert('La Homoclave debe tener 10 caracteres');
 			return false;
 			
 		}

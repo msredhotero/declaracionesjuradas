@@ -27,7 +27,7 @@ $resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Estado 
 
 $id = $_GET['id'];
 
-$resResultado = $serviciosReferencias->traerClientesPorId($id);
+$resResultado = $serviciosReferencias->traerEstadocivilPorId($id);
 
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////

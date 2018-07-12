@@ -27,7 +27,7 @@ $resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Regimen
 
 $id = $_GET['id'];
 
-$resResultado = $serviciosReferencias->traerClientesPorId($id);
+$resResultado = $serviciosReferencias->traerRegimenmatrimonialPorId($id);
 
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////

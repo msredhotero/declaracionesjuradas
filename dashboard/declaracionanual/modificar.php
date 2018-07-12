@@ -22,13 +22,17 @@ $serviciosReferencias 	= new ServiciosReferencias();
 $fecha = date('Y-m-d');
 
 //$resProductos = $serviciosProductos->traerProductosLimite(6);
+
 $resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Declaracion Anual Intereses",$_SESSION['refroll_predio'],'');
 
 
 $id = $_GET['id'];
 
-$resResultado = $serviciosReferencias->traerDeclaracionanualinteresPorId($id);
-
+if ($_SESSION['idroll_predio'] == 1) {
+	$resResultado = $serviciosReferencias->traerDeclaracionanualinteresPorCabecera($id);
+} else {
+	$resResultado = $serviciosReferencias->traerDeclaracionanualinteresPorCabeceraCURP($id, $_SESSION['curp_predio']);
+}
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
 $singular = "Declaracion Anual Intereses";

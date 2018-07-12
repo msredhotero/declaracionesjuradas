@@ -46,6 +46,7 @@ $lblCambio	 	= array('fecharecepcion',
 						'segundoapellido',
 						'curp',
 						'homoclave',
+						'rfc',
 						'emailinstitucional',
 						'emailalterno',
 						'refestadocivil',
@@ -69,7 +70,8 @@ $lblreemplazo	= array('Fecha de Recepción',
 						'Primer Apellido',
 						'Segundo Apellido',
 						'CURP',
-						'RFC / Homoclave',
+						'Homoclave',
+						'RFC',
 						'Correo Electrónico Inst.',
 						'Correo Electrónico Alterno',
 						'Estado Civil',
@@ -119,7 +121,6 @@ $cabeceras 		= "	<th>Apellidos</th>
 					<th>CURP</th>
 					<th>Fecha DDJJ</th>
 					<th>Teléfono</th>
-					<th>Email Particular</th>
 					<th>Estado</th>";
 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
@@ -129,7 +130,7 @@ $cabeceras 		= "	<th>Apellidos</th>
 
 $formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
-$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerDeclaracionjuradacabeceraGrilla(),7);
+$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerDeclaracionjuradacabeceraGrilla(),6);
 
 
 

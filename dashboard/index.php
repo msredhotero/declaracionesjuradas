@@ -340,6 +340,31 @@ $(document).ready(function(){
 			alert("Error, vuelva a realizar la acción.");	
 		  }
 	});//fin del boton eliminar
+
+
+	$("#example").on("click",'.vargastos', function(){
+		  usersid =  $(this).attr("id");
+		  if (!isNaN(usersid)) {
+		  	window.open("../reportes/rptDeclaracionPatrimonial.php?id=" + usersid ,'_blank');  
+
+		  } else {
+			alert("Error, vuelva a realizar la acción.");	
+		  }
+	});//fin del boton eliminar
+
+
+	$("#example").on("click",'.varimprmiracuse', function(){
+		  usersid =  $(this).attr("id");
+		  if (!isNaN(usersid)) {
+		  	window.open("../reportes/rptAcuse.php" ,'_blank');  
+
+		  } else {
+			alert("Error, vuelva a realizar la acción.");	
+		  }
+	});//fin del boton eliminar
+
+
+	
 	
 	$("#example").on("click",'.varmodificar', function(){
 		  usersid =  $(this).attr("id");
