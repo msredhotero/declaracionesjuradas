@@ -60,6 +60,9 @@ $tablasAr	= array("declaracionjuradacabecera"        => "dbdeclaracionjuradacabe
 "tipoinversion"				=> "tbtipoinversion",
 "estados"				=> "tbestados",
 "tipoadeudo"				=> "tbtipoadeudo",
+
+
+
 "adeudos"					=> "dbadeudos",
 "decrementos"				=> "dbdecrementos",
 "observaciones"				=> "dbobservaciones",
