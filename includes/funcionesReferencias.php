@@ -3348,6 +3348,528 @@ return $res;
 /* /* Fin de la Tabla: dbobservaciones*/
 
 
+/* PARA Conflictoeconomica */
+
+function insertarConflictoeconomica($refdeclaracionjuradacabecera,$reftipooperacion,$refresponsables,$descripcion,$fecha,$inscripcion,$sector,$reftiposociedad,$refparticipacion,$especifica,$antiguedad,$refinicioparticipacion,$ubicacion) { 
+$sql = "insert into dbconflictoeconomica(idconflictoeconomica,refdeclaracionjuradacabecera,reftipooperacion,refresponsables,descripcion,fecha,inscripcion,sector,reftiposociedad,refparticipacion,especifica,antiguedad,refinicioparticipacion,ubicacion) 
+values ('',".$refdeclaracionjuradacabecera.",".$reftipooperacion.",".$refresponsables.",'".($descripcion)."','".($fecha)."','".($inscripcion)."','".($sector)."',".$reftiposociedad.",".$refparticipacion.",'".($especifica)."','".($antiguedad)."',".$refinicioparticipacion.",'".($ubicacion)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarConflictoeconomica($id,$refdeclaracionjuradacabecera,$reftipooperacion,$refresponsables,$descripcion,$fecha,$inscripcion,$sector,$reftiposociedad,$refparticipacion,$especifica,$antiguedad,$refinicioparticipacion,$ubicacion) { 
+$sql = "update dbconflictoeconomica 
+set 
+refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",reftipooperacion = ".$reftipooperacion.",refresponsables = ".$refresponsables.",descripcion = '".($descripcion)."',fecha = '".($fecha)."',inscripcion = '".($inscripcion)."',sector = '".($sector)."',reftiposociedad = ".$reftiposociedad.",refparticipacion = ".$refparticipacion.",especifica = '".($especifica)."',antiguedad = '".($antiguedad)."',refinicioparticipacion = ".$refinicioparticipacion.",ubicacion = '".($ubicacion)."' 
+where idconflictoeconomica =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarConflictoeconomica($id) { 
+$sql = "delete from dbconflictoeconomica where idconflictoeconomica =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerConflictoeconomica() { 
+$sql = "select 
+c.idconflictoeconomica,
+c.refdeclaracionjuradacabecera,
+c.reftipooperacion,
+c.refresponsables,
+c.descripcion,
+c.fecha,
+c.inscripcion,
+c.sector,
+c.reftiposociedad,
+c.refparticipacion,
+c.especifica,
+c.antiguedad,
+c.refinicioparticipacion,
+c.ubicacion
+from dbconflictoeconomica c 
+inner join dbdeclaracionjuradacabecera dec ON dec.iddeclaracionjuradacabecera = c.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dec.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dec.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dec.refusuarios 
+inner join tbestados es ON es.idestado = dec.refestados 
+inner join tbtipooperacion tip ON tip.idtipooperacion = c.reftipooperacion 
+inner join tbresponsables res ON res.idresponsable = c.refresponsables 
+inner join tbtiposociedad tip ON tip.idtiposociedad = c.reftiposociedad 
+inner join tbparticipacion par ON par.idparticipacion = c.refparticipacion 
+inner join tbinicioparticipacion ini ON ini.idinicioparticipacion = c.refinicioparticipacion 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerConflictoeconomicaPorId($id) { 
+$sql = "select idconflictoeconomica,refdeclaracionjuradacabecera,reftipooperacion,refresponsables,descripcion,fecha,inscripcion,sector,reftiposociedad,refparticipacion,especifica,antiguedad,refinicioparticipacion,ubicacion from dbconflictoeconomica where idconflictoeconomica =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: dbconflictoeconomica*/
+
+
+/* PARA Conflictopuestos */
+
+function insertarConflictopuestos($refdeclaracionjuradacabecera,$reftipooperacion,$refresponsables,$descripcion,$refvinculos,$antiguedad,$reffrecuenciaanual,$refparticipacion,$reftipopersonajuridica,$reftipocolaboracion,$ubicacion) { 
+$sql = "insert into dbconflictopuestos(idconflictopuesto,refdeclaracionjuradacabecera,reftipooperacion,refresponsables,descripcion,refvinculos,antiguedad,reffrecuenciaanual,refparticipacion,reftipopersonajuridica,reftipocolaboracion,ubicacion) 
+values ('',".$refdeclaracionjuradacabecera.",".$reftipooperacion.",".$refresponsables.",'".($descripcion)."',".$refvinculos.",".$antiguedad.",".$reffrecuenciaanual.",".$refparticipacion.",".$reftipopersonajuridica.",".$reftipocolaboracion.",'".($ubicacion)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarConflictopuestos($id,$refdeclaracionjuradacabecera,$reftipooperacion,$refresponsables,$descripcion,$refvinculos,$antiguedad,$reffrecuenciaanual,$refparticipacion,$reftipopersonajuridica,$reftipocolaboracion,$ubicacion) { 
+$sql = "update dbconflictopuestos 
+set 
+refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",reftipooperacion = ".$reftipooperacion.",refresponsables = ".$refresponsables.",descripcion = '".($descripcion)."',refvinculos = ".$refvinculos.",antiguedad = ".$antiguedad.",reffrecuenciaanual = ".$reffrecuenciaanual.",refparticipacion = ".$refparticipacion.",reftipopersonajuridica = ".$reftipopersonajuridica.",reftipocolaboracion = ".$reftipocolaboracion.",ubicacion = '".($ubicacion)."' 
+where idconflictopuesto =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarConflictopuestos($id) { 
+$sql = "delete from dbconflictopuestos where idconflictopuesto =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerConflictopuestos() { 
+$sql = "select 
+c.idconflictopuesto,
+c.refdeclaracionjuradacabecera,
+c.reftipooperacion,
+c.refresponsables,
+c.descripcion,
+c.refvinculos,
+c.antiguedad,
+c.reffrecuenciaanual,
+c.refparticipacion,
+c.reftipopersonajuridica,
+c.reftipocolaboracion,
+c.ubicacion
+from dbconflictopuestos c 
+inner join dbdeclaracionjuradacabecera dec ON dec.iddeclaracionjuradacabecera = c.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dec.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dec.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dec.refusuarios 
+inner join tbestados es ON es.idestado = dec.refestados 
+inner join tbtipooperacion tip ON tip.idtipooperacion = c.reftipooperacion 
+inner join tbresponsables res ON res.idresponsable = c.refresponsables 
+inner join tbvinculos vin ON vin.idvinculo = c.refvinculos 
+inner join tbfrecuenciaanual fre ON fre.idfrecuenciaanual = c.reffrecuenciaanual 
+inner join tbparticipacion par ON par.idparticipacion = c.refparticipacion 
+inner join tbtipopersonajuridica tip ON tip.idtipopersonajuridica = c.reftipopersonajuridica 
+inner join tbtipocolaboracion tip ON tip.idtipocolaboracion = c.reftipocolaboracion 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerConflictopuestosPorId($id) { 
+$sql = "select idconflictopuesto,refdeclaracionjuradacabecera,reftipooperacion,refresponsables,descripcion,refvinculos,antiguedad,reffrecuenciaanual,refparticipacion,reftipopersonajuridica,reftipocolaboracion,ubicacion from dbconflictopuestos where idconflictopuesto =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: dbconflictopuestos*/
+
+
+/* PARA Frecuenciaanual */
+
+function insertarFrecuenciaanual($descripcion) { 
+$sql = "insert into tbfrecuenciaanual(idfrecuenciaanual,descripcion) 
+values ('','".($descripcion)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarFrecuenciaanual($id,$descripcion) { 
+$sql = "update tbfrecuenciaanual 
+set 
+descripcion = '".($descripcion)."' 
+where idfrecuenciaanual =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarFrecuenciaanual($id) { 
+$sql = "delete from tbfrecuenciaanual where idfrecuenciaanual =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerFrecuenciaanual() { 
+$sql = "select 
+f.idfrecuenciaanual,
+f.descripcion
+from tbfrecuenciaanual f 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerFrecuenciaanualPorId($id) { 
+$sql = "select idfrecuenciaanual,descripcion from tbfrecuenciaanual where idfrecuenciaanual =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: tbfrecuenciaanual*/
+
+
+/* PARA Inicioparticipacion */
+
+function insertarInicioparticipacion($descripcion) { 
+$sql = "insert into tbinicioparticipacion(idinicioparticipacion,descripcion) 
+values ('','".($descripcion)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarInicioparticipacion($id,$descripcion) { 
+$sql = "update tbinicioparticipacion 
+set 
+descripcion = '".($descripcion)."' 
+where idinicioparticipacion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarInicioparticipacion($id) { 
+$sql = "delete from tbinicioparticipacion where idinicioparticipacion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerInicioparticipacion() { 
+$sql = "select 
+i.idinicioparticipacion,
+i.descripcion
+from tbinicioparticipacion i 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerInicioparticipacionPorId($id) { 
+$sql = "select idinicioparticipacion,descripcion from tbinicioparticipacion where idinicioparticipacion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: tbinicioparticipacion*/
+
+/* PARA Participacion */
+
+function insertarParticipacion($descripcion) { 
+$sql = "insert into tbparticipacion(idparticipacion,descripcion) 
+values ('','".($descripcion)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarParticipacion($id,$descripcion) { 
+$sql = "update tbparticipacion 
+set 
+descripcion = '".($descripcion)."' 
+where idparticipacion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarParticipacion($id) { 
+$sql = "delete from tbparticipacion where idparticipacion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerParticipacion() { 
+$sql = "select 
+p.idparticipacion,
+p.descripcion
+from tbparticipacion p 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerParticipacionPorId($id) { 
+$sql = "select idparticipacion,descripcion from tbparticipacion where idparticipacion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: tbparticipacion*/
+
+
+/* PARA Responsables */
+
+function insertarResponsables($descripcion) { 
+$sql = "insert into tbresponsables(idresponsable,descripcion) 
+values ('','".($descripcion)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarResponsables($id,$descripcion) { 
+$sql = "update tbresponsables 
+set 
+descripcion = '".($descripcion)."' 
+where idresponsable =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarResponsables($id) { 
+$sql = "delete from tbresponsables where idresponsable =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerResponsables() { 
+$sql = "select 
+r.idresponsable,
+r.descripcion
+from tbresponsables r 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerResponsablesPorId($id) { 
+$sql = "select idresponsable,descripcion from tbresponsables where idresponsable =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: tbresponsables*/
+
+
+/* PARA Tipocolaboracion */
+
+function insertarTipocolaboracion($descripcion) { 
+$sql = "insert into tbtipocolaboracion(idtipocolaboracion,descripcion) 
+values ('','".($descripcion)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarTipocolaboracion($id,$descripcion) { 
+$sql = "update tbtipocolaboracion 
+set 
+descripcion = '".($descripcion)."' 
+where idtipocolaboracion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarTipocolaboracion($id) { 
+$sql = "delete from tbtipocolaboracion where idtipocolaboracion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerTipocolaboracion() { 
+$sql = "select 
+t.idtipocolaboracion,
+t.descripcion
+from tbtipocolaboracion t 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerTipocolaboracionPorId($id) { 
+$sql = "select idtipocolaboracion,descripcion from tbtipocolaboracion where idtipocolaboracion =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: tbtipocolaboracion*/
+
+
+/* PARA Tipopersonajuridica */
+
+function insertarTipopersonajuridica($descripcion) { 
+$sql = "insert into tbtipopersonajuridica(idtipopersonajuridica,descripcion) 
+values ('','".($descripcion)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarTipopersonajuridica($id,$descripcion) { 
+$sql = "update tbtipopersonajuridica 
+set 
+descripcion = '".($descripcion)."' 
+where idtipopersonajuridica =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarTipopersonajuridica($id) { 
+$sql = "delete from tbtipopersonajuridica where idtipopersonajuridica =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerTipopersonajuridica() { 
+$sql = "select 
+t.idtipopersonajuridica,
+t.descripcion
+from tbtipopersonajuridica t 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerTipopersonajuridicaPorId($id) { 
+$sql = "select idtipopersonajuridica,descripcion from tbtipopersonajuridica where idtipopersonajuridica =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: tbtipopersonajuridica*/
+
+
+/* PARA Tiposociedad */
+
+function insertarTiposociedad($descripcion) { 
+$sql = "insert into tbtiposociedad(idtiposociedad,descripcion) 
+values ('','".($descripcion)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarTiposociedad($id,$descripcion) { 
+$sql = "update tbtiposociedad 
+set 
+descripcion = '".($descripcion)."' 
+where idtiposociedad =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarTiposociedad($id) { 
+$sql = "delete from tbtiposociedad where idtiposociedad =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerTiposociedad() { 
+$sql = "select 
+t.idtiposociedad,
+t.descripcion
+from tbtiposociedad t 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerTiposociedadPorId($id) { 
+$sql = "select idtiposociedad,descripcion from tbtiposociedad where idtiposociedad =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: tbtiposociedad*/
+
+/* PARA Vinculos */
+
+function insertarVinculos($descripcion) { 
+$sql = "insert into tbvinculos(idvinculo,descripcion) 
+values ('','".($descripcion)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarVinculos($id,$descripcion) { 
+$sql = "update tbvinculos 
+set 
+descripcion = '".($descripcion)."' 
+where idvinculo =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarVinculos($id) { 
+$sql = "delete from tbvinculos where idvinculo =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerVinculos() { 
+$sql = "select 
+v.idvinculo,
+v.descripcion
+from tbvinculos v 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerVinculosPorId($id) { 
+$sql = "select idvinculo,descripcion from tbvinculos where idvinculo =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: tbvinculos*/
+
+
 
 
 function query($sql,$accion) {

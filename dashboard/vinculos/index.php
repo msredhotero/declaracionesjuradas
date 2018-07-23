@@ -39,7 +39,7 @@ $tituloWeb = "Gestión: Declaraciones Patrimoniales";
 
 
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
-$tabla 			= "tbtitular";
+$tabla 			= "tbvinculos";
 
 $lblCambio	 	= array('');
 $lblreemplazo	= array('');

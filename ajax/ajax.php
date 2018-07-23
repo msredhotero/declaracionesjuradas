@@ -311,10 +311,325 @@ case 'traerArchivosPorCliente':
 		eliminarObservaciones($serviciosReferencias); 
 	break; 
 
+	case 'insertarConflictoeconomica': 
+		insertarConflictoeconomica($serviciosReferencias); 
+	break; 
+	case 'modificarConflictoeconomica': 
+		modificarConflictoeconomica($serviciosReferencias); 
+	break; 
+	case 'eliminarConflictoeconomica': 
+		eliminarConflictoeconomica($serviciosReferencias); 
+	break; 
+	case 'insertarConflictopuestos': 
+		insertarConflictopuestos($serviciosReferencias); 
+	break; 
+	case 'modificarConflictopuestos': 
+		modificarConflictopuestos($serviciosReferencias); 
+	break; 
+	case 'eliminarConflictopuestos': 
+		eliminarConflictopuestos($serviciosReferencias); 
+	break; 
+
+	case 'insertarFrecuenciaanual': 
+		insertarFrecuenciaanual($serviciosReferencias); 
+	break; 
+	case 'modificarFrecuenciaanual': 
+		modificarFrecuenciaanual($serviciosReferencias); 
+	break; 
+	case 'eliminarFrecuenciaanual': 
+		eliminarFrecuenciaanual($serviciosReferencias); 
+	break; 
+	case 'insertarInicioparticipacion': 
+		insertarInicioparticipacion($serviciosReferencias); 
+	break; 
+	case 'modificarInicioparticipacion': 
+		modificarInicioparticipacion($serviciosReferencias); 
+	break; 
+	case 'eliminarInicioparticipacion': 
+		eliminarInicioparticipacion($serviciosReferencias); 
+	break; 
+
+	case 'insertarParticipacion': 
+		insertarParticipacion($serviciosReferencias); 
+	break; 
+	case 'modificarParticipacion': 
+		modificarParticipacion($serviciosReferencias); 
+	break; 
+	case 'eliminarParticipacion': 
+		eliminarParticipacion($serviciosReferencias); 
+	break; 
+	case 'insertarResponsables': 
+		insertarResponsables($serviciosReferencias); 
+	break; 
+	case 'modificarResponsables': 
+		modificarResponsables($serviciosReferencias); 
+	break; 
+	case 'eliminarResponsables': 
+		eliminarResponsables($serviciosReferencias); 
+	break; 
+	case 'insertarTipocolaboracion': 
+		insertarTipocolaboracion($serviciosReferencias); 
+	break; 
+	case 'modificarTipocolaboracion': 
+		modificarTipocolaboracion($serviciosReferencias); 
+	break; 
+	case 'eliminarTipocolaboracion': 
+		eliminarTipocolaboracion($serviciosReferencias); 
+	break; 
+	case 'insertarTipopersonajuridica': 
+		insertarTipopersonajuridica($serviciosReferencias); 
+	break; 
+	case 'modificarTipopersonajuridica': 
+		modificarTipopersonajuridica($serviciosReferencias); 
+	break; 
+	case 'eliminarTipopersonajuridica': 
+		eliminarTipopersonajuridica($serviciosReferencias); 
+	break; 
+	case 'insertarTiposociedad': 
+		insertarTiposociedad($serviciosReferencias); 
+	break; 
+	case 'modificarTiposociedad': 	
+		modificarTiposociedad($serviciosReferencias); 
+	break; 
+	case 'eliminarTiposociedad': 
+		eliminarTiposociedad($serviciosReferencias); 
+	break; 
+
+	case 'insertarVinculos': 
+		insertarVinculos($serviciosReferencias); 
+	break; 
+	case 'modificarVinculos': 
+		modificarVinculos($serviciosReferencias); 
+	break; 
+	case 'eliminarVinculos': 
+		eliminarVinculos($serviciosReferencias); 
+	break; 
 
 }
 
 /* Fin */
+
+	function insertarVinculos($serviciosReferencias) { 
+		$descripcion = $_POST['descripcion']; 
+		$res = $serviciosReferencias->insertarVinculos($descripcion); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+
+	function modificarVinculos($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$descripcion = $_POST['descripcion']; 
+		$res = $serviciosReferencias->modificarVinculos($id,$descripcion); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+
+	function eliminarVinculos($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarVinculos($id); 
+		echo $res; 
+	} 
+
+
+	function insertarFrecuenciaanual($serviciosReferencias) { 
+		$descripcion = $_POST['descripcion']; 
+		$res = $serviciosReferencias->insertarFrecuenciaanual($descripcion); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+
+	function modificarFrecuenciaanual($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$descripcion = $_POST['descripcion']; 
+		$res = $serviciosReferencias->modificarFrecuenciaanual($id,$descripcion); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+
+	function eliminarFrecuenciaanual($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarFrecuenciaanual($id); 
+		echo $res; 
+	} 
+
+	function insertarInicioparticipacion($serviciosReferencias) { 
+		$descripcion = $_POST['descripcion']; 
+		$res = $serviciosReferencias->insertarInicioparticipacion($descripcion); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+	function modificarInicioparticipacion($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$descripcion = $_POST['descripcion']; 
+		$res = $serviciosReferencias->modificarInicioparticipacion($id,$descripcion); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+	function eliminarInicioparticipacion($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarInicioparticipacion($id); 
+		echo $res; 
+	} 
+
+	function insertarParticipacion($serviciosReferencias) { 
+		$descripcion = $_POST['descripcion']; 
+		$res = $serviciosReferencias->insertarParticipacion($descripcion); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+	function modificarParticipacion($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$descripcion = $_POST['descripcion']; 
+		$res = $serviciosReferencias->modificarParticipacion($id,$descripcion); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+
+	function eliminarParticipacion($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarParticipacion($id); 
+		echo $res; 
+	} 
+
+	function insertarResponsables($serviciosReferencias) { 
+		$descripcion = $_POST['descripcion']; 
+		$res = $serviciosReferencias->insertarResponsables($descripcion); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+	function modificarResponsables($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$descripcion = $_POST['descripcion']; 
+		$res = $serviciosReferencias->modificarResponsables($id,$descripcion); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+	function eliminarResponsables($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarResponsables($id); 
+		echo $res; 
+	} 
+
+	function insertarTipocolaboracion($serviciosReferencias) { 
+		$descripcion = $_POST['descripcion']; 
+		$res = $serviciosReferencias->insertarTipocolaboracion($descripcion); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+	function modificarTipocolaboracion($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$descripcion = $_POST['descripcion']; 
+		$res = $serviciosReferencias->modificarTipocolaboracion($id,$descripcion); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+	function eliminarTipocolaboracion($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarTipocolaboracion($id); 
+		echo $res; 
+	} 
+
+	function insertarTipopersonajuridica($serviciosReferencias) { 
+		$descripcion = $_POST['descripcion']; 
+		$res = $serviciosReferencias->insertarTipopersonajuridica($descripcion); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+	function modificarTipopersonajuridica($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$descripcion = $_POST['descripcion']; 
+		$res = $serviciosReferencias->modificarTipopersonajuridica($id,$descripcion); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+	function eliminarTipopersonajuridica($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarTipopersonajuridica($id); 
+		echo $res; 
+	} 
+
+	function insertarTiposociedad($serviciosReferencias) { 
+		$descripcion = $_POST['descripcion']; 
+		$res = $serviciosReferencias->insertarTiposociedad($descripcion); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+	function modificarTiposociedad($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$descripcion = $_POST['descripcion']; 
+		$res = $serviciosReferencias->modificarTiposociedad($id,$descripcion); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+	function eliminarTiposociedad($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarTiposociedad($id); 
+		echo $res; 
+	} 
 
 
 	function insertarRecursos($serviciosReferencias) { 

@@ -37,7 +37,7 @@ $plural = "Tipo Sociedades";
 
 $eliminar = "eliminarTiposociedad";
 
-$modificar = "modificarTitular";
+$modificar = "modificarTiposociedad";
 
 $idTabla = "idtiposociedad";
 
