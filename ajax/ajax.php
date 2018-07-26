@@ -1042,8 +1042,9 @@ case 'traerArchivosPorCliente':
 		$reftitular = $_POST['reftitular']; 
 		$especificacionventa = $_POST['especificacionventa']; 
 		$especificacionsiniestro = $_POST['especificacionsiniestro']; 
+		$estado = $_POST['estado']; 
 		
-		$res = $serviciosReferencias->insertarVehiculos($refdeclaracionjuradacabecera,$reftipooperacion,$vehiculo,$donde,$entidadfederativa,$refformaadquisicion,$cesionario,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$reftitular,$especificacionventa,$especificacionsiniestro); 
+		$res = $serviciosReferencias->insertarVehiculos($refdeclaracionjuradacabecera,$reftipooperacion,$vehiculo,$donde,$entidadfederativa,$refformaadquisicion,$cesionario,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$reftitular,$especificacionventa,$especificacionsiniestro, $estado); 
 		
 		if ((integer)$res > 0) { 
 			echo ''; 
@@ -1070,8 +1071,9 @@ case 'traerArchivosPorCliente':
 		$reftitular = $_POST['reftitular']; 
 		$especificacionventa = $_POST['especificacionventa']; 
 		$especificacionsiniestro = $_POST['especificacionsiniestro']; 
+		$estado = $_POST['estado']; 
 		
-		$res = $serviciosReferencias->modificarVehiculos($id,$refdeclaracionjuradacabecera,$reftipooperacion,$vehiculo,$donde,$entidadfederativa,$refformaadquisicion,$cesionario,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$reftitular,$especificacionventa,$especificacionsiniestro); 
+		$res = $serviciosReferencias->modificarVehiculos($id,$refdeclaracionjuradacabecera,$reftipooperacion,$vehiculo,$donde,$entidadfederativa,$refformaadquisicion,$cesionario,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$reftitular,$especificacionventa,$especificacionsiniestro, $estado); 
 		
 		if ($res == true) { 
 			echo ''; 

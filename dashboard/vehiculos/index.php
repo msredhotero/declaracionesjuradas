@@ -45,7 +45,8 @@ $tituloWeb = "Gestión: Declaraciones Patrimoniales";
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
 $tabla 			= "dbvehiculos";
 
-$lblCambio	 	= array("refdeclaracionjuradacabecera",
+$lblCambio	 	= array("estado",
+						"refdeclaracionjuradacabecera",
 						"reftipooperacion",
 						"vehiculo",
 						"donde",
@@ -60,7 +61,8 @@ $lblCambio	 	= array("refdeclaracionjuradacabecera",
 						"reftitular",
 						"especificacionventa",
 						"especificacionsiniestro");
-$lblreemplazo	= array('Declaración Patrimonial Cabecera',
+$lblreemplazo	= array('Alta o Baja',
+						'Declaración Patrimonial Cabecera',
 						'Tipo de Operacion',
 						'Marca, Tipo, Modelo y Nro de Serie',
 						'¿Donde se encuentra Registrado?',
@@ -92,8 +94,10 @@ $cadRef4 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar4,array(1),'
 $refVar5 = $serviciosReferencias->traerTitular();
 $cadRef5 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar5,array(1),' ');
 
-$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3, 3=>$cadRef4, 4=>$cadRef5);
-$refCampo 	=  array("refdeclaracionjuradacabecera","reftipooperacion","refformaadquisicion","reftipocesionario","reftitular"); 
+$cadRef6 = "<option value='A'>Alta</option><option value='B'>Baja</option>";
+
+$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3, 3=>$cadRef4, 4=>$cadRef5, 5=>$cadRef6);
+$refCampo 	=  array("refdeclaracionjuradacabecera","reftipooperacion","refformaadquisicion","reftipocesionario","reftitular","estado"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 

@@ -398,6 +398,8 @@ if (mysql_num_rows($resResultado)>0) {
 
 	/*---------------   CUARTA PAGINA  ***********************************/
 
+	$datos4a = $serviciosReferencias->traerDependienteseconomicosPorCabecera($id);
+
 	$pdf->AddPage();
 
 	$pdf->SetXY(10,10);
@@ -493,16 +495,146 @@ if (mysql_num_rows($resResultado)>0) {
 	$pdf->Cell(70,5,mysql_result($resResultado,0,'cedulaprofesional'),'RLB',0,'C',0);
 
 
+	$pdf->Ln();
+	$pdf->SetFont('Arial','b',6);
+	$pdf->SetX(15);
+	$pdf->Cell(40,5,'AAAA-MM-DD Fecha de Nacimiento','',0,'C',0);
+	$pdf->Cell(5,5,'',0,0,'C',0); //lugarcito
+	$pdf->Cell(20,5,'Edad','',0,'C',0);
+	$pdf->Cell(5,5,'',0,0,'C',0); //lugarcito
+	$pdf->Cell(25,5,'Sexo (M o F)','',0,'C',0);
+	$pdf->Cell(5,5,'',0,0,'C',0); //lugarcito
+	$pdf->Cell(90,5,'Grado máximo de estudios/Especialidad','',0,'C',0);
+	$pdf->Cell(5,5,'',0,0,'C',0); //lugarcito
+	$pdf->Cell(70,5,'Número de cédula profesional','',0,'C',0);
+
+	$pdf->Ln();
+	$pdf->Ln();
+	$pdf->SetFont('Arial','b',10);
+	$pdf->SetX(15);
+	$pdf->Cell(75,5,'¿Tiene USTED dependientes económicos ?','',0,'L',0);
+	if (mysql_num_rows($datos4a) > 0) {
+		$pdf->Cell(5,5,'Si',0,0,'C',0);
+		$pdf->Cell(5,5,'X',1,0,'C',0);
+		$pdf->Cell(5,5,'No',0,0,'C',0);
+		$pdf->Cell(5,5,'',1,0,'C',0);
+	} else {
+		$pdf->Cell(5,5,'Si',0,0,'C',0);
+		$pdf->Cell(5,5,'',1,0,'C',0);
+		$pdf->Cell(5,5,'No',0,0,'C',0);
+		$pdf->Cell(5,5,'X',1,0,'C',0);
+	}
+	$pdf->Cell(155,5,'Si su respuesta es AFIRMATIVA, proporcione sus nombres, edades y parentesco o vínculo con USTED','',0,'L',0);
+
+	$pdf->Ln();
+	$pdf->Ln();
+	$pdf->Ln();
+	$pdf->SetFont('Arial','b',12);
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'DATOS DE SUS DEPENDIENTES ECONÓMICOS','RLTB',0,'C',0);
+
+	$pdf->Ln();
+	$pdf->SetFont('Arial','',12);
+	$pdf->SetX(15);
+	$pdf->Cell(110,5,'Nombre','RLTB',0,'C',0);
+	$pdf->Cell(45,5,'Edad','RLTB',0,'C',0);
+	$pdf->Cell(110,5,'HERMANA','RLTB',0,'C',0);
+
+	while ($row4 = mysql_fetch_array($datos4a)) {
+		$pdf->Ln();
+		$pdf->SetFont('Arial','',12);
+		$pdf->SetX(15);
+		$pdf->Cell(110,5,$row4['nombre'],'RLTB',0,'C',0);
+		$pdf->Cell(45,5,$row4['edad'],'RLTB',0,'C',0);
+		$pdf->Cell(110,5,$row4['tipoparentesco'],'RLTB',0,'C',0);
+	}
 
 
 
-	/*---------------  FIN SEGUNDA PAGINA ***********************************/
+	/*---------------  FIN CUARTA PAGINA ***********************************/
+
+	/*---------------      QUINTA PAGINA ***********************************/
+	$datos5a = $serviciosReferencias->traerBienesmueblesGridPorCabecera($id);
+	$datos5b = $serviciosReferencias->traerVehiculosGridPorCabecera($id);
+
+	$pdf->AddPage();
+
+	$pdf->SetXY(10,10);
+
+
+
+	$pdf->SetFont('Arial','b',16);
+	$pdf->SetXY(3,10);
+	$pdf->Cell(150,8,'VI.-BIENES MUEBLES',0,0,'C',0);
+
+	$pdf->Ln();
+	$pdf->Ln();
+	$pdf->SetFont('Arial','',10);
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'Independientemente de anotar si vendió algún bien, también deberá indicar si Adquirió otro, anotando la clave, el tipo de operación y forma de pago.','',0,'C',0);
+
+	$pdf->Ln();
+	$pdf->Ln();
+	$pdf->SetFont('Arial','',12);
+	$pdf->SetX(15);
+	$pdf->Cell(100,5,'Tipo de Bien','RLTB',0,'C',0);
+	$pdf->Cell(50,5,'Valor del bien mueble','RLTB',0,'C',0);
+	$pdf->Cell(65,5,'Tipo de Operación','RLTB',0,'C',0);
+	$pdf->Cell(50,5,'Forma de Pago','RLTB',0,'C',0);
+
+	while ($row5 = mysql_fetch_array($datos5a)) {
+		$pdf->Ln();
+		$pdf->SetFont('Arial','',10);
+		$pdf->SetX(15);
+		$pdf->Cell(100,5,$row5['tipobien'],0,'C',0);
+		$pdf->Cell(50,5,'$ '.$row5['valor'],'RLTB',0,'C',0);
+		$pdf->Cell(65,5,$row5['tipooperacion'],'RLTB',0,'C',0);
+		$pdf->Cell(50,5,$row5['formaadquisicion'],'RLTB',0,'C',0);
+	}
+
+	$pdf->Ln();
+	$pdf->Ln();
+	$pdf->Ln();
+	$pdf->Ln();
+
+
+	$pdf->SetFont('Arial','b',16);
+	$pdf->SetXY(3,10);
+	$pdf->Cell(150,8,'VII.- VEHICULOS',0,0,'C',0);
+
+	$pdf->Ln();
+	$pdf->Ln();
+	$pdf->SetFont('Arial','',10);
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'Anote "A", si el vehículo registrado fue adquirido ó "B" si el vehículo pasó ser propiedad de otra persona, señalando l tipo de operación que se llevó a cabo.','',0,'L',0);
+
+	$pdf->Ln();
+	$pdf->Ln();
+	$pdf->SetFont('Arial','',12);
+	$pdf->SetX(15);
+	$pdf->Cell(100,5,'Tipo de Bien','RLTB',0,'C',0);
+	$pdf->Cell(50,5,'Valor del bien mueble','RLTB',0,'C',0);
+	$pdf->Cell(65,5,'Tipo de Operación','RLTB',0,'C',0);
+	$pdf->Cell(50,5,'Forma de Pago','RLTB',0,'C',0);
+
+	while ($row5 = mysql_fetch_array($datos5b)) {
+		$pdf->Ln();
+		$pdf->SetFont('Arial','',10);
+		$pdf->SetX(15);
+		$pdf->Cell(100,5,$row5['tipobien'],0,'C',0);
+		$pdf->Cell(50,5,'$ '.$row5['valor'],'RLTB',0,'C',0);
+		$pdf->Cell(65,5,$row5['tipooperacion'],'RLTB',0,'C',0);
+		$pdf->Cell(50,5,$row5['formaadquisicion'],'RLTB',0,'C',0);
+	}
+
+
+	/*---------------  FIN QUINTA PAGINA ***********************************/
 
 
 
 	$nombreArchivo = "DeclaracionPatrimonial.pdf";
 
-	$pdf->Output($nombreArchivo,'D');
+	$pdf->Output($nombreArchivo,'I');
 } else {
 	echo '<h1>No existe datos</h1>';	
 }
