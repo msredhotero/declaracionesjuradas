@@ -89,9 +89,9 @@ $refVar5 = $serviciosReferencias->traerParticipacion();
 $cadRef5 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar5,array(1),' ');
 
 $refVar6 = $serviciosReferencias->traerInicioparticipacion();
-$cadRef6 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar5,array(1),' ');
+$cadRef6 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar6,array(1),' ');
 
-$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3, 3=>$cadRef4, 4=>$cadRef5);
+$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3, 3=>$cadRef4, 4=>$cadRef5, 5=>$cadRef6);
 $refCampo 	=  array("refdeclaracionjuradacabecera","reftipooperacion","refresponsables","reftiposociedad","refparticipacion","refinicioparticipacion"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
@@ -99,13 +99,9 @@ $refCampo 	=  array("refdeclaracionjuradacabecera","reftipooperacion","refrespon
 
 
 /////////////////////// Opciones para la creacion del view  apellido,nombre,nrodocumento,fechanacimiento,direccion,telefono,email/////////////////////
-$cabeceras 		= "	<th>Declaración Patr. Cabecera</th>
-					<th>Tipo de Operacion</th>
-					<th>Vehiculo</th>
-					<th>Forma de Adquisicion</th>
-					<th>Valor del Vehiculo</th>
-					<th>Tipo de Moneda</th>
-					<th>Fecha de Adquisicion</th>";
+$cabeceras 		= "	<th>Tipo de Operacion</th>
+					<th>Responsable</th>
+					<th>Nombre de la persona fisica, empresa o sociedad</th>";
 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
@@ -114,7 +110,7 @@ $cabeceras 		= "	<th>Declaración Patr. Cabecera</th>
 
 $formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
-$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerVehiculosGridPorCabecera($id),7);
+$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerConflictoeconomicaGridPorCabecera($id),3);
 
 
 
@@ -298,7 +294,7 @@ $(document).ready(function(){
 		  }
 	} );
 
-	$('#valor').number( true, 0,'.','' );
+	$('#antiguedad').number( true, 0,'.','' );
 	
 
 	$("#example").on("click",'.varborrar', function(){

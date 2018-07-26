@@ -3392,14 +3392,14 @@ c.antiguedad,
 c.refinicioparticipacion,
 c.ubicacion
 from dbconflictoeconomica c 
-inner join dbdeclaracionjuradacabecera dec ON dec.iddeclaracionjuradacabecera = c.refdeclaracionjuradacabecera 
-inner join tbestadocivil es ON es.idestadocivil = dec.refestadocivil 
-inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dec.refregimenmatrimonial 
-inner join dbusuarios us ON us.idusuario = dec.refusuarios 
-inner join tbestados es ON es.idestado = dec.refestados 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = c.refdeclaracionjuradacabecera 
+inner join tbestadocivil est ON est.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+inner join tbestados es ON es.idestado = dj.refestados 
 inner join tbtipooperacion tip ON tip.idtipooperacion = c.reftipooperacion 
 inner join tbresponsables res ON res.idresponsable = c.refresponsables 
-inner join tbtiposociedad tip ON tip.idtiposociedad = c.reftiposociedad 
+inner join tbtiposociedad tips ON tips.idtiposociedad = c.reftiposociedad 
 inner join tbparticipacion par ON par.idparticipacion = c.refparticipacion 
 inner join tbinicioparticipacion ini ON ini.idinicioparticipacion = c.refinicioparticipacion 
 order by 1"; 
@@ -3413,6 +3413,115 @@ $sql = "select idconflictoeconomica,refdeclaracionjuradacabecera,reftipooperacio
 $res = $this->query($sql,0); 
 return $res; 
 } 
+
+
+
+function traerConflictoeconomicaGridPorCabecera($id) {
+	$sql = "select 
+				c.idconflictoeconomica,
+				tip.tipooperacion,
+				res.descripcion as responsable,
+				tips.descripcion as tiposociedad,
+				par.descripcion as participacion,
+				ini.descripcion as inicioparticipacion,
+				concat(dj.primerapellido, ' ', dj.segundoapellido, ' ', dj.nombres) as declaracioncabecera,
+				c.descripcion,
+				c.fecha,
+				c.inscripcion,
+				c.sector,
+				c.especifica,
+				c.antiguedad,
+				c.ubicacion,
+				c.refdeclaracionjuradacabecera,
+				c.reftipooperacion,
+				c.refresponsables,
+				c.reftiposociedad,
+				c.refparticipacion,
+				c.refinicioparticipacion
+			from dbconflictoeconomica c 
+			inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = c.refdeclaracionjuradacabecera 
+			inner join tbestadocivil est ON est.idestadocivil = dj.refestadocivil 
+			inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+			inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+			inner join tbestados es ON es.idestado = dj.refestados 
+			inner join tbtipooperacion tip ON tip.idtipooperacion = c.reftipooperacion 
+			inner join tbresponsables res ON res.idresponsable = c.refresponsables 
+			inner join tbtiposociedad tips ON tips.idtiposociedad = c.reftiposociedad 
+			inner join tbparticipacion par ON par.idparticipacion = c.refparticipacion 
+			inner join tbinicioparticipacion ini ON ini.idinicioparticipacion = c.refinicioparticipacion 
+			where dj.iddeclaracionjuradacabecera = ".$id."
+			order by 1"; 
+	$res = $this->query($sql,0); 
+	return $res; 
+}
+
+
+function traerConflictoeconomicaPorCabeceraCURP($id, $curp) {
+	$sql = "select 
+				c.idconflictoeconomica,
+				c.refdeclaracionjuradacabecera,
+				c.reftipooperacion,
+				c.refresponsables,
+				c.descripcion,
+				c.fecha,
+				c.inscripcion,
+				c.sector,
+				c.reftiposociedad,
+				c.refparticipacion,
+				c.especifica,
+				c.antiguedad,
+				c.refinicioparticipacion,
+				c.ubicacion
+			from dbconflictoeconomica c 
+			inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = c.refdeclaracionjuradacabecera 
+			inner join tbestadocivil est ON est.idestadocivil = dj.refestadocivil 
+			inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+			inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+			inner join tbestados es ON es.idestado = dj.refestados 
+			inner join tbtipooperacion tip ON tip.idtipooperacion = c.reftipooperacion 
+			inner join tbresponsables res ON res.idresponsable = c.refresponsables 
+			inner join tbtiposociedad tips ON tips.idtiposociedad = c.reftiposociedad 
+			inner join tbparticipacion par ON par.idparticipacion = c.refparticipacion 
+			inner join tbinicioparticipacion ini ON ini.idinicioparticipacion = c.refinicioparticipacion 
+			where dj.iddeclaracionjuradacabecera = ".$id." and dj.curp = '".$curp."'
+			order by 1"; 
+	$res = $this->query($sql,0); 
+	return $res; 
+}
+
+
+function traerConflictoeconomicaPorCabecera($id) {
+	$sql = "select 
+				c.idconflictoeconomica,
+				c.refdeclaracionjuradacabecera,
+				c.reftipooperacion,
+				c.refresponsables,
+				c.descripcion,
+				c.fecha,
+				c.inscripcion,
+				c.sector,
+				c.reftiposociedad,
+				c.refparticipacion,
+				c.especifica,
+				c.antiguedad,
+				c.refinicioparticipacion,
+				c.ubicacion
+			from dbconflictoeconomica c 
+			inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = c.refdeclaracionjuradacabecera 
+			inner join tbestadocivil est ON est.idestadocivil = dj.refestadocivil 
+			inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+			inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+			inner join tbestados es ON es.idestado = dj.refestados 
+			inner join tbtipooperacion tip ON tip.idtipooperacion = c.reftipooperacion 
+			inner join tbresponsables res ON res.idresponsable = c.refresponsables 
+			inner join tbtiposociedad tips ON tips.idtiposociedad = c.reftiposociedad 
+			inner join tbparticipacion par ON par.idparticipacion = c.refparticipacion 
+			inner join tbinicioparticipacion ini ON ini.idinicioparticipacion = c.refinicioparticipacion 
+			where dj.iddeclaracionjuradacabecera = ".$id."
+			order by 1"; 
+	$res = $this->query($sql,0); 
+	return $res; 
+}
 
 /* Fin */
 /* /* Fin de la Tabla: dbconflictoeconomica*/
@@ -3460,18 +3569,18 @@ c.reftipopersonajuridica,
 c.reftipocolaboracion,
 c.ubicacion
 from dbconflictopuestos c 
-inner join dbdeclaracionjuradacabecera dec ON dec.iddeclaracionjuradacabecera = c.refdeclaracionjuradacabecera 
-inner join tbestadocivil es ON es.idestadocivil = dec.refestadocivil 
-inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dec.refregimenmatrimonial 
-inner join dbusuarios us ON us.idusuario = dec.refusuarios 
-inner join tbestados es ON es.idestado = dec.refestados 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = c.refdeclaracionjuradacabecera 
+inner join tbestadocivil est ON est.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+inner join tbestados es ON es.idestado = dj.refestados 
 inner join tbtipooperacion tip ON tip.idtipooperacion = c.reftipooperacion 
 inner join tbresponsables res ON res.idresponsable = c.refresponsables 
 inner join tbvinculos vin ON vin.idvinculo = c.refvinculos 
 inner join tbfrecuenciaanual fre ON fre.idfrecuenciaanual = c.reffrecuenciaanual 
 inner join tbparticipacion par ON par.idparticipacion = c.refparticipacion 
-inner join tbtipopersonajuridica tip ON tip.idtipopersonajuridica = c.reftipopersonajuridica 
-inner join tbtipocolaboracion tip ON tip.idtipocolaboracion = c.reftipocolaboracion 
+inner join tbtipopersonajuridica tipj ON tipj.idtipopersonajuridica = c.reftipopersonajuridica 
+inner join tbtipocolaboracion tipc ON tipc.idtipocolaboracion = c.reftipocolaboracion 
 order by 1"; 
 $res = $this->query($sql,0); 
 return $res; 
@@ -3483,6 +3592,130 @@ $sql = "select idconflictopuesto,refdeclaracionjuradacabecera,reftipooperacion,r
 $res = $this->query($sql,0); 
 return $res; 
 } 
+
+
+
+function traerConflictopuestosGridPorCabecera($id) {
+	$sql = "SELECT 
+			    c.idconflictopuesto,
+			    tip.tipooperacion,
+			    res.descripcion as responsable,
+			    vin.descripcion as vinculo,
+			    fre.descripcion as frecuenciaanual,
+			    par.descripcion as participacion,
+			    tipj.descripcion as personajuridica,
+			    tipc.descripcion as colaboracion,
+			    concat(dj.primerapellido, ' ', dj.segundoapellido, ' ', dj.nombres) as declaracioncabecera,
+			    c.descripcion,
+			    c.antiguedad,
+			    c.ubicacion,
+			    c.refdeclaracionjuradacabecera,
+			    c.reftipooperacion,
+			    c.refresponsables,
+			    c.refvinculos,
+			    c.reffrecuenciaanual,
+			    c.refparticipacion,
+			    c.reftipopersonajuridica,
+			    c.reftipocolaboracion
+			FROM
+			    dbconflictopuestos c
+			        INNER JOIN
+			    dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = c.refdeclaracionjuradacabecera
+			        INNER JOIN
+			    tbestadocivil est ON est.idestadocivil = dj.refestadocivil
+			        INNER JOIN
+			    tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial
+			        INNER JOIN
+			    dbusuarios us ON us.idusuario = dj.refusuarios
+			        INNER JOIN
+			    tbestados es ON es.idestado = dj.refestados
+			        INNER JOIN
+			    tbtipooperacion tip ON tip.idtipooperacion = c.reftipooperacion
+			        INNER JOIN
+			    tbresponsables res ON res.idresponsable = c.refresponsables
+			        INNER JOIN
+			    tbvinculos vin ON vin.idvinculo = c.refvinculos
+			        INNER JOIN
+			    tbfrecuenciaanual fre ON fre.idfrecuenciaanual = c.reffrecuenciaanual
+			        INNER JOIN
+			    tbparticipacion par ON par.idparticipacion = c.refparticipacion
+			        INNER JOIN
+			    tbtipopersonajuridica tipj ON tipj.idtipopersonajuridica = c.reftipopersonajuridica
+			        INNER JOIN
+			    tbtipocolaboracion tipc ON tipc.idtipocolaboracion = c.reftipocolaboracion
+			where dj.iddeclaracionjuradacabecera = ".$id."
+			order by 1"; 
+	$res = $this->query($sql,0); 
+	return $res; 
+}
+
+
+function traerConflictopuestosPorCabeceraCURP($id, $curp) {
+	$sql = "select 
+				c.idconflictopuesto,
+				c.refdeclaracionjuradacabecera,
+				c.reftipooperacion,
+				c.refresponsables,
+				c.descripcion,
+				c.refvinculos,
+				c.antiguedad,
+				c.reffrecuenciaanual,
+				c.refparticipacion,
+				c.reftipopersonajuridica,
+				c.reftipocolaboracion,
+				c.ubicacion
+			from dbconflictopuestos c 
+			inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = c.refdeclaracionjuradacabecera 
+			inner join tbestadocivil est ON est.idestadocivil = dj.refestadocivil 
+			inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+			inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+			inner join tbestados es ON es.idestado = dj.refestados 
+			inner join tbtipooperacion tip ON tip.idtipooperacion = c.reftipooperacion 
+			inner join tbresponsables res ON res.idresponsable = c.refresponsables 
+			inner join tbvinculos vin ON vin.idvinculo = c.refvinculos 
+			inner join tbfrecuenciaanual fre ON fre.idfrecuenciaanual = c.reffrecuenciaanual 
+			inner join tbparticipacion par ON par.idparticipacion = c.refparticipacion 
+			inner join tbtipopersonajuridica tipj ON tipj.idtipopersonajuridica = c.reftipopersonajuridica 
+			inner join tbtipocolaboracion tipc ON tipc.idtipocolaboracion = c.reftipocolaboracion 
+			where dj.iddeclaracionjuradacabecera = ".$id." and dj.curp = '".$curp."'
+			order by 1"; 
+	$res = $this->query($sql,0); 
+	return $res; 
+}
+
+
+function traerConflictopuestosPorCabecera($id) {
+	$sql = "select 
+				c.idconflictopuesto,
+				c.refdeclaracionjuradacabecera,
+				c.reftipooperacion,
+				c.refresponsables,
+				c.descripcion,
+				c.refvinculos,
+				c.antiguedad,
+				c.reffrecuenciaanual,
+				c.refparticipacion,
+				c.reftipopersonajuridica,
+				c.reftipocolaboracion,
+				c.ubicacion
+			from dbconflictopuestos c 
+			inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = c.refdeclaracionjuradacabecera 
+			inner join tbestadocivil est ON est.idestadocivil = dj.refestadocivil 
+			inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+			inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+			inner join tbestados es ON es.idestado = dj.refestados 
+			inner join tbtipooperacion tip ON tip.idtipooperacion = c.reftipooperacion 
+			inner join tbresponsables res ON res.idresponsable = c.refresponsables 
+			inner join tbvinculos vin ON vin.idvinculo = c.refvinculos 
+			inner join tbfrecuenciaanual fre ON fre.idfrecuenciaanual = c.reffrecuenciaanual 
+			inner join tbparticipacion par ON par.idparticipacion = c.refparticipacion 
+			inner join tbtipopersonajuridica tipj ON tipj.idtipopersonajuridica = c.reftipopersonajuridica 
+			inner join tbtipocolaboracion tipc ON tipc.idtipocolaboracion = c.reftipocolaboracion 
+			where dj.iddeclaracionjuradacabecera = ".$id."
+			order by 1"; 
+	$res = $this->query($sql,0); 
+	return $res; 
+}
 
 /* Fin */
 /* /* Fin de la Tabla: dbconflictopuestos*/

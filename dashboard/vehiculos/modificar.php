@@ -244,7 +244,7 @@ $(document).ready(function(){
 
 	$('.volver').click(function(event){
 		 
-		url = "index.php";
+		url = "index.php?id=<?php echo mysql_result($resResultado, 0,'refdeclaracionjuradacabecera'); ?>";
 		$(location).attr('href',url);
 	});//fin del boton modificar
 
@@ -282,7 +282,7 @@ $(document).ready(function(){
 											
 									},
 									success:  function (response) {
-											url = "index.php";
+											url = "index.php?id=<?php echo mysql_result($resResultado, 0,'refdeclaracionjuradacabecera'); ?>";
 											$(location).attr('href',url);
 											
 									}

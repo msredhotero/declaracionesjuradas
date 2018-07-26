@@ -22,7 +22,7 @@ $serviciosReferencias 	= new ServiciosReferencias();
 $fecha = date('Y-m-d');
 
 //$resProductos = $serviciosProductos->traerProductosLimite(6);
-$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Vehiculos",$_SESSION['refroll_predio'],'');
+$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Conflictos Cargo",$_SESSION['refroll_predio'],'');
 
 
 ///////////////////////   id de la cabecera de la declaracion /////////////////////////
@@ -30,51 +30,43 @@ $id = $_GET['id'];
 ///////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
-$singular = "Vehiculo";
+$singular = "Conflictos Cargo";
 
-$plural = "Vehiculos";
+$plural = "Conflictos Cargos";
 
-$eliminar = "eliminarVehiculos";
+$eliminar = "eliminarConflictopuestos";
 
-$insertar = "insertarVehiculos";
+$insertar = "insertarConflictopuestos";
 
 $tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
-$tabla 			= "dbvehiculos";
+$tabla 			= "dbconflictopuestos";
 
-$lblCambio	 	= array("refdeclaracionjuradacabecera",
-						"reftipooperacion",
-						"vehiculo",
-						"donde",
-						"entidadfederativa",
-						"refformaadquisicion",
-						"cesionario",
-						"reftipocesionario",
-						"otrotipocesionario",
-						"valor",
-						"tipomoneda",
-						"fechaadquisicion",
-						"reftitular",
-						"especificacionventa",
-						"especificacionsiniestro");
+$lblCambio	 	= array('refdeclaracionjuradacabecera',
+						'reftipooperacion',
+						'refresponsables',
+						'descripcion',
+						'refvinculos',
+						'antiguedad',
+						'reffrecuenciaanual',
+						'refparticipacion',
+						'reftipopersonajuridica',
+						'reftipocolaboracion',
+						'ubicacio');
 $lblreemplazo	= array('Declaración Patrimonial Cabecera',
 						'Tipo de Operacion',
-						'Marca, Tipo, Modelo y Nro de Serie',
-						'¿Donde se encuentra Registrado?',
-						'Entidad Federativa',
-						'Forma de Adquisicion',
-						'Nombre del cesionario, del autor de la donacion o del autor de la herencia',
-						'Relacion del cesionario, del autor de la donacion o del autor de la herencia con el titular',
-						'En caso de elegir "Otro" indicar',
-						'Valor del Vehiculo al momento de la adquisicion, sin centavos',
-						'Tipo de Moneda',
-						'Fecha de Adquisicion',
-						'Titular',
-						'Si eligio "Venta" debera especificar los datos de la operacion',
-						'Si eligio "Siniestro" debera especificar los datos de la operacion');
+						'Responsable de conflicto de intereses',
+						'Nombre de la entidad (empresa, asociación, sindicato, etc)',
+						'Vinculos',
+						'Antigüedad',
+						'Frecuencia Anual',
+						'Participación en la dirección o administración',
+						'Tipo de persona jurídica',
+						'Tipo Colaboración o aporte',
+						'Ubicación');
 
 
 $resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
@@ -83,30 +75,35 @@ $cadRef = $serviciosFunciones->devolverSelectBoxObligatorio($resVar1,array(2,3,4
 $refVar2 = $serviciosReferencias->traerTipooperacion();
 $cadRef2 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar2,array(1),' ');
 
-$refVar3 = $serviciosReferencias->traerFormaadquisicion();
+$refVar3 = $serviciosReferencias->traerResponsables();
 $cadRef3 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar3,array(1),' ');
 
-$refVar4 = $serviciosReferencias->traerTipocesionario();
+$refVar4 = $serviciosReferencias->traerVinculos();
 $cadRef4 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar4,array(1),' ');
 
-$refVar5 = $serviciosReferencias->traerTitular();
+$refVar5 = $serviciosReferencias->traerFrecuenciaanual();
 $cadRef5 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar5,array(1),' ');
 
-$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3, 3=>$cadRef4, 4=>$cadRef5);
-$refCampo 	=  array("refdeclaracionjuradacabecera","reftipooperacion","refformaadquisicion","reftipocesionario","reftitular"); 
+$refVar6 = $serviciosReferencias->traerParticipacion();
+$cadRef6 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar6,array(1),' ');
+
+$refVar7 = $serviciosReferencias->traerTipopersonajuridica();
+$cadRef7 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar7,array(1),' ');
+
+$refVar8 = $serviciosReferencias->traerTipocolaboracion();
+$cadRef8 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar8,array(1),' ');
+
+$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3, 3=>$cadRef4, 4=>$cadRef5, 5=>$cadRef6, 6=>$cadRef7, 7=>$cadRef8);
+$refCampo 	=  array("refdeclaracionjuradacabecera","reftipooperacion","refresponsables","refvinculos","reffrecuenciaanual","refparticipacion","reftipopersonajuridica","reftipocolaboracion");
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
 
 
 /////////////////////// Opciones para la creacion del view  apellido,nombre,nrodocumento,fechanacimiento,direccion,telefono,email/////////////////////
-$cabeceras 		= "	<th>Declaración Patr. Cabecera</th>
-					<th>Tipo de Operacion</th>
-					<th>Vehiculo</th>
-					<th>Forma de Adquisicion</th>
-					<th>Valor del Vehiculo</th>
-					<th>Tipo de Moneda</th>
-					<th>Fecha de Adquisicion</th>";
+$cabeceras 		= "	<th>Tipo de Operacion</th>
+					<th>Responsable</th>
+					<th>Nombre de la persona fisica, empresa o sociedad</th>";
 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
@@ -115,7 +112,7 @@ $cabeceras 		= "	<th>Declaración Patr. Cabecera</th>
 
 $formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
-$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerVehiculosGridPorCabecera($id),7);
+$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerConflictopuestosGridPorCabecera($id),3);
 
 
 
@@ -299,7 +296,7 @@ $(document).ready(function(){
 		  }
 	} );
 
-	$('#valor').number( true, 0,'.','' );
+	$('#antiguedad').number( true, 0,'.','' );
 	
 
 	$("#example").on("click",'.varborrar', function(){
@@ -412,27 +409,27 @@ $(document).ready(function(){
 				success: function(data){
 
 					if (data == '') {
-                                            $(".alert").removeClass("alert-danger");
-											$(".alert").removeClass("alert-info");
-                                            $(".alert").addClass("alert-success");
-                                            $(".alert").html('<strong>Ok!</strong> Se cargo exitosamente el <strong><?php echo $singular; ?></strong>. ');
-											$(".alert").delay(3000).queue(function(){
-												/*aca lo que quiero hacer 
-												  después de los 2 segundos de retraso*/
-												$(this).dequeue(); //continúo con el siguiente ítem en la cola
-												
-											});
-											$("#load").html('');
-											url = "index.php?id=<?php echo $id; ?>";
-											$(location).attr('href',url);
-                                            
-											
-                                        } else {
-                                        	$(".alert").removeClass("alert-danger");
-                                            $(".alert").addClass("alert-danger");
-                                            $(".alert").html('<strong>Error!</strong> '+data);
-                                            $("#load").html('');
-                                        }
+                        $(".alert").removeClass("alert-danger");
+						$(".alert").removeClass("alert-info");
+                        $(".alert").addClass("alert-success");
+                        $(".alert").html('<strong>Ok!</strong> Se cargo exitosamente el <strong><?php echo $singular; ?></strong>. ');
+						$(".alert").delay(3000).queue(function(){
+							/*aca lo que quiero hacer 
+							  después de los 2 segundos de retraso*/
+							$(this).dequeue(); //continúo con el siguiente ítem en la cola
+							
+						});
+						$("#load").html('');
+						url = "index.php?id=<?php echo $id; ?>";
+						$(location).attr('href',url);
+                        
+						
+                    } else {
+                    	$(".alert").removeClass("alert-danger");
+                        $(".alert").addClass("alert-danger");
+                        $(".alert").html('<strong>Error!</strong> '+data);
+                        $("#load").html('');
+                    }
 				},
 				//si ha ocurrido un error
 				error: function(){

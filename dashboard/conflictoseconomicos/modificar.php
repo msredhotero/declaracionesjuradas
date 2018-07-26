@@ -22,80 +22,79 @@ $serviciosReferencias 	= new ServiciosReferencias();
 $fecha = date('Y-m-d');
 
 //$resProductos = $serviciosProductos->traerProductosLimite(6);
-$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Vehiculos",$_SESSION['refroll_predio'],'');
+$resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Conflictos Economicos",$_SESSION['refroll_predio'],'');
 
 
 $id = $_GET['id'];
 
-$resResultado = $serviciosReferencias->traerVehiculosPorId($id);
+$resResultado = $serviciosReferencias->traerConflictoeconomicaPorId($id);
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
-$singular = "Vehiculo";
+$singular = "Conflictos Economicos";
 
-$plural = "Vehiculos";
+$plural = "Conflictos Economicos";
 
-$eliminar = "eliminarVehiculos";
+$eliminar = "eliminarConflictoeconomica";
 
-$modificar = "modificarVehiculos";
+$modificar = "modificarConflictoeconomica";
 
-$idTabla = "idvehiculos";
+$idTabla = "idconflictoeconomica";
 
 $tituloWeb = "Gestión: Declaraciones Patrimoniales";
 //////////////////////// Fin opciones ////////////////////////////////////////////////
 
 
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
-$tabla 			= "dbvehiculos";
+$tabla 			= "dbconflictoeconomica";
 
 $lblCambio	 	= array("refdeclaracionjuradacabecera",
 						"reftipooperacion",
-						"vehiculo",
-						"donde",
-						"entidadfederativa",
-						"refformaadquisicion",
-						"cesionario",
-						"reftipocesionario",
-						"otrotipocesionario",
-						"valor",
-						"tipomoneda",
-						"fechaadquisicion",
-						"reftitular",
-						"especificacionventa",
-						"especificacionsiniestro");
+						"refresponsables",
+						"descripcion",
+						"fecha",
+						"inscripcion",
+						"sector",
+						"reftiposociedad",
+						"refparticipacion",
+						"especifica",
+						"antiguedad",
+						"refinicioparticipacion",
+						"ubicacio");
 $lblreemplazo	= array('Declaración Patrimonial Cabecera',
 						'Tipo de Operacion',
-						'Marca, Tipo, Modelo y Nro de Serie',
-						'¿Donde se encuentra Registrado?',
-						'Entidad Federativa',
-						'Forma de Adquisicion',
-						'Nombre del cesionario, del autor de la donacion o del autor de la herencia',
-						'Relacion del cesionario, del autor de la donacion o del autor de la herencia con el titular',
-						'En caso de elegir "Otro" indicar',
-						'Valor del Vehiculo al momento de la adquisicion, sin centavos',
-						'Tipo de Moneda',
-						'Fecha de Adquisicion',
-						'Titular',
-						'Si eligio "Venta" debera especificar los datos de la operacion',
-						'Si eligio "Siniestro" debera especificar los datos de la operacion');
+						'Responsable de conflicto de intereses',
+						'Nombre de la persona fisica, empresa o sociedad',
+						'Fecha de constitución de la sociedad',
+						'Inscrpcion en el registro publico u otro dato que permite se identificacion',
+						'Sector o industria',
+						'Tipo de sociedad en la que se participa o con la que se contrata',
+						'Tipo de participacion o contrato',
+						'Especifica',
+						'Antigüedad de la participación o convenio(años)',
+						'Inicio de participación o contrato',
+						'Ubicación');
 
 
-$resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
-$cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(2,3,4),' ', mysql_result($resResultado,0,'refdeclaracionjuradacabecera'));
+$resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId(mysql_result($resResultado, 0,'refdeclaracionjuradacabecera'));
+$cadRef = $serviciosFunciones->devolverSelectBoxObligatorio($resVar1,array(2,3,4),' ');
 
 $refVar2 = $serviciosReferencias->traerTipooperacion();
-$cadRef2 = $serviciosFunciones->devolverSelectBoxActivo($refVar2,array(1),' ', mysql_result($resResultado,0,'reftipooperacion'));
+$cadRef2 = $serviciosFunciones->devolverSelectBoxActivo($refVar2,array(1),' ', mysql_result($resResultado, 0,'reftipooperacion'));
 
-$refVar3 = $serviciosReferencias->traerFormaadquisicion();
-$cadRef3 = $serviciosFunciones->devolverSelectBoxActivo($refVar3,array(1),' ', mysql_result($resResultado,0,'refformaadquisicion'));
+$refVar3 = $serviciosReferencias->traerResponsables();
+$cadRef3 = $serviciosFunciones->devolverSelectBoxActivo($refVar3,array(1),' ', mysql_result($resResultado, 0,'refresponsables'));
 
-$refVar4 = $serviciosReferencias->traerTipocesionario();
-$cadRef4 = $serviciosFunciones->devolverSelectBoxActivo($refVar4,array(1),' ', mysql_result($resResultado,0,'reftipocesionario'));
+$refVar4 = $serviciosReferencias->traerTiposociedad();
+$cadRef4 = $serviciosFunciones->devolverSelectBoxActivo($refVar4,array(1),' ', mysql_result($resResultado, 0,'reftiposociedad'));
 
-$refVar5 = $serviciosReferencias->traerTitular();
-$cadRef5 = $serviciosFunciones->devolverSelectBoxActivo($refVar5,array(1),' ', mysql_result($resResultado,0,'reftitular'));
+$refVar5 = $serviciosReferencias->traerParticipacion();
+$cadRef5 = $serviciosFunciones->devolverSelectBoxActivo($refVar5,array(1),' ', mysql_result($resResultado, 0,'refparticipacion'));
 
-$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3, 3=>$cadRef4, 4=>$cadRef5);
-$refCampo 	=  array("refdeclaracionjuradacabecera","reftipooperacion","refformaadquisicion","reftipocesionario","reftitular"); 
+$refVar6 = $serviciosReferencias->traerInicioparticipacion();
+$cadRef6 = $serviciosFunciones->devolverSelectBoxActivo($refVar6,array(1),' ', mysql_result($resResultado, 0,'refinicioparticipacion'));
+
+$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3, 3=>$cadRef4, 4=>$cadRef5, 5=>$cadRef6);
+$refCampo 	=  array("refdeclaracionjuradacabecera","reftipooperacion","refresponsables","reftiposociedad","refparticipacion","refinicioparticipacion"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
@@ -236,7 +235,7 @@ $(document).ready(function(){
 
 	$('.volver').click(function(event){
 		 
-		url = "index.php";
+		url = "index.php?id=<?php echo mysql_result($resResultado, 0,'refdeclaracionjuradacabecera'); ?>";
 		$(location).attr('href',url);
 	});//fin del boton modificar
 
@@ -274,7 +273,7 @@ $(document).ready(function(){
 											
 									},
 									success:  function (response) {
-											url = "index.php";
+											url = "index.php?id=<?php echo mysql_result($resResultado, 0,'refdeclaracionjuradacabecera'); ?>";
 											$(location).attr('href',url);
 											
 									}
