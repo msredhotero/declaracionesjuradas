@@ -409,6 +409,109 @@ case 'traerArchivosPorCliente':
 
 /* Fin */
 
+	function insertarConflictoeconomica($serviciosReferencias) { 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$reftipooperacion = $_POST['reftipooperacion']; 
+		$refresponsables = $_POST['refresponsables']; 
+		$descripcion = $_POST['descripcion']; 
+		$fecha = $_POST['fecha']; 
+		$inscripcion = $_POST['inscripcion']; 
+		$sector = $_POST['sector']; 
+		$reftiposociedad = $_POST['reftiposociedad']; 
+		$refparticipacion = $_POST['refparticipacion']; 
+		$especifica = $_POST['especifica']; 
+		$antiguedad = $_POST['antiguedad']; 
+		$refinicioparticipacion = $_POST['refinicioparticipacion']; 
+		$ubicacion = $_POST['ubicacion']; 
+		$res = $serviciosReferencias->insertarConflictoeconomica($refdeclaracionjuradacabecera,$reftipooperacion,$refresponsables,$descripcion,$fecha,$inscripcion,$sector,$reftiposociedad,$refparticipacion,$especifica,$antiguedad,$refinicioparticipacion,$ubicacion); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+
+	function modificarConflictoeconomica($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$reftipooperacion = $_POST['reftipooperacion']; 
+		$refresponsables = $_POST['refresponsables']; 
+		$descripcion = $_POST['descripcion']; 
+		$fecha = $_POST['fecha']; 
+		$inscripcion = $_POST['inscripcion']; 
+		$sector = $_POST['sector']; 
+		$reftiposociedad = $_POST['reftiposociedad']; 
+		$refparticipacion = $_POST['refparticipacion']; 
+		$especifica = $_POST['especifica']; 
+		$antiguedad = $_POST['antiguedad']; 
+		$refinicioparticipacion = $_POST['refinicioparticipacion']; 
+		$ubicacion = $_POST['ubicacion']; 
+		$res = $serviciosReferencias->modificarConflictoeconomica($id,$refdeclaracionjuradacabecera,$reftipooperacion,$refresponsables,$descripcion,$fecha,$inscripcion,$sector,$reftiposociedad,$refparticipacion,$especifica,$antiguedad,$refinicioparticipacion,$ubicacion); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+
+	function eliminarConflictoeconomica($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarConflictoeconomica($id); 
+		echo $res; 
+	} 
+
+
+	function insertarConflictopuestos($serviciosReferencias) { 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$reftipooperacion = $_POST['reftipooperacion']; 
+		$refresponsables = $_POST['refresponsables']; 
+		$descripcion = $_POST['descripcion']; 
+		$refvinculos = $_POST['refvinculos']; 
+		$antiguedad = $_POST['antiguedad']; 
+		$reffrecuenciaanual = $_POST['reffrecuenciaanual']; 
+		$refparticipacion = $_POST['refparticipacion']; 
+		$reftipopersonajuridica = $_POST['reftipopersonajuridica']; 
+		$reftipocolaboracion = $_POST['reftipocolaboracion']; 
+		$ubicacion = $_POST['ubicacion']; 
+		$res = $serviciosReferencias->insertarConflictopuestos($refdeclaracionjuradacabecera,$reftipooperacion,$refresponsables,$descripcion,$refvinculos,$antiguedad,$reffrecuenciaanual,$refparticipacion,$reftipopersonajuridica,$reftipocolaboracion,$ubicacion); 
+		if ((integer)$res > 0) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al insertar datos';	 
+		} 
+	} 
+
+
+	function modificarConflictopuestos($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$refdeclaracionjuradacabecera = $_POST['refdeclaracionjuradacabecera']; 
+		$reftipooperacion = $_POST['reftipooperacion']; 
+		$refresponsables = $_POST['refresponsables']; 
+		$descripcion = $_POST['descripcion']; 
+		$refvinculos = $_POST['refvinculos']; 
+		$antiguedad = $_POST['antiguedad']; 
+		$reffrecuenciaanual = $_POST['reffrecuenciaanual']; 
+		$refparticipacion = $_POST['refparticipacion']; 
+		$reftipopersonajuridica = $_POST['reftipopersonajuridica']; 
+		$reftipocolaboracion = $_POST['reftipocolaboracion']; 
+		$ubicacion = $_POST['ubicacion']; 
+		$res = $serviciosReferencias->modificarConflictopuestos($id,$refdeclaracionjuradacabecera,$reftipooperacion,$refresponsables,$descripcion,$refvinculos,$antiguedad,$reffrecuenciaanual,$refparticipacion,$reftipopersonajuridica,$reftipocolaboracion,$ubicacion); 
+		if ($res == true) { 
+		echo ''; 
+		} else { 
+		echo 'Hubo un error al modificar datos'; 
+		} 
+	} 
+
+	
+	function eliminarConflictopuestos($serviciosReferencias) { 
+		$id = $_POST['id']; 
+		$res = $serviciosReferencias->eliminarConflictopuestos($id); 
+		echo $res; 
+	} 
+
 	function insertarVinculos($serviciosReferencias) { 
 		$descripcion = $_POST['descripcion']; 
 		$res = $serviciosReferencias->insertarVinculos($descripcion); 
