@@ -2276,18 +2276,18 @@ return $res;
 
 /* PARA Vehiculos */
 
-function insertarVehiculos($refdeclaracionjuradacabecera,$reftipooperacion,$vehiculo,$donde,$entidadfederativa,$refformaadquisicion,$cesionario,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$reftitular,$especificacionventa,$especificacionsiniestro) { 
-$sql = "insert into dbvehiculos(idvehiculos,refdeclaracionjuradacabecera,reftipooperacion,vehiculo,donde,entidadfederativa,refformaadquisicion,cesionario,reftipocesionario,otrotipocesionario,valor,tipomoneda,fechaadquisicion,reftitular,especificacionventa,especificacionsiniestro) 
-values ('',".$refdeclaracionjuradacabecera.",".$reftipooperacion.",'".($vehiculo)."','".($donde)."','".($entidadfederativa)."',".$refformaadquisicion.",'".($cesionario)."',".$reftipocesionario.",'".($otrotipocesionario)."',".$valor.",'".($tipomoneda)."','".($fechaadquisicion)."',".$reftitular.",'".($especificacionventa)."','".($especificacionsiniestro)."')"; 
+function insertarVehiculos($refdeclaracionjuradacabecera,$reftipooperacion,$vehiculo,$donde,$entidadfederativa,$refformaadquisicion,$cesionario,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$reftitular,$especificacionventa,$especificacionsiniestro, $estado) { 
+$sql = "insert into dbvehiculos(idvehiculos,refdeclaracionjuradacabecera,reftipooperacion,vehiculo,donde,entidadfederativa,refformaadquisicion,cesionario,reftipocesionario,otrotipocesionario,valor,tipomoneda,fechaadquisicion,reftitular,especificacionventa,especificacionsiniestro,estado) 
+values ('',".$refdeclaracionjuradacabecera.",".$reftipooperacion.",'".($vehiculo)."','".($donde)."','".($entidadfederativa)."',".$refformaadquisicion.",'".($cesionario)."',".$reftipocesionario.",'".($otrotipocesionario)."',".$valor.",'".($tipomoneda)."','".($fechaadquisicion)."',".$reftitular.",'".($especificacionventa)."','".($especificacionsiniestro)."','".($estado)."')"; 
 $res = $this->query($sql,1); 
 return $res; 
 } 
 
 
-function modificarVehiculos($id,$refdeclaracionjuradacabecera,$reftipooperacion,$vehiculo,$donde,$entidadfederativa,$refformaadquisicion,$cesionario,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$reftitular,$especificacionventa,$especificacionsiniestro) { 
+function modificarVehiculos($id,$refdeclaracionjuradacabecera,$reftipooperacion,$vehiculo,$donde,$entidadfederativa,$refformaadquisicion,$cesionario,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$reftitular,$especificacionventa,$especificacionsiniestro, $estado) { 
 $sql = "update dbvehiculos 
 set 
-refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",reftipooperacion = ".$reftipooperacion.",vehiculo = '".($vehiculo)."',donde = '".($donde)."',entidadfederativa = '".($entidadfederativa)."',refformaadquisicion = ".$refformaadquisicion.",cesionario = '".($cesionario)."',reftipocesionario = ".$reftipocesionario.",otrotipocesionario = '".($otrotipocesionario)."',valor = ".$valor.",tipomoneda = '".($tipomoneda)."',fechaadquisicion = '".($fechaadquisicion)."',reftitular = ".$reftitular.",especificacionventa = '".($especificacionventa)."',especificacionsiniestro = '".($especificacionsiniestro)."' 
+refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",reftipooperacion = ".$reftipooperacion.",vehiculo = '".($vehiculo)."',donde = '".($donde)."',entidadfederativa = '".($entidadfederativa)."',refformaadquisicion = ".$refformaadquisicion.",cesionario = '".($cesionario)."',reftipocesionario = ".$reftipocesionario.",otrotipocesionario = '".($otrotipocesionario)."',valor = ".$valor.",tipomoneda = '".($tipomoneda)."',fechaadquisicion = '".($fechaadquisicion)."',reftitular = ".$reftitular.",especificacionventa = '".($especificacionventa)."',especificacionsiniestro = '".($especificacionsiniestro)."' ,estado = '".($estado)."' 
 where idvehiculos =".$id; 
 $res = $this->query($sql,0); 
 return $res; 
@@ -2318,7 +2318,8 @@ v.tipomoneda,
 v.fechaadquisicion,
 v.reftitular,
 v.especificacionventa,
-v.especificacionsiniestro
+v.especificacionsiniestro,
+v.estado
 from dbvehiculos v 
 inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = v.refdeclaracionjuradacabecera 
 inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
@@ -2335,7 +2336,7 @@ return $res;
 
 
 function traerVehiculosPorId($id) { 
-$sql = "select idvehiculos,refdeclaracionjuradacabecera,reftipooperacion,vehiculo,donde,entidadfederativa,refformaadquisicion,cesionario,reftipocesionario,otrotipocesionario,valor,tipomoneda,fechaadquisicion,reftitular,especificacionventa,especificacionsiniestro from dbvehiculos where idvehiculos =".$id; 
+$sql = "select idvehiculos,refdeclaracionjuradacabecera,reftipooperacion,vehiculo,donde,entidadfederativa,refformaadquisicion,cesionario,reftipocesionario,otrotipocesionario,valor,tipomoneda,fechaadquisicion,reftitular,especificacionventa,especificacionsiniestro,estado from dbvehiculos where idvehiculos =".$id; 
 $res = $this->query($sql,0); 
 return $res; 
 } 
@@ -2361,7 +2362,8 @@ v.reftitular,
 v.refdeclaracionjuradacabecera,
 v.reftipooperacion,
 v.especificacionventa,
-v.especificacionsiniestro
+v.especificacionsiniestro,
+v.estado
 from dbvehiculos v 
 inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = v.refdeclaracionjuradacabecera 
 inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
@@ -2395,7 +2397,8 @@ v.tipomoneda,
 v.fechaadquisicion,
 v.reftitular,
 v.especificacionventa,
-v.especificacionsiniestro
+v.especificacionsiniestro,
+v.estado
 from dbvehiculos v 
 inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = v.refdeclaracionjuradacabecera 
 inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
@@ -2429,7 +2432,8 @@ v.tipomoneda,
 v.fechaadquisicion,
 v.reftitular,
 v.especificacionventa,
-v.especificacionsiniestro
+v.especificacionsiniestro,
+v.estado
 from dbvehiculos v 
 inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = v.refdeclaracionjuradacabecera 
 inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
