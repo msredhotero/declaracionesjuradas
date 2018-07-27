@@ -62,7 +62,8 @@ $lblCambio	 	= array("refdeclaracionjuradacabecera",
 						"registropublico",
 						"ubicacion",
 						"especificacionobra",
-						"especificacionventa");
+						"especificacionventa",
+						"estado");
 $lblreemplazo	= array('Declaración Patrimonial Cabecera',
 						'Tipo de Operacion',
 						'Tipo de Bien',
@@ -80,7 +81,8 @@ $lblreemplazo	= array('Declaración Patrimonial Cabecera',
 						'Datos del registro publico de la propiedad: folio real u otro dato que permita la identificacion del mismo',
 						'Ubicacion del inmueble',
 						'Si eligio "Obra" debera especificar los datos de la operacion',
-						'Si eligio "Venta" debera especificar los datos de la operacion');
+						'Si eligio "Venta" debera especificar los datos de la operacion',
+						'Alta o Baja');
 
 
 $resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
@@ -104,8 +106,10 @@ $cadRef5 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar5,array(1),'
 $refVar7 = $serviciosReferencias->traerOtrotipobien();
 $cadRef7 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar7,array(1),' ');
 
-$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef6, 3=>$cadRef3, 4=>$cadRef4, 5=>$cadRef5, 6=>$cadRef7);
-$refCampo 	=  array("refdeclaracionjuradacabecera","reftipooperacion","reftipobien","refformaadquisicion","reftipocesionario","reftitular","refotrotipobien"); 
+$cadRef8 = "<option value='A'>Alta</option><option value='B'>Baja</option>";
+
+$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef6, 3=>$cadRef3, 4=>$cadRef4, 5=>$cadRef5, 6=>$cadRef7, 7=>$cadRef8);
+$refCampo 	=  array("refdeclaracionjuradacabecera","reftipooperacion","reftipobien","refformaadquisicion","reftipocesionario","reftitular","refotrotipobien","estado"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 

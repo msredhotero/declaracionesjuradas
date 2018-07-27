@@ -1174,18 +1174,18 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 	
 	/* PARA Publicacion */
 	
-	function insertarPublicacion($refdeclaracionjuradacabecera,$estadeacuerdo,$eningresosnetos,$enbienesinmuebles,$enbienesmuebles,$envehiculos,$eninversiones,$enadeudos) { 
-	$sql = "insert into dbpublicacion(idpublicacion,refdeclaracionjuradacabecera,estadeacuerdo,eningresosnetos,enbienesinmuebles,enbienesmuebles,envehiculos,eninversiones,enadeudos) 
-	values ('',".$refdeclaracionjuradacabecera.",".$estadeacuerdo.",".$eningresosnetos.",".$enbienesinmuebles.",".$enbienesmuebles.",".$envehiculos.",".$eninversiones.",".$enadeudos.")"; 
+	function insertarPublicacion($refdeclaracionjuradacabecera,$estadeacuerdo,$eningresosnetos,$enbienesinmuebles,$enbienesmuebles,$envehiculos,$eninversiones,$enadeudos, $enconflictos) { 
+	$sql = "insert into dbpublicacion(idpublicacion,refdeclaracionjuradacabecera,estadeacuerdo,eningresosnetos,enbienesinmuebles,enbienesmuebles,envehiculos,eninversiones,enadeudos, enconflictos) 
+	values ('',".$refdeclaracionjuradacabecera.",".$estadeacuerdo.",".$eningresosnetos.",".$enbienesinmuebles.",".$enbienesmuebles.",".$envehiculos.",".$eninversiones.",".$enadeudos.",".$enconflictos.")"; 
 	$res = $this->query($sql,1); 
 	return $res; 
 	} 
 	
 	
-	function modificarPublicacion($id,$refdeclaracionjuradacabecera,$estadeacuerdo,$eningresosnetos,$enbienesinmuebles,$enbienesmuebles,$envehiculos,$eninversiones,$enadeudos) { 
+	function modificarPublicacion($id,$refdeclaracionjuradacabecera,$estadeacuerdo,$eningresosnetos,$enbienesinmuebles,$enbienesmuebles,$envehiculos,$eninversiones,$enadeudos, $enconflictos) { 
 	$sql = "update dbpublicacion 
 	set 
-	refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",estadeacuerdo = ".$estadeacuerdo.",eningresosnetos = ".$eningresosnetos.",enbienesinmuebles = ".$enbienesinmuebles.",enbienesmuebles = ".$enbienesmuebles.",envehiculos = ".$envehiculos.",eninversiones = ".$eninversiones.",enadeudos = ".$enadeudos." 
+	refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",estadeacuerdo = ".$estadeacuerdo.",eningresosnetos = ".$eningresosnetos.",enbienesinmuebles = ".$enbienesinmuebles.",enbienesmuebles = ".$enbienesmuebles.",envehiculos = ".$envehiculos.",eninversiones = ".$eninversiones.",enadeudos = ".$enadeudos." ,enconflictos = ".$enconflictos." 
 	where idpublicacion =".$id; 
 	$res = $this->query($sql,0); 
 	return $res; 
@@ -1209,7 +1209,8 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 	p.enbienesmuebles,
 	p.envehiculos,
 	p.eninversiones,
-	p.enadeudos
+	p.enadeudos,
+	p.enconflictos
 	from dbpublicacion p 
 	order by 1"; 
 	$res = $this->query($sql,0); 
@@ -1225,7 +1226,8 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 				(case when enbienesmuebles = 1 then 'Si' else 'No' end) as enbienesmuebles,
 				(case when envehiculos = 1 then 'Si' else 'No' end) as envehiculos,
 				(case when eninversiones = 1 then 'Si' else 'No' end) as eninversiones,
-				(case when enadeudos = 1 then 'Si' else 'No' end) as enadeudos
+				(case when enadeudos = 1 then 'Si' else 'No' end) as enadeudos,
+				(case when enconflictos = 1 then 'Si' else 'No' end) as enconflictos
 				from dbpublicacion where idpublicacion =".$id; 
 	$res = $this->query($sql,0); 
 	return $res; 
@@ -1242,6 +1244,7 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 				(case when p.envehiculos = 1 then 'Si' else 'No' end) as envehiculos,
 				(case when p.eninversiones = 1 then 'Si' else 'No' end) as eninversiones,
 				(case when p.enadeudos = 1 then 'Si' else 'No' end) as enadeudos,
+				(case when p.enconflictos = 1 then 'Si' else 'No' end) as enconflictos,
 				p.refdeclaracionjuradacabecera
 				from dbpublicacion p 
 				inner join dbdeclaracionjuradacabecera dj on dj.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera
@@ -1262,6 +1265,7 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 				(case when p.envehiculos = 1 then 'Si' else 'No' end) as envehiculos,
 				(case when p.eninversiones = 1 then 'Si' else 'No' end) as eninversiones,
 				(case when p.enadeudos = 1 then 'Si' else 'No' end) as enadeudos,
+				(case when p.enconflictos = 1 then 'Si' else 'No' end) as enconflictos,
 				p.refdeclaracionjuradacabecera
 				from dbpublicacion p 
 				inner join dbdeclaracionjuradacabecera dj on dj.iddeclaracionjuradacabecera = p.refdeclaracionjuradacabecera
@@ -1283,6 +1287,7 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 				(case when p.envehiculos = 1 then 'Si' else 'No' end) as envehiculos,
 				(case when p.eninversiones = 1 then 'Si' else 'No' end) as eninversiones,
 				(case when p.enadeudos = 1 then 'Si' else 'No' end) as enadeudos,
+				(case when p.enconflictos = 1 then 'Si' else 'No' end) as enconflictos,
 				p.refdeclaracionjuradacabecera
 				from dbpublicacion p 
 				inner join dbdeclaracionjuradacabecera dj on dj.iddeclaracionjuradacabecera = p.refdeclaracionjuradacabecera
@@ -1303,7 +1308,8 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 	(case when p.enbienesmuebles = 1 then 'Si' else 'No' end) as enbienesmuebles,
 	(case when p.envehiculos = 1 then 'Si' else 'No' end) as envehiculos,
 	(case when p.eninversiones = 1 then 'Si' else 'No' end) as eninversiones,
-	(case when p.enadeudos = 1 then 'Si' else 'No' end) as enadeudos
+	(case when p.enadeudos = 1 then 'Si' else 'No' end) as enadeudos,
+	(case when p.enconflictos = 1 then 'Si' else 'No' end) as enconflictos
 	from dbpublicacion p 
 	inner join dbdeclaracionjuradacabecera dj on dj.iddeclaracionjuradacabecera = p.refdeclaracionjuradacabecera
 	where dj.curp = '".$curp."' and dj.iddeclaracionjuradacabecera = ".$cabecera."
@@ -1323,7 +1329,8 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 	(case when p.enbienesmuebles = 1 then 'Si' else 'No' end) as enbienesmuebles,
 	(case when p.envehiculos = 1 then 'Si' else 'No' end) as envehiculos,
 	(case when p.eninversiones = 1 then 'Si' else 'No' end) as eninversiones,
-	(case when p.enadeudos = 1 then 'Si' else 'No' end) as enadeudos
+	(case when p.enadeudos = 1 then 'Si' else 'No' end) as enadeudos,
+	(case when p.enconflictos = 1 then 'Si' else 'No' end) as enconflictos
 	from dbpublicacion p 
 	inner join dbdeclaracionjuradacabecera dj on dj.iddeclaracionjuradacabecera = p.refdeclaracionjuradacabecera
 	where dj.iddeclaracionjuradacabecera = ".$cabecera."
@@ -1746,18 +1753,18 @@ return $res;
 
 /* PARA Bienesinmuebles */
 
-function insertarBienesinmuebles($refdeclaracionjuradacabecera,$reftipooperacion,$reftipobien,$refotrotipobien,$mtrsterreno,$mtrsconstruccion,$refformaadquisicion,$cesionario,$reftitular,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$registropublico,$ubicacion,$especificacionobra,$especificacionventa) { 
-$sql = "insert into dbbienesinmuebles(idbieninmueble,refdeclaracionjuradacabecera,reftipooperacion,reftipobien,refotrotipobien,mtrsterreno,mtrsconstruccion,refformaadquisicion,cesionario,reftitular,reftipocesionario,otrotipocesionario,valor,tipomoneda,fechaadquisicion,registropublico,ubicacion,especificacionobra,especificacionventa) 
-values ('',".$refdeclaracionjuradacabecera.",".$reftipooperacion.",".$reftipobien.",".$refotrotipobien.",".($mtrsterreno == '' ? 'NULL' : $mtrsterreno).",".($mtrsconstruccion == '' ? 'NULL' : $mtrsconstruccion).",".$refformaadquisicion.",'".($cesionario)."',".$reftitular.",".$reftipocesionario.",'".($otrotipocesionario)."',".($valor == '' ? 'NULL' : $valor).",'".($tipomoneda)."','".($fechaadquisicion)."','".($registropublico)."','".($ubicacion)."','".($especificacionobra)."','".($especificacionventa)."')"; 
+function insertarBienesinmuebles($refdeclaracionjuradacabecera,$reftipooperacion,$reftipobien,$refotrotipobien,$mtrsterreno,$mtrsconstruccion,$refformaadquisicion,$cesionario,$reftitular,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$registropublico,$ubicacion,$especificacionobra,$especificacionventa, $estado) { 
+$sql = "insert into dbbienesinmuebles(idbieninmueble,refdeclaracionjuradacabecera,reftipooperacion,reftipobien,refotrotipobien,mtrsterreno,mtrsconstruccion,refformaadquisicion,cesionario,reftitular,reftipocesionario,otrotipocesionario,valor,tipomoneda,fechaadquisicion,registropublico,ubicacion,especificacionobra,especificacionventa,estado) 
+values ('',".$refdeclaracionjuradacabecera.",".$reftipooperacion.",".$reftipobien.",".$refotrotipobien.",".($mtrsterreno == '' ? 'NULL' : $mtrsterreno).",".($mtrsconstruccion == '' ? 'NULL' : $mtrsconstruccion).",".$refformaadquisicion.",'".($cesionario)."',".$reftitular.",".$reftipocesionario.",'".($otrotipocesionario)."',".($valor == '' ? 'NULL' : $valor).",'".($tipomoneda)."','".($fechaadquisicion)."','".($registropublico)."','".($ubicacion)."','".($especificacionobra)."','".($especificacionventa)."','".($estado)."')"; 
 $res = $this->query($sql,1); 
 return $res; 
 } 
 
 
-function modificarBienesinmuebles($id,$refdeclaracionjuradacabecera,$reftipooperacion,$reftipobien,$refotrotipobien,$mtrsterreno,$mtrsconstruccion,$refformaadquisicion,$cesionario,$reftitular,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$registropublico,$ubicacion,$especificacionobra,$especificacionventa) { 
+function modificarBienesinmuebles($id,$refdeclaracionjuradacabecera,$reftipooperacion,$reftipobien,$refotrotipobien,$mtrsterreno,$mtrsconstruccion,$refformaadquisicion,$cesionario,$reftitular,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$registropublico,$ubicacion,$especificacionobra,$especificacionventa,$estado) { 
 $sql = "update dbbienesinmuebles 
 set 
-refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",reftipooperacion = ".$reftipooperacion.",reftipobien = ".$reftipobien.",refotrotipobien = ".$refotrotipobien.",mtrsterreno = ".($mtrsterreno == '' ? 'NULL' : $mtrsterreno).",mtrsconstruccion = ".($mtrsconstruccion == '' ? 'NULL' : $mtrsconstruccion).",refformaadquisicion = ".$refformaadquisicion.",cesionario = '".($cesionario)."',reftitular = ".$reftitular.",reftipocesionario = ".$reftipocesionario.",otrotipocesionario = '".($otrotipocesionario)."',valor = ".($valor == '' ? 'NULL' : $valor).",tipomoneda = '".($tipomoneda)."',fechaadquisicion = '".($fechaadquisicion)."',registropublico = '".($registropublico)."',ubicacion = '".($ubicacion)."',especificacionobra = '".($especificacionobra)."',especificacionventa = '".($especificacionventa)."' 
+refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",reftipooperacion = ".$reftipooperacion.",reftipobien = ".$reftipobien.",refotrotipobien = ".$refotrotipobien.",mtrsterreno = ".($mtrsterreno == '' ? 'NULL' : $mtrsterreno).",mtrsconstruccion = ".($mtrsconstruccion == '' ? 'NULL' : $mtrsconstruccion).",refformaadquisicion = ".$refformaadquisicion.",cesionario = '".($cesionario)."',reftitular = ".$reftitular.",reftipocesionario = ".$reftipocesionario.",otrotipocesionario = '".($otrotipocesionario)."',valor = ".($valor == '' ? 'NULL' : $valor).",tipomoneda = '".($tipomoneda)."',fechaadquisicion = '".($fechaadquisicion)."',registropublico = '".($registropublico)."',ubicacion = '".($ubicacion)."',especificacionobra = '".($especificacionobra)."',especificacionventa = '".($especificacionventa)."' ,estado = '".($estado)."' 
 where idbieninmueble =".$id; 
 $res = $this->query($sql,0); 
 return $res; 
@@ -1791,7 +1798,8 @@ b.fechaadquisicion,
 b.registropublico,
 b.ubicacion,
 b.especificacionobra,
-b.especificacionventa
+b.especificacionventa,
+b.estado
 from dbbienesinmuebles b 
 inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = b.refdeclaracionjuradacabecera 
 inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
@@ -1810,7 +1818,7 @@ return $res;
 
 
 function traerBienesinmueblesPorId($id) { 
-$sql = "select idbieninmueble,refdeclaracionjuradacabecera,reftipooperacion,reftipobien,refotrotipobien,mtrsterreno,mtrsconstruccion,refformaadquisicion,cesionario,reftitular,reftipocesionario,otrotipocesionario,valor,tipomoneda,fechaadquisicion,registropublico,ubicacion,especificacionobra,especificacionventa from dbbienesinmuebles where idbieninmueble =".$id; 
+$sql = "select idbieninmueble,refdeclaracionjuradacabecera,reftipooperacion,reftipobien,refotrotipobien,mtrsterreno,mtrsconstruccion,refformaadquisicion,cesionario,reftitular,reftipocesionario,otrotipocesionario,valor,tipomoneda,fechaadquisicion,registropublico,ubicacion,especificacionobra,especificacionventa,estado from dbbienesinmuebles where idbieninmueble =".$id; 
 $res = $this->query($sql,0); 
 return $res; 
 } 
@@ -1841,7 +1849,9 @@ b.reftipobien,
 b.reftitular,
 b.reftipocesionario,
 b.refformaadquisicion,
-b.refotrotipobien
+b.refotrotipobien,
+b.estado,
+tit.titular
 from dbbienesinmuebles b 
 inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = b.refdeclaracionjuradacabecera 
 inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
@@ -1880,7 +1890,8 @@ b.fechaadquisicion,
 b.registropublico,
 b.ubicacion,
 b.especificacionobra,
-b.especificacionventa
+b.especificacionventa,
+b.estado
 from dbbienesinmuebles b 
 inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = b.refdeclaracionjuradacabecera 
 inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
@@ -1919,7 +1930,8 @@ b.fechaadquisicion,
 b.registropublico,
 b.ubicacion,
 b.especificacionobra,
-b.especificacionventa
+b.especificacionventa,
+b.estado
 from dbbienesinmuebles b 
 inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = b.refdeclaracionjuradacabecera 
 inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
@@ -2197,7 +2209,8 @@ i.reftipoinversion,
 i.refdeclaracionjuradacabecera,
 i.reftipooperacion,
 i.reftitular,
-i.especifica
+i.especifica,
+ti.tipoinversion
 from dbinversiones i 
 inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = i.refdeclaracionjuradacabecera 
 inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
@@ -2797,18 +2810,18 @@ return $res;
 
 /* PARA Adeudos */
 
-function insertarAdeudos($refdeclaracionjuradacabecera,$reftipooperacion,$reftipoadeudo,$numerocuenta,$donde,$razonsocial,$pais,$fechaotorgamiento,$montooritginal,$tipomoneda,$montopagos,$saldo,$tipomonedasaldo,$reftitular) { 
-$sql = "insert into dbadeudos(idadeudo,refdeclaracionjuradacabecera,reftipooperacion,reftipoadeudo,numerocuenta,donde,razonsocial,pais,fechaotorgamiento,montooritginal,tipomoneda,montopagos,saldo,tipomonedasaldo,reftitular) 
-values ('',".$refdeclaracionjuradacabecera.",".$reftipooperacion.",".$reftipoadeudo.",'".($numerocuenta)."','".($donde)."','".($razonsocial)."','".($pais)."','".($fechaotorgamiento)."',".$montooritginal.",'".($tipomoneda)."',".$montopagos.",".$saldo.",'".($tipomonedasaldo)."',".$reftitular.")"; 
+function insertarAdeudos($refdeclaracionjuradacabecera,$reftipooperacion,$reftipoadeudo,$numerocuenta,$donde,$razonsocial,$pais,$fechaotorgamiento,$montooriginal,$tipomoneda,$montopagos,$saldo,$tipomonedasaldo,$reftitular, $registropublico, $plazo) { 
+$sql = "insert into dbadeudos(idadeudo,refdeclaracionjuradacabecera,reftipooperacion,reftipoadeudo,numerocuenta,donde,razonsocial,pais,fechaotorgamiento,montooriginal,tipomoneda,montopagos,saldo,tipomonedasaldo,reftitular, registropublico, plazo) 
+values ('',".$refdeclaracionjuradacabecera.",".$reftipooperacion.",".$reftipoadeudo.",'".($numerocuenta)."','".($donde)."','".($razonsocial)."','".($pais)."','".($fechaotorgamiento)."',".$montooriginal.",'".($tipomoneda)."',".$montopagos.",".$saldo.",'".($tipomonedasaldo)."',".$reftitular.",'".($registropublico)."','".($plazo)."')"; 
 $res = $this->query($sql,1); 
 return $res; 
 } 
 
 
-function modificarAdeudos($id,$refdeclaracionjuradacabecera,$reftipooperacion,$reftipoadeudo,$numerocuenta,$donde,$razonsocial,$pais,$fechaotorgamiento,$montooritginal,$tipomoneda,$montopagos,$saldo,$tipomonedasaldo,$reftitular) { 
+function modificarAdeudos($id,$refdeclaracionjuradacabecera,$reftipooperacion,$reftipoadeudo,$numerocuenta,$donde,$razonsocial,$pais,$fechaotorgamiento,$montooriginal,$tipomoneda,$montopagos,$saldo,$tipomonedasaldo,$reftitular, $registropublico, $plazo) { 
 $sql = "update dbadeudos 
 set 
-refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",reftipooperacion = ".$reftipooperacion.",reftipoadeudo = ".$reftipoadeudo.",numerocuenta = '".($numerocuenta)."',donde = '".($donde)."',razonsocial = '".($razonsocial)."',pais = '".($pais)."',fechaotorgamiento = '".($fechaotorgamiento)."',montooritginal = ".$montooritginal.",tipomoneda = '".($tipomoneda)."',montopagos = ".$montopagos.",saldo = ".$saldo.",tipomonedasaldo = '".($tipomonedasaldo)."',reftitular = ".$reftitular." 
+refdeclaracionjuradacabecera = ".$refdeclaracionjuradacabecera.",reftipooperacion = ".$reftipooperacion.",reftipoadeudo = ".$reftipoadeudo.",numerocuenta = '".($numerocuenta)."',donde = '".($donde)."',razonsocial = '".($razonsocial)."',pais = '".($pais)."',fechaotorgamiento = '".($fechaotorgamiento)."',montooriginal = ".$montooriginal.",tipomoneda = '".($tipomoneda)."',montopagos = ".$montopagos.",saldo = ".$saldo.",tipomonedasaldo = '".($tipomonedasaldo)."',reftitular = ".$reftitular." ,registropublico = '".($registropublico)."',plazo = '".($plazo)."'
 where idadeudo =".$id; 
 $res = $this->query($sql,0); 
 return $res; 
@@ -2833,12 +2846,14 @@ a.donde,
 a.razonsocial,
 a.pais,
 a.fechaotorgamiento,
-a.montooritginal,
+a.montooriginal,
 a.tipomoneda,
 a.montopagos,
 a.saldo,
 a.tipomonedasaldo,
-a.reftitular
+a.reftitular,
+a.registropublico,
+a.plazo
 from dbadeudos a 
 inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = a.refdeclaracionjuradacabecera 
 inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
@@ -2854,7 +2869,7 @@ return $res;
 
 
 function traerAdeudosPorId($id) { 
-$sql = "select idadeudo,refdeclaracionjuradacabecera,reftipooperacion,reftipoadeudo,numerocuenta,donde,razonsocial,pais,fechaotorgamiento,montooritginal,tipomoneda,montopagos,saldo,tipomonedasaldo,reftitular from dbadeudos where idadeudo =".$id; 
+$sql = "select idadeudo,refdeclaracionjuradacabecera,reftipooperacion,reftipoadeudo,numerocuenta,donde,razonsocial,pais,fechaotorgamiento,montooriginal,tipomoneda,montopagos,saldo,tipomonedasaldo,reftitular, registropublico, plazo from dbadeudos where idadeudo =".$id; 
 $res = $this->query($sql,0); 
 return $res; 
 } 
@@ -2872,14 +2887,16 @@ a.donde,
 a.razonsocial,
 a.pais,
 a.fechaotorgamiento,
-a.montooritginal,
+a.montooriginal,
 a.tipomoneda,
 a.montopagos,
 a.saldo,
 a.tipomonedasaldo,
 a.refdeclaracionjuradacabecera,
 a.reftipooperacion,
-a.reftipoadeudo
+a.reftipoadeudo,
+a.registropublico,
+a.plazo
 from dbadeudos a 
 inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = a.refdeclaracionjuradacabecera 
 inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
@@ -2907,14 +2924,16 @@ a.donde,
 a.razonsocial,
 a.pais,
 a.fechaotorgamiento,
-a.montooritginal,
+a.montooriginal,
 a.tipomoneda,
 a.montopagos,
 a.saldo,
 a.tipomonedasaldo,
 a.refdeclaracionjuradacabecera,
 a.reftipooperacion,
-a.reftipoadeudo
+a.reftipoadeudo,
+a.registropublico,
+a.plazo
 from dbadeudos a 
 inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = a.refdeclaracionjuradacabecera 
 inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
@@ -2941,14 +2960,16 @@ a.donde,
 a.razonsocial,
 a.pais,
 a.fechaotorgamiento,
-a.montooritginal,
+a.montooriginal,
 a.tipomoneda,
 a.montopagos,
 a.saldo,
 a.tipomonedasaldo,
 a.refdeclaracionjuradacabecera,
 a.reftipooperacion,
-a.reftipoadeudo
+a.reftipoadeudo,
+a.registropublico,
+a.plazo
 from dbadeudos a 
 inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = a.refdeclaracionjuradacabecera 
 inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 

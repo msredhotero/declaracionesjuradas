@@ -25,6 +25,8 @@ $id				=	$_GET['id'];
 $resResultado = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
 $resResultadoCompleto = $serviciosReferencias->traerDeclaracionjuradacabeceraPorIdCompleta($id);
 
+$publico = $serviciosReferencias->traerPublicacionPorCabecera($id);
+
 
 if (mysql_num_rows($resResultado)>0) {
 
@@ -564,18 +566,18 @@ if (mysql_num_rows($resResultado)>0) {
 
 
 	$pdf->SetFont('Arial','b',16);
-	$pdf->SetXY(3,10);
-	$pdf->Cell(150,8,'VI.-BIENES MUEBLES',0,0,'C',0);
+	$pdf->SetXY(15,10);
+	$pdf->Cell(150,8,'VI.-BIENES MUEBLES',0,0,'L',0);
 
 	$pdf->Ln();
 	$pdf->Ln();
 	$pdf->SetFont('Arial','',10);
 	$pdf->SetX(15);
-	$pdf->Cell(265,5,'Independientemente de anotar si vendió algún bien, también deberá indicar si Adquirió otro, anotando la clave, el tipo de operación y forma de pago.','',0,'C',0);
+	$pdf->Cell(265,5,'Independientemente de anotar si vendió algún bien, también deberá indicar si Adquirió otro, anotando la clave, el tipo de operación y forma de pago.','',0,'L',0);
 
 	$pdf->Ln();
 	$pdf->Ln();
-	$pdf->SetFont('Arial','',12);
+	$pdf->SetFont('Arial','b',10);
 	$pdf->SetX(15);
 	$pdf->Cell(100,5,'Tipo de Bien','RLTB',0,'C',0);
 	$pdf->Cell(50,5,'Valor del bien mueble','RLTB',0,'C',0);
@@ -598,8 +600,8 @@ if (mysql_num_rows($resResultado)>0) {
 
 
 	$pdf->SetFont('Arial','b',16);
-
-	$pdf->Cell(150,8,'VII.- VEHICULOS',0,0,'C',0);
+	$pdf->SetX(15);
+	$pdf->Cell(150,8,'VII.- VEHICULOS',0,0,'L',0);
 
 	$pdf->Ln();
 	$pdf->Ln();
@@ -609,7 +611,7 @@ if (mysql_num_rows($resResultado)>0) {
 
 	$pdf->Ln();
 	$pdf->Ln();
-	$pdf->SetFont('Arial','',9);
+	$pdf->SetFont('Arial','b',9);
 	$pdf->SetX(15);
 	$pdf->Cell(10,5,'Tipo','RLTB',0,'C',0);
 	$pdf->Cell(30,5,'Tipo de Operación','RLTB',0,'C',0);
@@ -639,6 +641,417 @@ if (mysql_num_rows($resResultado)>0) {
 	/*---------------  FIN QUINTA PAGINA ***********************************/
 
 
+	/*---------------      SEXTA PAGINA ***********************************/
+	$datos6a = $serviciosReferencias->traerBienesinmueblesGridPorCabecera($id);
+
+
+	$pdf->AddPage();
+
+	$pdf->SetXY(10,10);
+
+
+
+	$pdf->SetFont('Arial','b',16);
+	$pdf->SetXY(15,10);
+	$pdf->Cell(150,8,'VIII.- BIENES INMUEBLES',0,0,'L',0);
+
+	$pdf->Ln();
+	$pdf->Ln();
+	$pdf->SetFont('Arial','',10);
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'Anote "A", si el inmueble registrado fue adquirido ó "B" si el inmueble pasó a ser propiedad de otra persona, señalando el tipo de operación que se llevó a cabo.','',0,'L',0);
+
+	
+	
+	
+
+	while ($row5 = mysql_fetch_array($datos6a)) {
+
+		$pdf->Ln();
+		$pdf->Ln();
+		$pdf->SetFont('Arial','b',10);
+		$pdf->SetX(15);
+		$pdf->Cell(90,5,'Tipo de Bien','RLTB',0,'C',0);
+		$pdf->Cell(10,5,'Tipo','RLTB',0,'C',0);
+		$pdf->Cell(35,5,'Tipo de Operación','RLTB',0,'C',0);
+		$pdf->Cell(30,5,'Forma de Pago','RLTB',0,'C',0);
+		$pdf->Cell(60,5,'Registro Publico','RLTB',0,'C',0);
+		$pdf->Cell(40,5,'Valor del Inmueble','RLTB',0,'C',0);
+		$pdf->Ln();
+		$pdf->SetFont('Arial','',10);
+		$pdf->SetX(15);
+		$pdf->Cell(90,5,$row5['tipobien'],'RLTB',0,'C',0);
+		$pdf->Cell(10,5,$row5['estado'],'RLTB',0,'C',0);
+		$pdf->Cell(35,5,$row5['tipooperacion'],'RLTB',0,'C',0);
+		$pdf->Cell(30,5,$row5['formaadquisicion'],'RLTB',0,'C',0);
+		$pdf->Cell(60,5,$row5['registropublico'],'RLTB',0,'C',0);
+		$pdf->Cell(40,5,'$'.$row5['valor'],'RLTB',0,'C',0);
+
+
+		$pdf->Ln();
+		$pdf->Ln();
+		$pdf->SetFont('Arial','b',10);
+		$pdf->SetX(15);
+		$pdf->Cell(145,5,'Ubicación del Inmueble','RLTB',0,'C',0);
+		$pdf->Cell(35,5,'Fecha Adquisición','RLTB',0,'C',0);
+		$pdf->Cell(30,5,'Titular','RLTB',0,'C',0);
+		$pdf->Cell(25,5,'Terreno M2','RLTB',0,'C',0);
+		$pdf->Cell(30,5,'Construcción M2','RLTB',0,'C',0);
+		$pdf->Ln();
+		$pdf->SetFont('Arial','',10);
+		$pdf->SetX(15);
+		$pdf->Cell(145,5,$row5['ubicacion'],'RLTB',0,'C',0);
+		$pdf->Cell(35,5,$row5['fechaadquisicion'],'RLTB',0,'C',0);
+		$pdf->Cell(30,5,$row5['titular'],'RLTB',0,'C',0);
+		$pdf->Cell(25,5,$row5['mtrsterreno'],'RLTB',0,'C',0);
+		$pdf->Cell(30,5,$row5['mtrsconstruccion'],'RLTB',0,'C',0);
+
+
+	}
+
+	/*---------------  FIN SEXTA PAGINA ***********************************/
+
+
+	/*---------------      SEPTIMA PAGINA ***********************************/
+	$datos7a = $serviciosReferencias->traerInversionesGridPorCabecera($id);
+
+
+	$pdf->AddPage();
+
+	$pdf->SetXY(10,10);
+
+
+
+	$pdf->SetFont('Arial','b',16);
+	$pdf->SetXY(15,10);
+	$pdf->Cell(150,8,'IX.- INVERSIONES',0,0,'L',0);
+
+	$pdf->Ln();
+	$pdf->Ln();
+	$pdf->SetFont('Arial','b',10);
+	$pdf->SetX(15);
+	$pdf->Cell(50,5,'Tipo de Inversión','RLTB',0,'C',0);
+	$pdf->Cell(35,5,'Tipo de Operación','RLTB',0,'C',0);
+	$pdf->Cell(35,5,'Numero de Cuenta','RLTB',0,'C',0);
+	$pdf->Cell(43,5,'Razon Social','RLTB',0,'C',0);
+	$pdf->SetFont('Arial','b',8);
+	$pdf->Cell(42,5,'Saldo al 31/12 del año anterior','RLTB',0,'C',0);
+	$pdf->SetFont('Arial','b',10);
+	$pdf->Cell(25,5,'Nacionalidad','RLTB',0,'C',0);
+	$pdf->Cell(30,5,'Moneda','RLTB',0,'C',0);
+	
+	
+
+	while ($row5 = mysql_fetch_array($datos7a)) {
+
+		
+		$pdf->Ln();
+		$pdf->SetFont('Arial','',10);
+		$pdf->SetX(15);
+		$pdf->Cell(50,5,$row5['tipoinversion'],'RLTB',0,'C',0);
+		$pdf->Cell(35,5,$row5['tipooperacion'],'RLTB',0,'C',0);
+		$pdf->Cell(35,5,$row5['numerocuenta'],'RLTB',0,'C',0);
+		$pdf->Cell(43,5,$row5['razonsocial'],'RLTB',0,'C',0);
+		$pdf->Cell(42,5,$row5['saldo'],'RLTB',0,'C',0);
+		$pdf->Cell(25,5,$row5['donde'],'RLTB',0,'C',0);
+		$pdf->Cell(30,5,$row5['tipomoneda'],'RLTB',0,'C',0);
+
+
+	}
+
+	/*---------------  FIN SEPTIMA PAGINA ***********************************/
+
+
+	/*---------------      OCTAVA PAGINA ***********************************/
+	$datos8a = $serviciosReferencias->traerAdeudosGridPorCabecera($id);
+
+
+	$pdf->AddPage();
+
+	$pdf->SetXY(10,10);
+
+
+
+	$pdf->SetFont('Arial','b',16);
+	$pdf->SetXY(15,10);
+	$pdf->Cell(150,8,'XI.- GRAVAMENES O ADEUDOS',0,0,'L',0);
+
+	$pdf->Ln();
+
+
+	while ($row5 = mysql_fetch_array($datos8a)) {
+
+		$pdf->Ln();
+		$pdf->Ln();
+		$pdf->SetFont('Arial','b',10);
+		$pdf->SetX(15);
+		$pdf->Cell(55,5,'Tipo de Adeudo','RLTB',0,'C',0);
+		$pdf->Cell(55,5,'Nro Cuenta o Contrato','RLTB',0,'C',0);
+		$pdf->Cell(75,5,'Institución o Acreedor','RLTB',0,'C',0);
+		$pdf->Cell(80,5,'Saldo al 31/12 del año anterior','RLTB',0,'C',0);
+		$pdf->Ln();
+		$pdf->SetFont('Arial','',10);
+		$pdf->SetX(15);
+		$pdf->Cell(55,5,$row5['tipoadeudo'],'RLTB',0,'C',0);
+		$pdf->Cell(55,5,$row5['numerocuenta'],'RLTB',0,'C',0);
+		$pdf->Cell(75,5,$row5['razonsocial'],'RLTB',0,'C',0);
+		$pdf->Cell(80,5,$row5['saldo'],'RLTB',0,'C',0);
+
+
+		$pdf->Ln();
+		$pdf->Ln();
+		$pdf->SetFont('Arial','b',9);
+		$pdf->SetX(15);
+		$pdf->Cell(190,5,'Si su adeudo o gravamen es por crédito hipotecario, embargo o compra a crédito de un inmueble, debe especificar el ','',0,'C',0);
+		$pdf->Cell(75,5,'Importe total del crédito: $ '.$row5['montooriginal'],'RLTB',0,'L',0);
+
+
+		$pdf->Ln();
+		$pdf->SetFont('Arial','b',10);
+		$pdf->SetX(15);
+		$pdf->Cell(60,5,'Registro Público de la Propiedad','',0,'L',0);
+		$pdf->Cell(50,5,$row5['registropublico'],'RLB',0,'C',0);
+		$pdf->Cell(5,5,'','',0,'C',0);
+		$pdf->Cell(65,5,$row5['fechaotorgamiento'],'RLB',0,'C',0);
+		$pdf->Cell(5,5,'','',0,'C',0);
+		$pdf->Cell(65,5,$row5['plazo'],'RLB',0,'C',0);
+		$pdf->Ln();
+		$pdf->SetFont('Arial','b',10);
+		$pdf->SetX(15);
+		$pdf->Cell(60,5,'','',0,'L',0);
+		$pdf->Cell(50,5,'','',0,'C',0);
+		$pdf->Cell(70,5,'AAAA-MM-DD Fecha que adquiere el adeudo','',0,'C',0);
+		$pdf->Cell(80,5,'Plazo a pagar en meses','',0,'C',0);
+
+		$pdf->Ln();
+		$pdf->SetFont('Arial','b',10);
+		$pdf->SetX(15);
+		$pdf->Cell(35,5,'Titular','',0,'L',0);
+		$pdf->SetFont('Arial','',10);
+		$pdf->Cell(65,5,$row5['titular'],'RLB',0,'C',0);
+
+		$pdf->SetFont('Arial','',10);
+		$pdf->Ln();
+		$pdf->SetX(15);
+		$pdf->Cell(265,5,'_______________________________________________________________________________________________________________________________________','',0,'L',0);
+
+
+	}
+
+	/*---------------  FIN OCTAVA PAGINA ***********************************/
+
+	/*---------------      NOVENA PAGINA ***********************************/
+	$datos9a = $serviciosReferencias->traerConflictoeconomicaGridPorCabecera($id);
+	$datos9b = $serviciosReferencias->traerConflictopuestosGridPorCabecera($id);
+
+
+	$pdf->AddPage();
+
+	$pdf->SetXY(10,10);
+
+
+
+	$pdf->SetFont('Arial','b',16);
+	$pdf->SetXY(15,10);
+	$pdf->Cell(150,8,'XII.- DECLARACIÓN DE INTERESES',0,0,'L',0);
+
+	$pdf->Ln();
+	$pdf->SetFont('Arial','b',10);
+	$pdf->SetX(15);
+	$pdf->Cell(180,5,'ESTOY DE ACUERDO EN HACER PÚBLICA LA INFORMACIÓN DE POSIBLE CONFLICTO DE INTERESES','',0,'L',0);
+	if (mysql_result($publico, 0,'enconflictos') == 'Si') {
+		$pdf->Cell(5,5,'Si',0,0,'C',0);
+		$pdf->Cell(5,5,'X',1,0,'C',0);
+		$pdf->Cell(5,5,'No',0,0,'C',0);
+		$pdf->Cell(5,5,'',1,0,'C',0);
+	} else {
+		$pdf->Cell(5,5,'Si',0,0,'C',0);
+		$pdf->Cell(5,5,'',1,0,'C',0);
+		$pdf->Cell(5,5,'No',0,0,'C',0);
+		$pdf->Cell(5,5,'X',1,0,'C',0);
+	}
+
+	$pdf->Ln();
+	$pdf->SetFont('Arial','',9);
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'POSIBLES CONFLICTOS DE INTERESES POR PARTICIPACIONES ECONÓMICAS O FINANCIERAS DEL CÓNYUGE, CONCUBINO, CONCUBINA Y/O DEPENDIENTES ECONÓMICOS.','',0,'L',0);
+
+	$pdf->Ln();
+	$pdf->SetFont('Arial','',9);
+	$pdf->Ln();
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'Descripción: Se refiere a participaciones económicas o financieras, así como aquellos convenios, contratos, compromisos o acuerdos con un valor económico presente o futuro que tenga el','',0,'L',0);
+	$pdf->Ln();
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'(la) cónyuge, concubino(a) y/o dependientes económicos con personas físicas o morales y que el servidor público tenga conocimiento de un posible conflicto de interés y que no pueden ser','',0,'L',0);
+	$pdf->Ln();
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'incluidos en alguna de las secciones anteriores.','',0,'L',0);
+
+	$pdf->Ln();
+	$pdf->Ln();
+
+	while ($row5 = mysql_fetch_array($datos9a)) {
+
+		
+		$pdf->SetFont('Arial','b',9);
+		$pdf->SetX(15);
+		$pdf->Cell(75,5,'Nombre de la persona fisica, empresa o sociedad','RLTB',0,'C',0);
+		$pdf->Cell(60,5,'Responsable de conflicto de intereses','RLTB',0,'C',0);
+		$pdf->SetFont('Arial','b',8);
+		$pdf->Cell(55,5,'Fecha de constitución de la sociedad','RLTB',0,'C',0);
+		$pdf->SetFont('Arial','b',9);
+		$pdf->Cell(75,5,'Inscrpcion en el registro publico u otro dato','RLTB',0,'C',0);
+		$pdf->Ln();
+		$pdf->SetFont('Arial','',9);
+		$pdf->SetX(15);
+		$pdf->Cell(75,5,$row5['descripcion'],'RLTB',0,'C',0);
+		$pdf->Cell(60,5,$row5['responsable'],'RLTB',0,'C',0);
+		$pdf->Cell(55,5,$row5['fecha'],'RLTB',0,'C',0);
+		$pdf->Cell(75,5,$row5['inscripcion'],'RLTB',0,'C',0);
+
+
+		$pdf->Ln();
+		$pdf->Ln();
+		$pdf->SetFont('Arial','b',9);
+		$pdf->SetX(15);
+		$pdf->Cell(35,5,'Sector o industria','RLTB',0,'C',0);
+		$pdf->Cell(100,5,'Tipo de sociedad en la que se participa o con la que se contrata','RLTB',0,'C',0);
+		$pdf->Cell(60,5,'Tipo de participacion o contrato','RLTB',0,'C',0);
+		$pdf->Cell(70,5,'Especifica','RLTB',0,'C',0);
+		$pdf->Ln();
+		$pdf->SetFont('Arial','',9);
+		$pdf->SetX(15);
+		$pdf->Cell(35,5,$row5['sector'],'RLTB',0,'C',0);
+		$pdf->Cell(100,5,$row5['tiposociedad'],'RLTB',0,'C',0);
+		$pdf->Cell(60,5,$row5['participacion'],'RLTB',0,'C',0);
+		$pdf->Cell(70,5,$row5['especifica'],'RLTB',0,'C',0);
+
+
+		$pdf->Ln();
+		$pdf->Ln();
+		$pdf->SetFont('Arial','b',9);
+		$pdf->SetX(15);
+		$pdf->Cell(80,5,'Antigüedad de la participación o convenio(años)','RLTB',0,'C',0);
+		$pdf->Cell(60,5,'Inicio de participación o contrato','RLTB',0,'C',0);
+		$pdf->Cell(80,5,'Ubicación','RLTB',0,'C',0);
+
+		$pdf->Ln();
+		$pdf->SetFont('Arial','',9);
+		$pdf->SetX(15);
+		$pdf->Cell(80,5,$row5['antiguedad'],'RLTB',0,'C',0);
+		$pdf->Cell(60,5,$row5['inicioparticipacion'],'RLTB',0,'C',0);
+		$pdf->Cell(80,5,$row5['ubicacion'],'RLTB',0,'C',0);
+
+		$pdf->SetFont('Arial','',10);
+		$pdf->Ln();
+		$pdf->SetX(15);
+		$pdf->Cell(265,5,'_______________________________________________________________________________________________________________________________________','',0,'L',0);
+
+
+
+		
+
+
+	}
+
+	/*---------------  FIN NOVENA PAGINA ***********************************/
+
+	/*---------------      DECIMA PAGINA ***********************************/
+
+
+
+	$pdf->AddPage();
+
+	$pdf->SetXY(10,10);
+
+
+	$pdf->Ln();
+	$pdf->SetFont('Arial','',9);
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'POR PUESTO, CARGO, COMISIÓN, ACTIVIDADES O PODERES DEL CÓNYUGE, CONCUBINO, CONCUBINA Y/O DEPENDIENTES ECONÓMICOS QUE ACTUALMENTE TENGA EN ASOCIACIONES, CONSEJOS, ACTIVIDADES FILANTRÓPICAS Y/O CONSULTORIA.','',0,'L',0);
+
+	$pdf->Ln();
+	$pdf->SetFont('Arial','',9);
+	$pdf->Ln();
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'Descripción: Se refiere a participaciones económicas o financieras, así como aquellos convenios, contratos, compromisos o acuerdos con un valor económico presente o futuro que tenga el','',0,'L',0);
+	$pdf->Ln();
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'(la) cónyuge, concubino(a) y/o dependientes económicos con personas físicas o morales y que el servidor público tenga conocimiento de un posible conflicto de interés y que no pueden ser','',0,'L',0);
+	$pdf->Ln();
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'incluidos en alguna de las secciones anteriores.','',0,'L',0);
+
+	$pdf->Ln();
+	$pdf->Ln();
+
+	while ($row5 = mysql_fetch_array($datos9b)) {
+
+		
+		$pdf->SetFont('Arial','b',9);
+		$pdf->SetX(15);
+		$pdf->SetFont('Arial','b',9);
+		$pdf->Cell(60,5,'Responsable de conflicto de intereses','RLTB',0,'C',0);
+		$pdf->Cell(95,5,'Nombre de la entidad (empresa, asociación, sindicato, etc)','RLTB',0,'C',0);
+		$pdf->Cell(35,5,'Vinculos','RLTB',0,'C',0);
+		$pdf->Cell(25,5,'Antigüedad','RLTB',0,'C',0);
+		$pdf->Cell(25,5,'Frecuencia Anual','RLTB',0,'C',0);
+		$pdf->Ln();
+		$pdf->SetFont('Arial','',9);
+		$pdf->SetX(15);
+		$pdf->Cell(60,5,$row5['responsable'],'RLTB',0,'C',0);
+		$pdf->Cell(95,5,$row5['descripcion'],'RLTB',0,'C',0);
+		$pdf->Cell(35,5,$row5['fecha'],'RLTB',0,'C',0);
+		$pdf->Cell(25,5,$row5['inscripcion'],'RLTB',0,'C',0);
+		$pdf->Cell(25,5,$row5['inscripcion'],'RLTB',0,'C',0);
+
+
+		$pdf->Ln();
+		$pdf->Ln();
+		$pdf->SetFont('Arial','b',9);
+		$pdf->SetX(15);
+		$pdf->Cell(35,5,'Sector o industria','RLTB',0,'C',0);
+		$pdf->Cell(100,5,'Tipo de sociedad en la que se participa o con la que se contrata','RLTB',0,'C',0);
+		$pdf->Cell(60,5,'Tipo de participacion o contrato','RLTB',0,'C',0);
+		$pdf->Cell(70,5,'Especifica','RLTB',0,'C',0);
+		$pdf->Ln();
+		$pdf->SetFont('Arial','',9);
+		$pdf->SetX(15);
+		$pdf->Cell(35,5,$row5['sector'],'RLTB',0,'C',0);
+		$pdf->Cell(100,5,$row5['tiposociedad'],'RLTB',0,'C',0);
+		$pdf->Cell(60,5,$row5['participacion'],'RLTB',0,'C',0);
+		$pdf->Cell(70,5,$row5['especifica'],'RLTB',0,'C',0);
+
+
+		$pdf->Ln();
+		$pdf->Ln();
+		$pdf->SetFont('Arial','b',9);
+		$pdf->SetX(15);
+		$pdf->Cell(80,5,'Antigüedad de la participación o convenio(años)','RLTB',0,'C',0);
+		$pdf->Cell(60,5,'Inicio de participación o contrato','RLTB',0,'C',0);
+		$pdf->Cell(80,5,'Ubicación','RLTB',0,'C',0);
+
+		$pdf->Ln();
+		$pdf->SetFont('Arial','',9);
+		$pdf->SetX(15);
+		$pdf->Cell(80,5,$row5['antiguedad'],'RLTB',0,'C',0);
+		$pdf->Cell(60,5,$row5['inicioparticipacion'],'RLTB',0,'C',0);
+		$pdf->Cell(80,5,$row5['ubicacion'],'RLTB',0,'C',0);
+
+		$pdf->SetFont('Arial','',10);
+		$pdf->Ln();
+		$pdf->SetX(15);
+		$pdf->Cell(265,5,'_______________________________________________________________________________________________________________________________________','',0,'L',0);
+
+
+
+		
+
+
+	}
+
+	/*---------------  FIN DECIMA PAGINA ***********************************/
 
 	$nombreArchivo = "DeclaracionPatrimonial.pdf";
 

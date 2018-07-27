@@ -870,8 +870,10 @@ case 'traerArchivosPorCliente':
 		$saldo = $_POST['saldo']; 
 		$tipomonedasaldo = $_POST['tipomonedasaldo']; 
 		$reftitular = $_POST['reftitular']; 
+		$registropublico = $_POST['registropublico']; 
+		$plazo = $_POST['plazo']; 
 		
-		$res = $serviciosReferencias->insertarAdeudos($refdeclaracionjuradacabecera,$reftipooperacion,$reftipoadeudo,$numerocuenta,$donde,$razonsocial,$pais,$fechaotorgamiento,$montooritginal,$tipomoneda,$montopagos,$saldo,$tipomonedasaldo,$reftitular); 
+		$res = $serviciosReferencias->insertarAdeudos($refdeclaracionjuradacabecera,$reftipooperacion,$reftipoadeudo,$numerocuenta,$donde,$razonsocial,$pais,$fechaotorgamiento,$montooritginal,$tipomoneda,$montopagos,$saldo,$tipomonedasaldo,$reftitular, $registropublico, $plazo); 
 		
 		if ((integer)$res > 0) { 
 			echo ''; 
@@ -897,8 +899,10 @@ case 'traerArchivosPorCliente':
 		$saldo = $_POST['saldo']; 
 		$tipomonedasaldo = $_POST['tipomonedasaldo']; 
 		$reftitular = $_POST['reftitular']; 
+		$registropublico = $_POST['registropublico']; 
+		$plazo = $_POST['plazo']; 
 		
-		$res = $serviciosReferencias->modificarAdeudos($id,$refdeclaracionjuradacabecera,$reftipooperacion,$reftipoadeudo,$numerocuenta,$donde,$razonsocial,$pais,$fechaotorgamiento,$montooritginal,$tipomoneda,$montopagos,$saldo,$tipomonedasaldo,$reftitular); 
+		$res = $serviciosReferencias->modificarAdeudos($id,$refdeclaracionjuradacabecera,$reftipooperacion,$reftipoadeudo,$numerocuenta,$donde,$razonsocial,$pais,$fechaotorgamiento,$montooritginal,$tipomoneda,$montopagos,$saldo,$tipomonedasaldo,$reftitular, $registropublico, $plazo); 
 		
 		if ($res == true) { 
 			echo ''; 
@@ -966,9 +970,10 @@ case 'traerArchivosPorCliente':
 		$registropublico = $_POST['registropublico']; 
 		$ubicacion = $_POST['ubicacion']; 
 		$especificacionobra = $_POST['especificacionobra']; 
-		$especificacionventa = $_POST['especificacionventa']; 
+		$especificacionventa = $_POST['especificacionventa'];
+		$estado = $_POST['estado']; 
 		
-		$res = $serviciosReferencias->insertarBienesinmuebles($refdeclaracionjuradacabecera,$reftipooperacion,$reftipobien,$refotrotipobien,$mtrsterreno,$mtrsconstruccion,$refformaadquisicion,$cesionario,$reftitular,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$registropublico,$ubicacion,$especificacionobra,$especificacionventa); 
+		$res = $serviciosReferencias->insertarBienesinmuebles($refdeclaracionjuradacabecera,$reftipooperacion,$reftipobien,$refotrotipobien,$mtrsterreno,$mtrsconstruccion,$refformaadquisicion,$cesionario,$reftitular,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$registropublico,$ubicacion,$especificacionobra,$especificacionventa,$estado); 
 		
 		if ((integer)$res > 0) { 
 			echo ''; 
@@ -998,8 +1003,9 @@ case 'traerArchivosPorCliente':
 		$ubicacion = $_POST['ubicacion']; 
 		$especificacionobra = $_POST['especificacionobra']; 
 		$especificacionventa = $_POST['especificacionventa']; 
+		$estado = $_POST['estado']; 
 		
-		$res = $serviciosReferencias->modificarBienesinmuebles($id,$refdeclaracionjuradacabecera,$reftipooperacion,$reftipobien,$refotrotipobien,$mtrsterreno,$mtrsconstruccion,$refformaadquisicion,$cesionario,$reftitular,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$registropublico,$ubicacion,$especificacionobra,$especificacionventa); 
+		$res = $serviciosReferencias->modificarBienesinmuebles($id,$refdeclaracionjuradacabecera,$reftipooperacion,$reftipobien,$refotrotipobien,$mtrsterreno,$mtrsconstruccion,$refformaadquisicion,$cesionario,$reftitular,$reftipocesionario,$otrotipocesionario,$valor,$tipomoneda,$fechaadquisicion,$registropublico,$ubicacion,$especificacionobra,$especificacionventa, $estado); 
 		
 		if ($res == true) { 
 			echo ''; 
