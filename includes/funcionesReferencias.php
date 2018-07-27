@@ -971,7 +971,8 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 	d.tiene,
 	d.nombre,
 	d.edad,
-	d.reftipoparentesco
+	d.reftipoparentesco,
+	tip.tipoparentesco
 	from dbdependienteseconomicos d 
 	inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera 
 	inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
@@ -992,7 +993,8 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 	d.tiene,
 	d.nombre,
 	d.edad,
-	d.reftipoparentesco
+	d.reftipoparentesco,
+	tip.tipoparentesco
 	from dbdependienteseconomicos d 
 	inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera 
 	inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
@@ -2363,7 +2365,8 @@ v.refdeclaracionjuradacabecera,
 v.reftipooperacion,
 v.especificacionventa,
 v.especificacionsiniestro,
-v.estado
+v.estado,
+tit.titular
 from dbvehiculos v 
 inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = v.refdeclaracionjuradacabecera 
 inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 

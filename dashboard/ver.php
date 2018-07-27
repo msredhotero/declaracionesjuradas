@@ -44,6 +44,9 @@ if ($_SESSION['idroll_predio'] == 1) {
 	$frmDecrementos = $serviciosReferencias->traerDecrementosPorCabecera($id);
 	$frmObservaciones = $serviciosReferencias->traerObservacionesPorCabecera($id);
 
+	$frmConflictosEconomicos = $serviciosReferencias->traerConflictoeconomicaPorCabecera($id);
+	$frmConflictosCargo = $serviciosReferencias->traerConflictopuestosPorCabecera($id);
+
 } else {
 	$frmDeclaracionAnual = $serviciosReferencias->traerDeclaracionanualinteresPorCabeceraCURP($id, $_SESSION['curp_predio']);
 	$frmDependientesEconomicos = $serviciosReferencias->traerDependienteseconomicosPorCabeceraCURP($id, $_SESSION['curp_predio']);
@@ -58,6 +61,9 @@ if ($_SESSION['idroll_predio'] == 1) {
 	$frmRecursos = $serviciosReferencias->traerRecursosPorCabeceraCURP($id, $_SESSION['curp_predio']);
 	$frmDecrementos = $serviciosReferencias->traerDecrementosPorCabeceraCURP($id, $_SESSION['curp_predio']);
 	$frmObservaciones = $serviciosReferencias->traerObservacionesPorCabeceraCURP($id, $_SESSION['curp_predio']);
+
+	$frmConflictosEconomicos = $serviciosReferencias->traerConflictoeconomicaPorCabeceraCURP($id, $_SESSION['curp_predio']);
+	$frmConflictosCargo = $serviciosReferencias->traerConflictopuestosPorCabeceraCURP($id, $_SESSION['curp_predio']);
 
 }
 
@@ -599,6 +605,68 @@ sección.</p>
 								</div>
 							</div>
 						</div>
+
+						
+
+					</div>
+
+
+					<div class="row">
+						
+
+						<div class="col s12 m4">
+							<div class="card teal lighten-2 darken-1">
+								<div class="card-content white-text">
+									<span class="card-title">CONFLICTOS ECONOMICOS</span>
+									<p>Participaciones económicas o financieras del declarante, cónyuge, concubina o concubinad y/o económicos.</p>
+								</div>
+								<div class="card-action">
+									<?php
+									if (mysql_num_rows($frmConflictosEconomicos) > 0) {
+									?>
+									<a href="conflictoseconomicos/index.php?id=<?php echo $id; ?>">Acceder</a>
+									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
+									<?php
+										} else {
+									?>
+									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<a href="conflictoseconomicos/index.php?id=<?php echo $id; ?>">Acceder</a>
+									
+									<?php
+										}
+									?>
+								</div>
+							</div>
+						</div>
+
+
+						<div class="col s12 m4">
+							<div class="card teal lighten-2 darken-1">
+								<div class="card-content white-text">
+									<span class="card-title">CONFLICTOS PUESTO</span>
+									<p>Puesto, cargo, comisión, actividades o poderes que actualmnte tenga el declarante, cónyuge,concubina o concubinado y/o dependientes económicos en asociaciones, sociedades, consejos, acividades filantrópicas y/o consultoría.</p>
+								</div>
+								<div class="card-action">
+
+									<?php
+									if (mysql_num_rows($frmConflictosCargo) > 0) {
+									?>
+									<a href="conflictospuestos/index.php?id=<?php echo $id; ?>">Acceder</a>
+									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
+									<?php
+										} else {
+									?>
+									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<a href="conflictospuestos/index.php?id=<?php echo $id; ?>">Acceder</a>
+									
+									<?php
+										}
+									?>
+								</div>
+							</div>
+						</div>
+
+
 
 						
 

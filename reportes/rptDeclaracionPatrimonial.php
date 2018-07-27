@@ -586,7 +586,7 @@ if (mysql_num_rows($resResultado)>0) {
 		$pdf->Ln();
 		$pdf->SetFont('Arial','',10);
 		$pdf->SetX(15);
-		$pdf->Cell(100,5,$row5['tipobien'],0,'C',0);
+		$pdf->Cell(100,5,$row5['tipobien'],'RLTB',0,'C',0);
 		$pdf->Cell(50,5,'$ '.$row5['valor'],'RLTB',0,'C',0);
 		$pdf->Cell(65,5,$row5['tipooperacion'],'RLTB',0,'C',0);
 		$pdf->Cell(50,5,$row5['formaadquisicion'],'RLTB',0,'C',0);
@@ -594,12 +594,11 @@ if (mysql_num_rows($resResultado)>0) {
 
 	$pdf->Ln();
 	$pdf->Ln();
-	$pdf->Ln();
-	$pdf->Ln();
+
 
 
 	$pdf->SetFont('Arial','b',16);
-	$pdf->SetXY(3,10);
+
 	$pdf->Cell(150,8,'VII.- VEHICULOS',0,0,'C',0);
 
 	$pdf->Ln();
@@ -610,21 +609,30 @@ if (mysql_num_rows($resResultado)>0) {
 
 	$pdf->Ln();
 	$pdf->Ln();
-	$pdf->SetFont('Arial','',12);
+	$pdf->SetFont('Arial','',9);
 	$pdf->SetX(15);
-	$pdf->Cell(100,5,'Tipo de Bien','RLTB',0,'C',0);
-	$pdf->Cell(50,5,'Valor del bien mueble','RLTB',0,'C',0);
-	$pdf->Cell(65,5,'Tipo de Operación','RLTB',0,'C',0);
-	$pdf->Cell(50,5,'Forma de Pago','RLTB',0,'C',0);
+	$pdf->Cell(10,5,'Tipo','RLTB',0,'C',0);
+	$pdf->Cell(30,5,'Tipo de Operación','RLTB',0,'C',0);
+	$pdf->Cell(25,5,'Forma de Pago','RLTB',0,'C',0);
+	$pdf->Cell(98,5,'Marca, Tipo, Modelo y Nro de Serie','RLTB',0,'C',0);
+	$pdf->Cell(18,5,'Fecha','RLTB',0,'C',0);
+	$pdf->Cell(25,5,'Valor','RLTB',0,'C',0);
+	$pdf->Cell(25,5,'Propietario','RLTB',0,'C',0);
+	$pdf->Cell(40,5,'Entidad Fed.','RLTB',0,'C',0);
 
 	while ($row5 = mysql_fetch_array($datos5b)) {
 		$pdf->Ln();
-		$pdf->SetFont('Arial','',10);
+		$pdf->SetFont('Arial','',9);
 		$pdf->SetX(15);
-		$pdf->Cell(100,5,$row5['tipobien'],0,'C',0);
-		$pdf->Cell(50,5,'$ '.$row5['valor'],'RLTB',0,'C',0);
-		$pdf->Cell(65,5,$row5['tipooperacion'],'RLTB',0,'C',0);
-		$pdf->Cell(50,5,$row5['formaadquisicion'],'RLTB',0,'C',0);
+		$pdf->Cell(10,5,$row5['estado'],'RLTB',0,'C',0);
+		$pdf->Cell(30,5,$row5['tipooperacion'],'RLTB',0,'C',0);
+		$pdf->Cell(25,5,$row5['formaadquisicion'],'RLTB',0,'C',0);
+		$pdf->Cell(98,5,$row5['vehiculo'],'RLTB',0,'C',0);
+		$pdf->Cell(18,5,$row5['fechaadquisicion'],'RLTB',0,'C',0);
+		$pdf->Cell(25,5,'$ '.$row5['valor'],'RLTB',0,'C',0);
+		$pdf->Cell(25,5,$row5['titular'],'RLTB',0,'C',0);
+		$pdf->Cell(40,5,$row5['entidadfederativa'],'RLTB',0,'C',0);
+
 	}
 
 
