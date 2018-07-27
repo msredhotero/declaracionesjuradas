@@ -102,8 +102,8 @@ if (mysql_result($resResultado, 0,'estado') == 'A') {
 	$cadRef6 = "<option value='A'>Alta</option><option value='B' selected>Baja</option>";
 }
 
-$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3, 3=>$cadRef4, 4=>$cadRef5);
-$refCampo 	=  array("refdeclaracionjuradacabecera","reftipooperacion","refformaadquisicion","reftipocesionario","reftitular"); 
+$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3, 3=>$cadRef4, 4=>$cadRef5, 5=>$cadRef6);
+$refCampo 	=  array("refdeclaracionjuradacabecera","reftipooperacion","refformaadquisicion","reftipocesionario","reftitular","estado"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
