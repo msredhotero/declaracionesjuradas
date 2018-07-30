@@ -24,11 +24,13 @@ $fecha = date('Y-m-d');
 $resMenu = $serviciosHTML->menu($_SESSION['nombre_predio'],"Dashboard",$_SESSION['refroll_predio'],'');
 
 
-if ($_SESSION['idroll_predio'] == 2) {
+$existeDeclaracionAnual = 0;
+
+if ($_SESSION['idroll_predio'] != 1) {
 	$resAgente = $serviciosReferencias->traerAgenteReal($_SESSION['curp_predio']);
 }
 
-if ($_SESSION['idroll_predio'] == 2) {
+if ($_SESSION['idroll_predio'] != 1) {
 	$lstDeclaraciones = $serviciosReferencias->traerDeclaracionjuradacabeceraGrillaPorCURP($_SESSION['curp_predio']);
 
 
@@ -40,6 +42,13 @@ if ($_SESSION['idroll_predio'] == 2) {
 					<th>Estado</th>";
 
 	$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$lstDeclaraciones,90);
+
+	$existeDP		= $serviciosReferencias->traerDeclaracionjuradacabeceraPorAnioCURP(date('Y'), $_SESSION['curp_predio']);
+	if (mysql_num_rows($existeDP) > 0) {
+		$existeDeclaracionAnual = 1;
+	} else {
+		$existeDeclaracionAnual = 0;
+	}
 } else {
 	$lstDeclaraciones = $serviciosReferencias->traerDeclaracionjuradacabeceraGrilla($_SESSION['curp_predio']);
 
@@ -170,7 +179,15 @@ if ($_SESSION['idroll_predio'] == 2) {
 	            <div class="cuerpoBox">
 
 	            	<div class="row">
+	            		<?php
+	            		if ($existeDeclaracionAnual == 0) {
+	            		?>
 	            		<a class="waves-effect green accent-4 btn agregarddpp" href="declaracionpatrimonial/"><i class="large material-icons left">add</i>Nueva Declaración</a>
+	            		
+	            		<?php } else { ?>
+	            		<a class="waves-effect red accent-4 btn"><i class="large material-icons left">block</i> Ya existe una declaración patrimonial para este año.</a>
+	            		<?php } ?>
+	            		<hr>
 	            		<?php echo $lstCargados; ?>
 	            	</div>	
 	            		
@@ -194,38 +211,6 @@ if ($_SESSION['idroll_predio'] == 2) {
 
 
 
-<div class="modal fade" id="myModalcaja" tabindex="1" style="z-index:500000;" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog modal-lg" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" id="myModalLabel">Inicio de Caja</h4>
-      </div>
-      <div class="modal-body inicioCaja">
-      	<div class="row">
-        <div class="form-group col-md-6 col-xs-6" style="display:'.$lblOculta.'">
-            <label for="'.$campo.'" class="control-label" style="text-align:left">Fecha</label>
-            <div class="input-group date form_date col-md-6 col-xs-6" data-date="" data-date-format="dd MM yyyy" data-link-field="fechacaja" data-link-format="yyyy-mm-dd">
-                <input class="form-control" size="50" type="text" value="<?php echo date('Y-m-d'); ?>" readonly>
-                <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-            </div>
-            <input type="hidden" name="fechacaja" id="fechacaja" value="<?php echo date('Y-m-d'); ?>" />
-        </div>
-        <div class="col-md-6">
-        	<label class="control-label">Ingresa Inicio de Caja</label>
-            <div class="col-md-12 input-group">
-            	<input type="number" class="form-control valor" id="cajainicio" name="cajainicio" value="5" required />
-            </div>
-        </div>
-        </div>
-      </div>
-      <div class="modal-footer">
-      	<button type="button" class="btn btn-primary" data-dismiss="modal" id="guardarcaja">Guardar</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
-      </div>
-    </div>
-  </div>
-</div>
 
 
 <script type="text/javascript" src="../js/jquery.dataTables.min.js"></script>
@@ -235,63 +220,6 @@ if ($_SESSION['idroll_predio'] == 2) {
 <script src="../js/bootstrap-datetimepicker.es.js"></script>
 <script type="text/javascript">
 $(document).ready(function(){
-
-
-	var options = {
-
-			url: "../json/jsbuscarclientes.php",
-
-			getValue: function(element) {
-				return element.apellido + ' ' + element.nombre + ' ' + element.cuit;
-			},
-
-			ajaxSettings: {
-		        dataType: "json",
-		        method: "POST",
-		        data: {
-		            busqueda: $("#lstjugadores").val()
-		        }
-		    },
-		    
-		    preparePostData: function (data) {
-		        data.busqueda = $("#lstjugadores").val();
-		        return data;
-		    },
-			
-			list: {
-			    maxNumberOfElements: 15,
-				match: {
-					enabled: true
-				},
-				onClickEvent: function() {
-					var value = $("#lstjugadores").getSelectedItemData().id;
-					
-					$("#selction-ajax").html('<button type="button" class="btn btn-warning varClienteModificar" id="' + value + '" style="margin-left:0px;"><span class="glyphicon glyphicon-pencil"></span> Modificar</button> \
-						<button type="button" class="btn btn-info varClienteArchivos" id="' + value + '" style="margin-left:0px;"><span class="glyphicon glyphicon-download-alt"></span> Cargar Archivos</button> \
-					<button type="button" class="btn btn-success varClienteDocumentaciones" id="' + value + '" style="margin-left:0px;"><span class="glyphicon glyphicon-file"></span> Archivos</button>');
-				}
-			},
-			theme: "square"
-		};
-
-	$("#lstjugadores").easyAutocomplete(options);
-
-	function traerArchivos(id) {
-		$.ajax({
-			data:  {id: id, accion: 'traerArchivosPorCliente'},
-			url:   '../ajax/ajax.php',
-			type:  'post',
-			beforeSend: function () {
-					
-			},
-			success:  function (response) {
-					$('#resultadosArchivos').html(response);
-					
-			}
-		});
-	}
-
-
 
 
 

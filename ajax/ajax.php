@@ -1263,8 +1263,10 @@ case 'traerArchivosPorCliente':
 
 
 	function insertarTipobien($serviciosReferencias) { 
-		$tipobien = $_POST['tipobien']; 
-		$res = $serviciosReferencias->insertarTipobien($tipobien); 
+		$tipobien = $_POST['tipobien'];
+		$refformularios = $_POST['refformularios'];
+
+		$res = $serviciosReferencias->insertarTipobien($tipobien,$refformularios); 
 		if ((integer)$res > 0) { 
 		echo ''; 
 		} else { 
@@ -1276,7 +1278,8 @@ case 'traerArchivosPorCliente':
 	function modificarTipobien($serviciosReferencias) { 
 		$id = $_POST['id']; 
 		$tipobien = $_POST['tipobien']; 
-		$res = $serviciosReferencias->modificarTipobien($id,$tipobien); 
+		$refformularios = $_POST['refformularios'];
+		$res = $serviciosReferencias->modificarTipobien($id,$tipobien, $refformularios); 
 		if ($res == true) { 
 		echo ''; 
 		} else { 
@@ -1354,7 +1357,8 @@ case 'traerArchivosPorCliente':
 
 	function insertarTipooperacion($serviciosReferencias) { 
 		$tipooperacion = $_POST['tipooperacion']; 
-		$res = $serviciosReferencias->insertarTipooperacion($tipooperacion); 
+		$refformularios = $_POST['refformularios'];
+		$res = $serviciosReferencias->insertarTipooperacion($tipooperacion, $refformularios); 
 		if ((integer)$res > 0) { 
 		echo ''; 
 		} else { 
@@ -1366,7 +1370,8 @@ case 'traerArchivosPorCliente':
 	function modificarTipooperacion($serviciosReferencias) { 
 		$id = $_POST['id']; 
 		$tipooperacion = $_POST['tipooperacion']; 
-		$res = $serviciosReferencias->modificarTipooperacion($id,$tipooperacion); 
+		$refformularios = $_POST['refformularios'];
+		$res = $serviciosReferencias->modificarTipooperacion($id,$tipooperacion,$refformularios); 
 		if ($res == true) { 
 		echo ''; 
 		} else { 
@@ -1663,7 +1668,14 @@ case 'traerArchivosPorCliente':
 		} else { 
 		$enadeudos = 0; 
 		} 
-		$res = $serviciosReferencias->insertarPublicacion($refdeclaracionjuradacabecera,$estadeacuerdo,$eningresosnetos,$enbienesinmuebles,$enbienesmuebles,$envehiculos,$eninversiones,$enadeudos); 
+
+		if (isset($_POST['enconflictos'])) { 
+		$enconflictos	= 1; 
+		} else { 
+		$enconflictos = 0; 
+		} 
+
+		$res = $serviciosReferencias->insertarPublicacion($refdeclaracionjuradacabecera,$estadeacuerdo,$eningresosnetos,$enbienesinmuebles,$enbienesmuebles,$envehiculos,$eninversiones,$enadeudos,$enconflictos); 
 		if ((integer)$res > 0) { 
 		echo ''; 
 		} else { 
@@ -1710,7 +1722,15 @@ case 'traerArchivosPorCliente':
 		} else { 
 		$enadeudos = 0; 
 		} 
-		$res = $serviciosReferencias->modificarPublicacion($id,$refdeclaracionjuradacabecera,$estadeacuerdo,$eningresosnetos,$enbienesinmuebles,$enbienesmuebles,$envehiculos,$eninversiones,$enadeudos); 
+
+		if (isset($_POST['enconflictos'])) { 
+		$enconflictos	= 1; 
+		} else { 
+		$enconflictos = 0; 
+		} 
+
+
+		$res = $serviciosReferencias->modificarPublicacion($id,$refdeclaracionjuradacabecera,$estadeacuerdo,$eningresosnetos,$enbienesinmuebles,$enbienesmuebles,$envehiculos,$eninversiones,$enadeudos, $enconflictos); 
 		if ($res == true) { 
 		echo ''; 
 		} else { 
@@ -1900,9 +1920,11 @@ function insertarDeclaracionjuradacabecera($serviciosReferencias) {
 	$cedulaprofesional = $_POST['cedulaprofesional']; 
 	$refusuarios = $_POST['refusuarios']; 
 
+	$fechanacimiento = $_POST['fechanacimiento']; 
+
 	$rfc = $_POST['rfc']; 
 	
-	$res = $serviciosReferencias->insertarDeclaracionjuradacabecera($fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$rfc,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios); 
+	$res = $serviciosReferencias->insertarDeclaracionjuradacabecera($fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$rfc,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios,$fechanacimiento); 
 	
 	if ((integer)$res > 0) { 
 		echo ''; 
@@ -1943,8 +1965,9 @@ function modificarDeclaracionjuradacabecera($serviciosReferencias) {
 
 	$refestados = $_POST['refestados']; 
 	$rfc = $_POST['rfc']; 
-	
-	$res = $serviciosReferencias->modificarDeclaracionjuradacabecera($id,$fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$rfc,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios,$refestados); 
+	$fechanacimiento = $_POST['fechanacimiento']; 
+
+	$res = $serviciosReferencias->modificarDeclaracionjuradacabecera($id,$fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$rfc,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios,$refestados,$fechanacimiento); 
 	
 	if ($res == true) { 
 		echo ''; 

@@ -48,14 +48,15 @@ $tituloWeb = "Gestión: Declaraciones Patrimoniales";
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
 $tabla 			= "tbtipooperacion";
 
-$lblCambio	 	= array('tipooperacion');
-$lblreemplazo	= array('Tipo de Operacion');
+$lblCambio	 	= array('tipooperacion','refformularios');
+$lblreemplazo	= array('Tipo de Operacion','Seleccione el Formulario al que pertenece');
 
 
-$cadRef 	= '';
+$resVar1 = $serviciosReferencias->traerFormularios();
+$cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(1),' ', mysql_result($resResultado, 0,'refformularios'));
 
-$refdescripcion = array();
-$refCampo 	=  array();
+$refdescripcion = array(0 => $cadRef);
+$refCampo 	=  array("refformularios"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 

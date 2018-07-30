@@ -27,6 +27,15 @@ $resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Decreme
 
 $id = $_GET['id'];
 
+/// valido ////
+if ($_SESSION['idroll_predio'] != 1) {
+	$validar = $serviciosReferencias->validoUsuarioDeclaraciones($id, $_SESSION['curp_predio']);
+	if ($validar == 0) {
+		header('Location: ../index.php');
+	}
+}
+/// fin valido ///
+
 if ($_SESSION['idroll_predio'] == 1) {
 	$resResultado = $serviciosReferencias->traerDecrementosPorCabecera($id);
 } else {

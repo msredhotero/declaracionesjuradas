@@ -65,7 +65,8 @@ $lblCambio	 	= array('fecharecepcion',
 						'estudios',
 						'cedulaprofesional',
 						'refusuarios',
-						'refestados');
+						'refestados',
+						'fechanacimiento');
 $lblreemplazo	= array('Fecha de Recepción',
 						'Primer Apellido',
 						'Segundo Apellido',
@@ -90,7 +91,8 @@ $lblreemplazo	= array('Fecha de Recepción',
 						'Grado Max. de estudios/Especialidad',
 						'Nro de cédula profesional',
 						'Usuario',
-						'Estado');
+						'Estado',
+						'Fecha de Nacimiento');
 
 
 $resEstadoCivil = $serviciosReferencias->traerEstadocivil();

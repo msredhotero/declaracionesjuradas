@@ -94,7 +94,9 @@ $lblCambio	 	= array('fecharecepcion',
 						'codigopostal',
 						'estudios',
 						'cedulaprofesional',
-						'refusuarios');
+						'refusuarios',
+						'refestados',
+						'fechanacimiento');
 $lblreemplazo	= array('Fecha de Recepción',
 						'Primer Apellido',
 						'Segundo Apellido',
@@ -118,7 +120,9 @@ $lblreemplazo	= array('Fecha de Recepción',
 						'Codigo Postal',
 						'Grado Max. de estudios/Especialidad',
 						'Nro de cédula profesional',
-						'Usuario');
+						'Usuario',
+						'Estado',
+						'Fecha de Nacimiento');
 
 
 $resEstadoCivil = $serviciosReferencias->traerEstadocivilPorId(mysql_result($resResultado,0,'refestadocivil'));
@@ -142,10 +146,13 @@ if (mysql_result($resResultado,0,'sexo') == '1') {
 	$cadRef5 = "<option value='2' selected>Masculino</option>";
 }
 
+$resEstado = $serviciosReferencias->traerEstadosPorId(mysql_result($resResultado,0,'refestados'));
+$cadRef6 = $serviciosFunciones->devolverSelectBoxActivo($resEstado,array(1),'', mysql_result($resResultado,0,'refestados'));
 
 
-$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3,3=>$cadRef4,4=>$cadRef5);
-$refCampo 	=  array("refestadocivil","refregimenmatrimonial","refusuarios","lugarubica","sexo");
+
+$refdescripcion = array(0 => $cadRef, 1=>$cadRef2, 2=>$cadRef3,3=>$cadRef4,4=>$cadRef5,5=>$cadRef6);
+$refCampo 	=  array("refestadocivil","refregimenmatrimonial","refusuarios","lugarubica","sexo","refestados");
 
 $frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracionjuradacabecera',$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
@@ -235,6 +242,8 @@ $frmDeclaracionCabecera = $serviciosFunciones->camposTablaVer($id, 'iddeclaracio
         	<form class="form-inline formulario" role="form" enctype="multipart/form-data">
         	<div class="row">
         	<div class="col-md-12">	
+
+
         		
                 
 

@@ -26,6 +26,15 @@ $resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Dependi
 
 ///////////////////////   id de la cabecera de la declaracion /////////////////////////
 $id = $_GET['id'];
+
+/// valido ////
+if ($_SESSION['idroll_predio'] != 1) {
+	$validar = $serviciosReferencias->validoUsuarioDeclaraciones($id, $_SESSION['curp_predio']);
+	if ($validar == 0) {
+		header('Location: ../index.php');
+	}
+}
+/// fin valido ///
 ///////////////////////////////////////////////////////////////////////////////////////
 
 

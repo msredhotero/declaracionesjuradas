@@ -27,6 +27,15 @@ $resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Inversi
 
 $id = $_GET['id'];
 
+/// valido ////
+if ($_SESSION['idroll_predio'] != 1) {
+	$validar = $serviciosReferencias->validoUsuarioDeclaraciones($id, $_SESSION['curp_predio']);
+	if ($validar == 0) {
+		header('Location: ../index.php');
+	}
+}
+/// fin valido ///
+
 $resResultado = $serviciosReferencias->traerInversionesPorId($id);
 
 
@@ -73,7 +82,7 @@ $lblreemplazo	= array('Declaración Patrimonial Cabecera',
 $resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId(mysql_result($resResultado, 0, 'refdeclaracionjuradacabecera'));
 $cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(2,3,4),' ', mysql_result($resResultado, 0, 'refdeclaracionjuradacabecera'));
 
-$refVar2 = $serviciosReferencias->traerTipooperacion();
+$refVar2 = $serviciosReferencias->traerTipooperacionPorFormulario(9);
 $cadRef2 = $serviciosFunciones->devolverSelectBoxActivo($refVar2,array(1),' ', mysql_result($resResultado, 0, 'reftipooperacion'));
 
 $refVar6 = $serviciosReferencias->traerTipoinversion();

@@ -486,9 +486,9 @@ if (mysql_num_rows($resResultado)>0) {
 	$pdf->Ln();
 	$pdf->SetFont('Arial','b',8);
 	$pdf->SetX(15);
-	$pdf->Cell(40,5,'1985-05-20','RLB',0,'C',0);
+	$pdf->Cell(40,5,mysql_result($resResultadoCompleto,0,'fechanacimiento'),'RLB',0,'C',0);
 	$pdf->Cell(5,5,'',0,0,'C',0); //lugarcito
-	$pdf->Cell(20,5,'33','RLB',0,'C',0);
+	$pdf->Cell(20,5,mysql_result($resResultadoCompleto,0,'edad'),'RLB',0,'C',0);
 	$pdf->Cell(5,5,'',0,0,'C',0); //lugarcito
 	$pdf->Cell(25,5,(mysql_result($resResultado,0,'sexo') == 1 ? 'F' : 'M'),'RLB',0,'C',0);
 	$pdf->Cell(5,5,'',0,0,'C',0); //lugarcito
@@ -842,7 +842,7 @@ if (mysql_num_rows($resResultado)>0) {
 
 	/*---------------      NOVENA PAGINA ***********************************/
 	$datos9a = $serviciosReferencias->traerConflictoeconomicaGridPorCabecera($id);
-	$datos9b = $serviciosReferencias->traerConflictopuestosGridPorCabecera($id);
+	
 
 
 	$pdf->AddPage();
@@ -958,7 +958,7 @@ if (mysql_num_rows($resResultado)>0) {
 	/*---------------  FIN NOVENA PAGINA ***********************************/
 
 	/*---------------      DECIMA PAGINA ***********************************/
-
+	$datos9b = $serviciosReferencias->traerConflictopuestosGridPorCabecera($id);
 
 
 	$pdf->AddPage();
@@ -967,9 +967,12 @@ if (mysql_num_rows($resResultado)>0) {
 
 
 	$pdf->Ln();
-	$pdf->SetFont('Arial','',9);
+	$pdf->SetFont('Arial','b',9);
 	$pdf->SetX(15);
-	$pdf->Cell(265,5,'POR PUESTO, CARGO, COMISIÓN, ACTIVIDADES O PODERES DEL CÓNYUGE, CONCUBINO, CONCUBINA Y/O DEPENDIENTES ECONÓMICOS QUE ACTUALMENTE TENGA EN ASOCIACIONES, CONSEJOS, ACTIVIDADES FILANTRÓPICAS Y/O CONSULTORIA.','',0,'L',0);
+	$pdf->Cell(265,5,'POR PUESTO, CARGO, COMISIÓN, ACTIVIDADES O PODERES DEL CÓNYUGE, CONCUBINO, CONCUBINA Y/O DEPENDIENTES ECONÓMICOS QUE','',0,'L',0);
+	$pdf->Ln();
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'ACTUALMENTE TENGA EN ASOCIACIONES, CONSEJOS, ACTIVIDADES FILANTRÓPICAS Y/O CONSULTORIA.','',0,'L',0);
 
 	$pdf->Ln();
 	$pdf->SetFont('Arial','',9);
@@ -1011,33 +1014,18 @@ if (mysql_num_rows($resResultado)>0) {
 		$pdf->Ln();
 		$pdf->SetFont('Arial','b',9);
 		$pdf->SetX(15);
-		$pdf->Cell(35,5,'Sector o industria','RLTB',0,'C',0);
-		$pdf->Cell(100,5,'Tipo de sociedad en la que se participa o con la que se contrata','RLTB',0,'C',0);
-		$pdf->Cell(60,5,'Tipo de participacion o contrato','RLTB',0,'C',0);
-		$pdf->Cell(70,5,'Especifica','RLTB',0,'C',0);
+		$pdf->Cell(35,5,'Participación en la dirección o administración','RLTB',0,'C',0);
+		$pdf->Cell(100,5,'Tipo de persona jurídica','RLTB',0,'C',0);
+		$pdf->Cell(60,5,'Tipo de colaboración o aporte','RLTB',0,'C',0);
+		$pdf->Cell(70,5,'Ubicación','RLTB',0,'C',0);
 		$pdf->Ln();
 		$pdf->SetFont('Arial','',9);
 		$pdf->SetX(15);
-		$pdf->Cell(35,5,$row5['sector'],'RLTB',0,'C',0);
-		$pdf->Cell(100,5,$row5['tiposociedad'],'RLTB',0,'C',0);
-		$pdf->Cell(60,5,$row5['participacion'],'RLTB',0,'C',0);
-		$pdf->Cell(70,5,$row5['especifica'],'RLTB',0,'C',0);
+		$pdf->Cell(35,5,$row5['participacion'],'RLTB',0,'C',0);
+		$pdf->Cell(100,5,$row5['personajuridica'],'RLTB',0,'C',0);
+		$pdf->Cell(60,5,$row5['colaboracion'],'RLTB',0,'C',0);
+		$pdf->Cell(70,5,$row5['ubicacion'],'RLTB',0,'C',0);
 
-
-		$pdf->Ln();
-		$pdf->Ln();
-		$pdf->SetFont('Arial','b',9);
-		$pdf->SetX(15);
-		$pdf->Cell(80,5,'Antigüedad de la participación o convenio(años)','RLTB',0,'C',0);
-		$pdf->Cell(60,5,'Inicio de participación o contrato','RLTB',0,'C',0);
-		$pdf->Cell(80,5,'Ubicación','RLTB',0,'C',0);
-
-		$pdf->Ln();
-		$pdf->SetFont('Arial','',9);
-		$pdf->SetX(15);
-		$pdf->Cell(80,5,$row5['antiguedad'],'RLTB',0,'C',0);
-		$pdf->Cell(60,5,$row5['inicioparticipacion'],'RLTB',0,'C',0);
-		$pdf->Cell(80,5,$row5['ubicacion'],'RLTB',0,'C',0);
 
 		$pdf->SetFont('Arial','',10);
 		$pdf->Ln();
@@ -1052,6 +1040,87 @@ if (mysql_num_rows($resResultado)>0) {
 	}
 
 	/*---------------  FIN DECIMA PAGINA ***********************************/
+
+
+	/*---------------      DECIMA-PRIMERA PAGINA ***********************************/
+	$datos10a = $serviciosReferencias->traerObservacionesGridPorCabecera($id);
+
+
+	$pdf->AddPage();
+
+	$pdf->SetXY(10,10);
+
+
+
+	$pdf->SetFont('Arial','b',16);
+	$pdf->SetXY(15,10);
+	$pdf->Cell(150,8,'XIII.- OBSERVACIONES Y/O ACLARACIONES',0,0,'L',0);
+
+
+	$pdf->Ln();
+	$pdf->SetFont('Arial','b',9);
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'LO DECLARADO ANTERIORMENTE ES CONFIDENCIAL','RLTB',0,'L',0);
+	$pdf->Ln();
+	$pdf->Ln();
+	$pdf->Ln();
+
+	$pdf->Ln();
+	$pdf->SetFont('Arial','',8);
+	$pdf->Ln();
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'C. Secretario de la Contraloría del Estado y/o C. Auditor General de la Entidad Superior de Auditoría y Fiscalización del Congreso del Estado, solicito se sirva tener por ','',0,'L',0);
+	$pdf->Ln();
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'presentada esta declaración, pidiendo me sea otorgado el acuse de recibo correspondiente.
+','',0,'L',0);
+
+	$pdf->Ln();
+	$pdf->Ln();
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'Así mismo y para efectos de lo señalado en el artículo 81 de la Ley de Estatal de Responsabilidades de los Servidores Públicos, manifiesto expresamente mi autorización ','',0,'L',0);
+	$pdf->Ln();
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'para que se verifique y coteje, el contenido de esta Declaración, ante cualquier Institución.','',0,'L',0);
+
+	$pdf->Ln();
+	$pdf->Ln();
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'Fecha de envío: Cuernavaca, Morelos a','',0,'L',0);
+
+
+	$pdf->Ln();
+	$pdf->Ln();
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'NOTA: El Servidor público ha manifestado su patrimonio BAJO PROTESTA DE DECIR VERDAD, en consecuencia se le apercibe para que se conduzca con verdad en lo ','',0,'L',0);
+	$pdf->Ln();
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'declarado. Así mismo, se hace de su conocimiento lo señalado en el artículo 221 del Código Penal para el Estado de Morelos que al respecto señala:','',0,'L',0);
+
+
+
+	$pdf->Ln();
+	$pdf->Ln();
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'"Al que teniendo legalmente la obligación de conducirse con verdad en un acto ante la autoridad, apercibido por ésta, en caso de ser procedente el apercibimiento, se ','',0,'L',0);
+	$pdf->Ln();
+	$pdf->SetX(15);
+	$pdf->Cell(265,5,'condujere con falsedad u ocultare la verdad, se le impondrá prisión de tres meses a dos años".','',0,'L',0);
+
+
+
+	$pdf->Ln();
+	$pdf->Ln();
+	$pdf->SetX(15);
+	if (mysql_num_rows($datos10a) > 0) {
+		$pdf->MultiCell(265,5,mysql_result($datos10a, 0,'observacion'),1,'L');
+	}
+
+
+
+	
+
+	/*---------------  FIN DECIMA-PRIMERA PAGINA ***********************************/
 
 	$nombreArchivo = "DeclaracionPatrimonial.pdf";
 

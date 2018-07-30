@@ -27,6 +27,15 @@ $resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Bienes 
 
 $id = $_GET['id'];
 
+/// valido ////
+if ($_SESSION['idroll_predio'] != 1) {
+	$validar = $serviciosReferencias->validoUsuarioDeclaraciones($id, $_SESSION['curp_predio']);
+	if ($validar == 0) {
+		header('Location: ../index.php');
+	}
+}
+/// fin valido ///
+
 $resResultado = $serviciosReferencias->traerBienesinmueblesPorId($id);
 
 
@@ -91,10 +100,10 @@ $lblreemplazo	= array('Declaración Patrimonial Cabecera',
 $resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
 $cadRef = $serviciosFunciones->devolverSelectBoxActivo($resVar1,array(2,3,4),' ', mysql_result($resResultado, 0,'refdeclaracionjuradacabecera'));
 
-$refVar2 = $serviciosReferencias->traerTipooperacion();
+$refVar2 = $serviciosReferencias->traerTipooperacionPorFormulario(7);
 $cadRef2 = $serviciosFunciones->devolverSelectBoxActivo($refVar2,array(1),' ', mysql_result($resResultado, 0,'reftipooperacion'));
 
-$refVar6 = $serviciosReferencias->traerTipobien();
+$refVar6 = $serviciosReferencias->traerTipobienPorFormulario(7);
 $cadRef6 = $serviciosFunciones->devolverSelectBoxActivo($refVar6,array(1),' ', mysql_result($resResultado, 0,'reftipobien'));
 
 $refVar3 = $serviciosReferencias->traerFormaadquisicion();

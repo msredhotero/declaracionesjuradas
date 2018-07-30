@@ -27,6 +27,15 @@ $resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Vehicul
 
 ///////////////////////   id de la cabecera de la declaracion /////////////////////////
 $id = $_GET['id'];
+
+/// valido ////
+if ($_SESSION['idroll_predio'] != 1) {
+	$validar = $serviciosReferencias->validoUsuarioDeclaraciones($id, $_SESSION['curp_predio']);
+	if ($validar == 0) {
+		header('Location: ../index.php');
+	}
+}
+/// fin valido ///
 ///////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
@@ -82,7 +91,7 @@ $lblreemplazo	= array('Alta o Baja',
 $resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
 $cadRef = $serviciosFunciones->devolverSelectBoxObligatorio($resVar1,array(2,3,4),' ');
 
-$refVar2 = $serviciosReferencias->traerTipooperacion();
+$refVar2 = $serviciosReferencias->traerTipooperacionPorFormulario(8);
 $cadRef2 = $serviciosFunciones->devolverSelectBoxObligatorio($refVar2,array(1),' ');
 
 $refVar3 = $serviciosReferencias->traerFormaadquisicion();

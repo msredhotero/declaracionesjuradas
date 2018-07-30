@@ -41,21 +41,23 @@ $tituloWeb = "Gestión: Declaraciones Patrimoniales";
 /////////////////////// Opciones para la creacion del formulario  /////////////////////
 $tabla 			= "tbtipooperacion";
 
-$lblCambio	 	= array('tipooperacion');
-$lblreemplazo	= array('Tipo de Operacion');
+$lblCambio	 	= array('tipooperacion','refformularios');
+$lblreemplazo	= array('Tipo de Operacion','Seleccione el Formulario al que pertenece');
 
 
-$cadRef 	= '';
+$resVar1 = $serviciosReferencias->traerFormularios();
+$cadRef = $serviciosFunciones->devolverSelectBoxObligatorio($resVar1,array(1),' ');
 
-$refdescripcion = array();
-$refCampo 	=  array();
+$refdescripcion = array(0 => $cadRef);
+$refCampo 	=  array("refformularios"); 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
 
 
 
 /////////////////////// Opciones para la creacion del view  apellido,nombre,nrodocumento,fechanacimiento,direccion,telefono,email/////////////////////
-$cabeceras 		= "	<th>Tipo de Operacion</th>";
+$cabeceras 		= "	<th>Tipo de Operacion</th>
+					<th>Formulario</th>";
 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
@@ -64,7 +66,7 @@ $cabeceras 		= "	<th>Tipo de Operacion</th>";
 
 $formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
-$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerTipooperacion(),1);
+$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerTipooperacion(),2);
 
 
 

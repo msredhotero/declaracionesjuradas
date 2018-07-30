@@ -10,6 +10,14 @@ date_default_timezone_set('America/Buenos_Aires');
 class ServiciosReferencias {
 
 
+function validoUsuarioDeclaraciones($idCabecera, $curp) {
+	$res = $this->traerDeclaracionanualinteresPorCabeceraCURP($idCabecera, $curp);
+	if (mysql_num_rows($res) > 0) {
+		return 1;
+	}
+	return 0;
+}
+
 function GUID()
 {
     if (function_exists('com_create_guid') === true)
@@ -1483,15 +1491,15 @@ function traerAgenteReal($curp) {
 	return $res; 
 }
 
-function insertarDeclaracionjuradacabecera($fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$rfc,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios) { 
-$sql = "insert into dbdeclaracionjuradacabecera(iddeclaracionjuradacabecera,fecharecepcion,primerapellido,segundoapellido,nombres,curp,homoclave,rfc,emailinstitucional,emailalterno,refestadocivil,refregimenmatrimonial,paisnacimiento,nacionalidad,entidadnacimiento,numerocelular,lugarubica,domicilioparticular,localidad,municipio,telefono,entidadfederativa,codigopostal,lada,sexo,estudios,cedulaprofesional,refusuarios, refestados) 
-values ('','".($fecharecepcion)."','".($primerapellido)."','".($segundoapellido)."','".($nombres)."','".($curp)."','".($homoclave)."','".($rfc)."','".($emailinstitucional)."','".($emailalterno)."',".$refestadocivil.",".$refregimenmatrimonial.",'".($paisnacimiento)."','".($nacionalidad)."','".($entidadnacimiento)."','".($numerocelular)."',".$lugarubica.",'".($domicilioparticular)."','".($localidad)."','".($municipio)."','".($telefono)."','".($entidadfederativa)."','".($codigopostal)."','".($lada)."',".$sexo.",'".($estudios)."','".($cedulaprofesional)."',".$refusuarios.", 1)"; 
+function insertarDeclaracionjuradacabecera($fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$rfc,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios, $fechanacimiento) { 
+$sql = "insert into dbdeclaracionjuradacabecera(iddeclaracionjuradacabecera,fecharecepcion,primerapellido,segundoapellido,nombres,curp,homoclave,rfc,emailinstitucional,emailalterno,refestadocivil,refregimenmatrimonial,paisnacimiento,nacionalidad,entidadnacimiento,numerocelular,lugarubica,domicilioparticular,localidad,municipio,telefono,entidadfederativa,codigopostal,lada,sexo,estudios,cedulaprofesional,refusuarios, refestados, fechanacimiento) 
+values ('','".($fecharecepcion)."','".($primerapellido)."','".($segundoapellido)."','".($nombres)."','".($curp)."','".($homoclave)."','".($rfc)."','".($emailinstitucional)."','".($emailalterno)."',".$refestadocivil.",".$refregimenmatrimonial.",'".($paisnacimiento)."','".($nacionalidad)."','".($entidadnacimiento)."','".($numerocelular)."',".$lugarubica.",'".($domicilioparticular)."','".($localidad)."','".($municipio)."','".($telefono)."','".($entidadfederativa)."','".($codigopostal)."','".($lada)."',".$sexo.",'".($estudios)."','".($cedulaprofesional)."',".$refusuarios.", 1, '".$fechanacimiento."')"; 
 $res = $this->query($sql,1); 
 return $res; 
 } 
 
 
-function modificarDeclaracionjuradacabecera($id,$fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$rfc,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios, $refestados) { 
+function modificarDeclaracionjuradacabecera($id,$fecharecepcion,$primerapellido,$segundoapellido,$nombres,$curp,$homoclave,$rfc,$emailinstitucional,$emailalterno,$refestadocivil,$refregimenmatrimonial,$paisnacimiento,$nacionalidad,$entidadnacimiento,$numerocelular,$lugarubica,$domicilioparticular,$localidad,$municipio,$telefono,$entidadfederativa,$codigopostal,$lada,$sexo,$estudios,$cedulaprofesional,$refusuarios, $refestados, $fechanacimiento) { 
 $sql = "update dbdeclaracionjuradacabecera 
 set 
 fecharecepcion = '".($fecharecepcion)."',primerapellido = '".($primerapellido)."',segundoapellido = '".($segundoapellido)."',
@@ -1500,7 +1508,7 @@ entidadnacimiento = '".($entidadnacimiento)."',numerocelular = '".($numerocelula
 lugarubica = ".$lugarubica.",domicilioparticular = '".($domicilioparticular)."',localidad = '".($localidad)."',
 municipio = '".($municipio)."',telefono = '".($telefono)."',entidadfederativa = '".($entidadfederativa)."',
 codigopostal = '".($codigopostal)."',lada = '".($lada)."',sexo = ".$sexo.",estudios = '".($estudios)."',
-cedulaprofesional = '".($cedulaprofesional)."',refusuarios = ".$refusuarios.", refestados = ".$refestados." 
+cedulaprofesional = '".($cedulaprofesional)."',refusuarios = ".$refusuarios.", refestados = ".$refestados." ,fechanacimiento = '".($fechanacimiento)."'
 where iddeclaracionjuradacabecera =".$id; 
 $res = $this->query($sql,0); 
 return $res; 
@@ -1508,7 +1516,7 @@ return $res;
 
 
 function eliminarDeclaracionjuradacabecera($id) { 
-$sql = "delete from dbdeclaracionjuradacabecera where iddeclaracionjuradacabecera =".$id; 
+$sql = "update dbdeclaracionjuradacabecera set refestados = 3 where iddeclaracionjuradacabecera =".$id; 
 $res = $this->query($sql,0); 
 return $res; 
 } 
@@ -1544,7 +1552,8 @@ d.lada,
 d.sexo,
 d.estudios,
 d.cedulaprofesional,
-d.refusuarios
+d.refusuarios,
+d.fechanacimiento
 from dbdeclaracionjuradacabecera d 
 inner join tbestadocivil est ON est.idestadocivil = d.refestadocivil 
 inner join tbregimenmatrimonial reg ON reg.idregimenmatrimonial = d.refregimenmatrimonial 
@@ -1556,8 +1565,51 @@ return $res;
 } 
 
 
+function traerDeclaracionjuradacabeceraPorAnioCURP($anio, $curp) { 
+$sql = "select 
+d.iddeclaracionjuradacabecera,
+d.fecharecepcion,
+d.primerapellido,
+d.segundoapellido,
+d.nombres,
+d.curp,
+d.homoclave,
+d.rfc,
+d.emailinstitucional,
+d.emailalterno,
+d.refestadocivil,
+d.refregimenmatrimonial,
+d.paisnacimiento,
+d.nacionalidad,
+d.entidadnacimiento,
+d.numerocelular,
+d.lugarubica,
+d.domicilioparticular,
+d.localidad,
+d.municipio,
+d.telefono,
+d.entidadfederativa,
+d.codigopostal,
+d.lada,
+d.sexo,
+d.estudios,
+d.cedulaprofesional,
+d.refusuarios,
+d.fechanacimiento
+from dbdeclaracionjuradacabecera d 
+inner join tbestadocivil est ON est.idestadocivil = d.refestadocivil 
+inner join tbregimenmatrimonial reg ON reg.idregimenmatrimonial = d.refregimenmatrimonial 
+inner join dbusuarios usu ON usu.idusuario = d.refusuarios 
+inner join tbroles ro ON ro.idrol = usu.refroles 
+where year(d.fecharecepcion) = ".$anio." and d.curp = '".$curp."' and d.refestados <> 3
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
 function traerDeclaracionjuradacabeceraPorId($id) { 
-$sql = "select iddeclaracionjuradacabecera,fecharecepcion,primerapellido,segundoapellido,nombres,curp,homoclave,rfc,emailinstitucional,emailalterno,refestadocivil,refregimenmatrimonial,paisnacimiento,nacionalidad,entidadnacimiento,numerocelular,lugarubica,domicilioparticular,localidad,municipio,telefono,entidadfederativa,codigopostal,lada,sexo,estudios,cedulaprofesional,refusuarios, refestados from dbdeclaracionjuradacabecera where iddeclaracionjuradacabecera =".$id; 
+$sql = "select iddeclaracionjuradacabecera,fecharecepcion,primerapellido,segundoapellido,nombres,curp,homoclave,rfc,emailinstitucional,emailalterno,refestadocivil,refregimenmatrimonial,paisnacimiento,nacionalidad,entidadnacimiento,numerocelular,lugarubica,domicilioparticular,localidad,municipio,telefono,entidadfederativa,codigopostal,lada,sexo,estudios,cedulaprofesional,refusuarios, refestados, fechanacimiento from dbdeclaracionjuradacabecera where iddeclaracionjuradacabecera =".$id; 
 $res = $this->query($sql,0); 
 return $res; 
 } 
@@ -1593,7 +1645,9 @@ d.estudios,
 d.cedulaprofesional,
 d.refusuarios,
 est.estadocivil,
-reg.regimenmatrimonial
+reg.regimenmatrimonial,
+d.fechanacimiento,
+TIMESTAMPDIFF(YEAR,d.fechanacimiento,CURDATE()) AS edad
 from dbdeclaracionjuradacabecera d 
 inner join tbestadocivil est ON est.idestadocivil = d.refestadocivil 
 inner join tbregimenmatrimonial reg ON reg.idregimenmatrimonial = d.refregimenmatrimonial 
@@ -1614,7 +1668,8 @@ function traerDeclaracionjuradacabeceraGrilla() {
 				d.curp,
 				d.fecharecepcion,
 				d.telefono,
-				et.estado
+				et.estado,
+				d.fechanacimiento
 			from dbdeclaracionjuradacabecera d 
 			inner join tbestadocivil est ON est.idestadocivil = d.refestadocivil 
 			inner join tbregimenmatrimonial reg ON reg.idregimenmatrimonial = d.refregimenmatrimonial 
@@ -1636,7 +1691,8 @@ function traerDeclaracionjuradacabeceraGrillaPorCURP($curp) {
 				d.curp,
 				d.fecharecepcion,
 				d.emailinstitucional,
-				et.estado
+				et.estado,
+				d.fechanacimiento
 			from dbdeclaracionjuradacabecera d 
 			inner join tbestadocivil est ON est.idestadocivil = d.refestadocivil 
 			inner join tbregimenmatrimonial reg ON reg.idregimenmatrimonial = d.refregimenmatrimonial 
@@ -2569,18 +2625,18 @@ return $res;
 
 /* PARA Tipobien */
 
-function insertarTipobien($tipobien) { 
-$sql = "insert into tbtipobien(idtipobien,tipobien) 
-values ('','".($tipobien)."')"; 
+function insertarTipobien($tipobien, $refformularios) { 
+$sql = "insert into tbtipobien(idtipobien,tipobien, refformularios) 
+values ('','".($tipobien)."',".$refformularios.")"; 
 $res = $this->query($sql,1); 
 return $res; 
 } 
 
 
-function modificarTipobien($id,$tipobien) { 
+function modificarTipobien($id,$tipobien, $refformularios) { 
 $sql = "update tbtipobien 
 set 
-tipobien = '".($tipobien)."' 
+tipobien = '".($tipobien)."' , refformularios = ".$refformularios."
 where idtipobien =".$id; 
 $res = $this->query($sql,0); 
 return $res; 
@@ -2597,8 +2653,26 @@ return $res;
 function traerTipobien() { 
 $sql = "select 
 t.idtipobien,
-t.tipobien
+t.tipobien,
+f.formulario,
+t.refformularios
 from tbtipobien t 
+inner join tbformularios f on f.idformulario = t.refformularios
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerTipobienPorFormulario($idformulario) { 
+$sql = "select 
+t.idtipobien,
+t.tipobien,
+f.formulario,
+t.refformularios
+from tbtipobien t 
+inner join tbformularios f on f.idformulario = t.refformularios
+where f.idformulario = ".$idformulario."
 order by 1"; 
 $res = $this->query($sql,0); 
 return $res; 
@@ -2606,7 +2680,7 @@ return $res;
 
 
 function traerTipobienPorId($id) { 
-$sql = "select idtipobien,tipobien from tbtipobien where idtipobien =".$id; 
+$sql = "select idtipobien,tipobien,refformularios from tbtipobien where idtipobien =".$id; 
 $res = $this->query($sql,0); 
 return $res; 
 } 
@@ -2713,18 +2787,18 @@ return $res;
 
 /* PARA Tipooperacion */
 
-function insertarTipooperacion($tipooperacion) { 
-$sql = "insert into tbtipooperacion(idtipooperacion,tipooperacion) 
-values ('','".($tipooperacion)."')"; 
+function insertarTipooperacion($tipooperacion, $refformularios) { 
+$sql = "insert into tbtipooperacion(idtipooperacion,tipooperacion, refformularios) 
+values ('','".($tipooperacion)."', ".$refformularios.")"; 
 $res = $this->query($sql,1); 
 return $res; 
 } 
 
 
-function modificarTipooperacion($id,$tipooperacion) { 
+function modificarTipooperacion($id,$tipooperacion, $refformularios) { 
 $sql = "update tbtipooperacion 
 set 
-tipooperacion = '".($tipooperacion)."' 
+tipooperacion = '".($tipooperacion)."' , refformularios = ".$refformularios."
 where idtipooperacion =".$id; 
 $res = $this->query($sql,0); 
 return $res; 
@@ -2741,8 +2815,26 @@ return $res;
 function traerTipooperacion() { 
 $sql = "select 
 t.idtipooperacion,
-t.tipooperacion
+t.tipooperacion,
+f.formulario,
+t.refformularios
 from tbtipooperacion t 
+inner join tbformularios f on f.idformulario = t.refformularios
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerTipooperacionPorFormulario($idformulario) { 
+$sql = "select 
+t.idtipooperacion,
+t.tipooperacion,
+f.formulario,
+t.refformularios
+from tbtipooperacion t 
+inner join tbformularios f on f.idformulario = t.refformularios
+where f.idformulario = ".$idformulario."
 order by 1"; 
 $res = $this->query($sql,0); 
 return $res; 
@@ -2750,7 +2842,7 @@ return $res;
 
 
 function traerTipooperacionPorId($id) { 
-$sql = "select idtipooperacion,tipooperacion from tbtipooperacion where idtipooperacion =".$id; 
+$sql = "select idtipooperacion,tipooperacion, refformularios from tbtipooperacion where idtipooperacion =".$id; 
 $res = $this->query($sql,0); 
 return $res; 
 } 
@@ -4131,6 +4223,52 @@ return $res;
 /* /* Fin de la Tabla: tbvinculos*/
 
 
+/* PARA Formularios */
+
+function insertarFormularios($formulario) { 
+$sql = "insert into tbformularios(idformulario,formulario) 
+values ('','".($formulario)."')"; 
+$res = $this->query($sql,1); 
+return $res; 
+} 
+
+
+function modificarFormularios($id,$formulario) { 
+$sql = "update tbformularios 
+set 
+formulario = '".($formulario)."' 
+where idformulario =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function eliminarFormularios($id) { 
+$sql = "delete from tbformularios where idformulario =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerFormularios() { 
+$sql = "select 
+f.idformulario,
+f.formulario
+from tbformularios f 
+order by f.formulario"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+function traerFormulariosPorId($id) { 
+$sql = "select idformulario,formulario from tbformularios where idformulario =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+/* Fin */
+/* /* Fin de la Tabla: tbformularios*/
 
 
 function query($sql,$accion) {

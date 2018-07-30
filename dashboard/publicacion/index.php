@@ -27,6 +27,16 @@ $resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Datos P
 
 ///////////////////////   id de la cabecera de la declaracion /////////////////////////
 $id = $_GET['id'];
+
+
+/// valido ////
+if ($_SESSION['idroll_predio'] != 1) {
+	$validar = $serviciosReferencias->validoUsuarioDeclaraciones($id, $_SESSION['curp_predio']);
+	if ($validar == 0) {
+		header('Location: ../index.php');
+	}
+}
+/// fin valido ///
 ///////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
@@ -52,7 +62,8 @@ $lblCambio	 	= array("refdeclaracionjuradacabecera",
 						"enbienesmuebles",
 						"envehiculos",
 						"eninversiones",
-						"enadeudos");
+						"enadeudos",
+						"enconflictos");
 $lblreemplazo	= array('Declaración Patrimonial Cabecera',
 						'¿Esta de acuerdo en hacer publicos sus datos personales?',
 						'En ingresos netos, los correspondientes a los recibidos por actividad industrial y/o comercial, financiera y otros, asi como el monto total de los ingresos considerados a los antes citados',
@@ -60,7 +71,8 @@ $lblreemplazo	= array('Declaración Patrimonial Cabecera',
 						'En bienes muebles, el valor de la contraprestación y moneda',
 						'En vehiculos, el valor de la contraprestación y moneda',
 						'En inversiones, cuentas bancarias y otros tipos de valores, el saldo',
-						'En adeudos, el monto original, el saldo y el monto de los pagos realizados');
+						'En adeudos, el monto original, el saldo y el monto de los pagos realizados',
+						'Estoy de acuerdo en hacer pública la información de posible conflicto de intereses.');
 
 
 $resVar1 = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
@@ -81,7 +93,8 @@ $cabeceras 		= "	<th>Decl. Patri. Cab.</th>
 					<th>Bienes Muebles</th>
 					<th>Vehiculos</th>
 					<th>Inversiones</th>
-					<th>Adeudos</th>";
+					<th>Adeudos</th>
+					<th>Conflictos</th>";
 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
@@ -90,7 +103,7 @@ $cabeceras 		= "	<th>Decl. Patri. Cab.</th>
 
 $formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
-$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerPublicacionGrillaPorCabecera($id),8);
+$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerPublicacionGrillaPorCabecera($id),9);
 
 
 $frmPublicacion = $serviciosReferencias->traerPublicacionPorCabeceraCURP($id, $_SESSION['curp_predio']);
