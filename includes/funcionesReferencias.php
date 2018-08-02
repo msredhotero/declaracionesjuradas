@@ -1515,6 +1515,16 @@ return $res;
 } 
 
 
+function modificarDeclaracionjuradacabeceraEstado($id, $refestados) { 
+$sql = "update dbdeclaracionjuradacabecera 
+set 
+	refestados = ".$refestados." 
+where iddeclaracionjuradacabecera =".$id; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
 function eliminarDeclaracionjuradacabecera($id) { 
 $sql = "update dbdeclaracionjuradacabecera set refestados = 3 where iddeclaracionjuradacabecera =".$id; 
 $res = $this->query($sql,0); 
@@ -1614,6 +1624,12 @@ $res = $this->query($sql,0);
 return $res; 
 } 
 
+function traerDeclaracionjuradacabeceraPorIdCURP($id, $curp) { 
+$sql = "select iddeclaracionjuradacabecera,fecharecepcion,primerapellido,segundoapellido,nombres,curp,homoclave,rfc,emailinstitucional,emailalterno,refestadocivil,refregimenmatrimonial,paisnacimiento,nacionalidad,entidadnacimiento,numerocelular,lugarubica,domicilioparticular,localidad,municipio,telefono,entidadfederativa,codigopostal,lada,sexo,estudios,cedulaprofesional,refusuarios, refestados, fechanacimiento from dbdeclaracionjuradacabecera where iddeclaracionjuradacabecera =".$id."  and curp = '".$curp."'"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
 function traerDeclaracionjuradacabeceraPorIdCompleta($id) { 
 $sql = "select 
 d.iddeclaracionjuradacabecera,
@@ -1667,9 +1683,10 @@ function traerDeclaracionjuradacabeceraGrilla() {
 				d.nombres,
 				d.curp,
 				d.fecharecepcion,
-				d.telefono,
+				d.emailinstitucional,
 				et.estado,
-				d.fechanacimiento
+				d.fechanacimiento,
+				d.refestados
 			from dbdeclaracionjuradacabecera d 
 			inner join tbestadocivil est ON est.idestadocivil = d.refestadocivil 
 			inner join tbregimenmatrimonial reg ON reg.idregimenmatrimonial = d.refregimenmatrimonial 
@@ -1692,7 +1709,8 @@ function traerDeclaracionjuradacabeceraGrillaPorCURP($curp) {
 				d.fecharecepcion,
 				d.emailinstitucional,
 				et.estado,
-				d.fechanacimiento
+				d.fechanacimiento,
+				d.refestados
 			from dbdeclaracionjuradacabecera d 
 			inner join tbestadocivil est ON est.idestadocivil = d.refestadocivil 
 			inner join tbregimenmatrimonial reg ON reg.idregimenmatrimonial = d.refregimenmatrimonial 

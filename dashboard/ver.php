@@ -271,14 +271,25 @@ Administrativa.</p>
 									<?php
 										if (mysql_num_rows($frmDeclaracionAnual) > 0) {
 									?>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="declaracionanual/modificar.php?id=<?php echo $id; ?>">Acceder</a>
+									<?php
+										}
+									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
 									<?php
 										} else {
 									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="declaracionanual/index.php?id=<?php echo $id; ?>">Acceder</a>
-									
+									<?php
+										}
+									?>
 									<?php
 										}
 									?>
@@ -298,14 +309,27 @@ Administrativa.</p>
 									<?php
 										if (mysql_num_rows($frmPublicacion) > 0) {
 									?>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="publicacion/modificar.php?id=<?php echo $id; ?>">Acceder</a>
+									<?php 
+										} 
+									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
 									<?php
 										} else {
 									?>
-									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
-									<a href="publicacion/index.php?id=<?php echo $id; ?>">Acceder</a>
 									
+									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
+									<a href="publicacion/index.php?id=<?php echo $id; ?>">Acceder</a>
+									<?php 
+										} 
+									?>
 									<?php
 										}
 									?>
@@ -328,14 +352,25 @@ el concepto de estos ingresos. Las cantidades deberán ser redondeados y sin cen
 									<?php
 										if (mysql_num_rows($frmIngresosAnuales) > 0) {
 									?>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="ingresosanuales/modificar.php?id=<?php echo $id; ?>">Acceder</a>
+									<?php
+										}
+									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
 									<?php
 										} else {
 									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="ingresosanuales/index.php?id=<?php echo $id; ?>">Acceder</a>
-									
+									<?php
+										}
+									?>
 									<?php
 										}
 									?>
@@ -361,14 +396,25 @@ el concepto de estos ingresos. Las cantidades deberán ser redondeados y sin cen
 									<?php
 										if (mysql_num_rows($frmDependientesEconomicos) > 0) {
 									?>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="dependienteseconomicos/index.php?id=<?php echo $id; ?>">Acceder</a>
+									<?php
+										}
+									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
 									<?php
 										} else {
 									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="dependienteseconomicos/index.php?id=<?php echo $id; ?>">Acceder</a>
-									
+									<?php
+										}
+									?>
 									<?php
 										}
 									?>
@@ -391,14 +437,25 @@ valor del bien deberá ir redondeado y sin centavos.
 									<?php
 										if (mysql_num_rows($frmBienesMuebles) > 0) {
 									?>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="bienesmuebles/index.php?id=<?php echo $id; ?>">Acceder</a>
+									<?php
+										}
+									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
 									<?php
 										} else {
 									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="bienesmuebles/index.php?id=<?php echo $id; ?>">Acceder</a>
-									
+									<?php
+										}
+									?>
 									<?php
 										}
 									?>
@@ -419,14 +476,25 @@ avión, tractor, etc. deberá especificarlo también en esta sección.</p>
 									<?php
 										if (mysql_num_rows($frmVehiculos) > 0) {
 									?>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="vehiculos/index.php?id=<?php echo $id; ?>">Acceder</a>
+									<?php
+										}
+									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
 									<?php
 										} else {
 									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="vehiculos/index.php?id=<?php echo $id; ?>">Acceder</a>
-									
+									<?php
+										}
+									?>
 									<?php
 										}
 									?>
@@ -452,14 +520,25 @@ ejidales, deberá señalar en el mismo espacio la sesión de derechos correspond
 									<?php
 									if (mysql_num_rows($frmBienesInmuebles) > 0) {
 									?>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="bienesinmuebles/index.php?id=<?php echo $id; ?>">Acceder</a>
+									<?php
+										}
+									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
 									<?php
 										} else {
 									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="bienesinmuebles/index.php?id=<?php echo $id; ?>">Acceder</a>
-									
+									<?php
+										}
+									?>
 									<?php
 										}
 									?>
@@ -480,14 +559,25 @@ deberá señalarlo en la sección VIII.- OTRO TIPO DE INVERSIÓN.</p>
 									<?php
 									if (mysql_num_rows($frmBienesInmuebles) > 0) {
 									?>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="inversiones/index.php?id=<?php echo $id; ?>">Acceder</a>
+									<?php
+										}
+									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
 									<?php
 										} else {
 									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="inversiones/index.php?id=<?php echo $id; ?>">Acceder</a>
-									
+									<?php
+										}
+									?>
 									<?php
 										}
 									?>
@@ -510,14 +600,25 @@ Acreedor” el nombre completo de esa persona.</p>
 									<?php
 									if (mysql_num_rows($frmAdeudos) > 0) {
 									?>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="adeudos/index.php?id=<?php echo $id; ?>">Acceder</a>
+									<?php
+										}
+									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
 									<?php
 										} else {
 									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="adeudos/index.php?id=<?php echo $id; ?>">Acceder</a>
-									
+									<?php
+										}
+									?>
 									<?php
 										}
 									?>
@@ -545,14 +646,25 @@ Acreedor” el nombre completo de esa persona.</p>
 									<?php
 									if (mysql_num_rows($frmRecursos) > 0) {
 									?>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="recursos/modificar.php?id=<?php echo $id; ?>">Acceder</a>
+									<?php
+										}
+									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
 									<?php
 										} else {
 									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="recursos/index.php?id=<?php echo $id; ?>">Acceder</a>
-									
+									<?php
+										}
+									?>
 									<?php
 										}
 									?>
@@ -572,14 +684,25 @@ Acreedor” el nombre completo de esa persona.</p>
 									<?php
 									if (mysql_num_rows($frmDecrementos) > 0) {
 									?>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="decrementos/modificar.php?id=<?php echo $id; ?>">Acceder</a>
+									<?php
+										}
+									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
 									<?php
 										} else {
 									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="decrementos/index.php?id=<?php echo $id; ?>">Acceder</a>
-									
+									<?php
+										}
+									?>
 									<?php
 										}
 									?>
@@ -600,14 +723,25 @@ sección.</p>
 									<?php
 									if (mysql_num_rows($frmObservaciones) > 0) {
 									?>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="observaciones/modificar.php?id=<?php echo $id; ?>">Acceder</a>
+									<?php
+										}
+									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
 									<?php
 										} else {
 									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="observaciones/index.php?id=<?php echo $id; ?>">Acceder</a>
-									
+									<?php
+										}
+									?>
 									<?php
 										}
 									?>
@@ -633,14 +767,25 @@ sección.</p>
 									<?php
 									if (mysql_num_rows($frmConflictosEconomicos) > 0) {
 									?>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="conflictoseconomicos/index.php?id=<?php echo $id; ?>">Acceder</a>
+									<?php
+										}
+									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
 									<?php
 										} else {
 									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="conflictoseconomicos/index.php?id=<?php echo $id; ?>">Acceder</a>
-									
+									<?php
+										}
+									?>
 									<?php
 										}
 									?>
@@ -660,14 +805,25 @@ sección.</p>
 									<?php
 									if (mysql_num_rows($frmConflictosCargo) > 0) {
 									?>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="conflictospuestos/index.php?id=<?php echo $id; ?>">Acceder</a>
+									<?php
+										}
+									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light green accent-4"><i class="material-icons">check</i></a>
 									<?php
 										} else {
 									?>
 									<a class="btn-floating halfway-fab waves-effect waves-light red"><i class="material-icons">clear</i></a>
+									<?php
+										if ($_SESSION['idroll_predio'] != 1) {
+									?>
 									<a href="conflictospuestos/index.php?id=<?php echo $id; ?>">Acceder</a>
-									
+									<?php
+										}
+									?>
 									<?php
 										}
 									?>

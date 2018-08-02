@@ -21,7 +21,9 @@ require('fpdf.php');
 //$header = array("Hora", "Cancha 1", "Cancha 2", "Cancha 3");
 
 
+$id				=	$_GET['id'];
 
+$serviciosReferencias->modificarDeclaracionjuradacabeceraEstado($id, 2);
 
 	$pdf = new FPDF();
 

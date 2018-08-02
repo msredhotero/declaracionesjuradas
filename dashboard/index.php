@@ -41,7 +41,7 @@ if ($_SESSION['idroll_predio'] != 1) {
 					<th>Email</th>
 					<th>Estado</th>";
 
-	$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$lstDeclaraciones,90);
+	$lstCargados 	= $lstDeclaraciones;
 
 	$existeDP		= $serviciosReferencias->traerDeclaracionjuradacabeceraPorAnioCURP(date('Y'), $_SESSION['curp_predio']);
 	if (mysql_num_rows($existeDP) > 0) {
@@ -60,7 +60,7 @@ if ($_SESSION['idroll_predio'] != 1) {
 					<th>Email</th>
 					<th>Estado</th>";
 
-	$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$lstDeclaraciones,100);
+	$lstCargados 	= $lstDeclaraciones;
 }
 
 ?>
@@ -161,7 +161,63 @@ if ($_SESSION['idroll_predio'] != 1) {
 
 	            	<div class="row">
 	            		
-	            		<?php echo $lstCargados; ?>
+	            		<table class="table table-striped table-responsive" id="example">
+							<thead>
+								<tr>
+									<th>Apellidos</th>
+									<th>Nombres</th>
+									<th>CURP</th>
+									<th>Fecha Recepción</th>
+									<th>Email</th>
+									<th>Estado</th>
+									<th style="width: 224px;">Acciones</th>
+								</tr>
+							</thead>
+							<tbody id="resultados">
+							<?php
+
+								while ($row = mysql_fetch_array($lstCargados)) {
+							?>
+							<tr>
+								<td><?php echo $row['apellidos']; ?></td>
+								<td><?php echo $row['nombres']; ?></td>
+								<td><?php echo $row['curp']; ?></td>
+								<td><?php echo $row['fecharecepcion']; ?></td>
+								<td><?php echo $row['emailinstitucional']; ?></td>
+								<td><?php echo $row['estado']; ?></td>
+								<td>
+									<?php if ($row['refestados'] == 3) { ?>
+									La declaración fue eliminada, no se puede acceder o modificar
+									<?php } else { ?>
+									<div class="btn-group">
+										<button class="btn btn-success" type="button">Acciones</button>
+										<button class="btn btn-success dropdown-toggle" data-toggle="dropdown" type="button">
+											<span class="caret"></span>
+											<span class="sr-only">Toggle Dropdown</span>
+										</button>
+										<ul class="dropdown-menu" role="menu">
+											<li>
+											<a href="javascript:void(0)" class="varmodificar" id="2"><span class="glyphicon glyphicon-pencil"></span> Modificar</a>
+											</li>		<li>
+											<a href="javascript:void(0)" class="vargastos" id="2"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
+											</li>		<li>
+											<a href="javascript:void(0)" class="varver" id="2"><span class="glyphicon glyphicon-search"></span> Ver</a>
+											</li>		<li>
+											<a href="javascript:void(0)" class="varimprmiracuse" id="2"><span class="glyphicon glyphicon-print"></span> Generar Acuse</a>
+											</li>		<li>
+											<a href="javascript:void(0)" class="varborrar" id="2"><span class="glyphicon glyphicon-remove"></span> Borrar</a>
+											</li>
+
+										</ul>
+									</div>
+									<?php }  ?>
+								</td>
+							</tr>
+							<?php
+							}
+							?>
+							</tbody>
+						</table>
 	            	</div>	
 	            		
                 </div>
@@ -188,7 +244,63 @@ if ($_SESSION['idroll_predio'] != 1) {
 	            		<a class="waves-effect red accent-4 btn"><i class="large material-icons left">block</i> Ya existe una declaración patrimonial para este año.</a>
 	            		<?php } ?>
 	            		<hr>
-	            		<?php echo $lstCargados; ?>
+	            		<table class="table table-striped table-responsive" id="example">
+							<thead>
+								<tr>
+									<th>Apellidos</th>
+									<th>Nombres</th>
+									<th>CURP</th>
+									<th>Fecha Recepción</th>
+									<th>Email</th>
+									<th>Estado</th>
+									<th style="width: 224px;">Acciones</th>
+								</tr>
+							</thead>
+							<tbody id="resultados">
+							<?php
+
+								while ($row = mysql_fetch_array($lstCargados)) {
+							?>
+							<tr>
+								<td><?php echo $row['apellidos']; ?></td>
+								<td><?php echo $row['nombres']; ?></td>
+								<td><?php echo $row['curp']; ?></td>
+								<td><?php echo $row['fecharecepcion']; ?></td>
+								<td><?php echo $row['emailinstitucional']; ?></td>
+								<td><?php echo $row['estado']; ?></td>
+								<td>
+									<?php if ($row['refestados'] == 3) { ?>
+									La declaración fue eliminada, no se puede acceder o modificar
+									<?php } else { ?>
+									<div class="btn-group">
+										<button class="btn btn-success" type="button">Acciones</button>
+										<button class="btn btn-success dropdown-toggle" data-toggle="dropdown" type="button">
+											<span class="caret"></span>
+											<span class="sr-only">Toggle Dropdown</span>
+										</button>
+										<ul class="dropdown-menu" role="menu">
+											<li>
+											<a href="javascript:void(0)" class="varmodificar" id="2"><span class="glyphicon glyphicon-pencil"></span> Modificar</a>
+											</li>		<li>
+											<a href="javascript:void(0)" class="vargastos" id="2"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
+											</li>		<li>
+											<a href="javascript:void(0)" class="varver" id="2"><span class="glyphicon glyphicon-search"></span> Ver</a>
+											</li>		<li>
+											<a href="javascript:void(0)" class="varimprmiracuse" id="2"><span class="glyphicon glyphicon-print"></span> Generar Acuse</a>
+											</li>		<li>
+											<a href="javascript:void(0)" class="varborrar" id="2"><span class="glyphicon glyphicon-remove"></span> Borrar</a>
+											</li>
+
+										</ul>
+									</div>
+									<?php }  ?>
+								</td>
+							</tr>
+							<?php
+							}
+							?>
+							</tbody>
+						</table>
 	            	</div>	
 	            		
                 </div>
@@ -284,7 +396,7 @@ $(document).ready(function(){
 	$("#example").on("click",'.varimprmiracuse', function(){
 		  usersid =  $(this).attr("id");
 		  if (!isNaN(usersid)) {
-		  	window.open("../reportes/rptAcuse.php" ,'_blank');  
+		  	window.open("../reportes/rptAcuse.php?id=" + usersid  ,'_blank');  
 
 		  } else {
 			alert("Error, vuelva a realizar la acción.");	

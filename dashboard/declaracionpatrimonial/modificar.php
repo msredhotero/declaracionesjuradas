@@ -27,8 +27,11 @@ $resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Declara
 
 $id = $_GET['id'];
 
-$resResultado = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
-
+if ($_SESSION['idroll_predio'] != 1) {
+	$resResultado = $serviciosReferencias->traerDeclaracionjuradacabeceraPorIdCURP($id, $_SESSION['curp_predio']);
+} else {
+	$resResultado = $serviciosReferencias->traerDeclaracionjuradacabeceraPorId($id);
+}
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
 $singular = "Declaracion Patrimonial";
@@ -310,7 +313,7 @@ $(document).ready(function(){
 		nombre = $('#homoclave').val();
 		
 	   //Comprobamos la longitud de caracteres
-		if (nombre.length==10){
+		if (nombre.length==3){
 			return true;
 		}
 		else {

@@ -37,7 +37,7 @@ $plural = "Tipo de Bienes";
 
 $eliminar = "eliminarTipobien";
 
-$modificar = "modificarPoder";
+$modificar = "modificarTipobien";
 
 $idTabla = "idtipobien";
 

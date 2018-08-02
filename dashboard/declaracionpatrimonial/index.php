@@ -132,8 +132,18 @@ $cabeceras 		= "	<th>Apellidos</th>
 
 $formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
-$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerDeclaracionjuradacabeceraGrilla(),6);
+if ($_SESSION['idroll_predio'] != 1) {
+	$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerDeclaracionjuradacabeceraGrillaPorCURP($_SESSION['curp_predio']),6);
 
+	$existeDP		= $serviciosReferencias->traerDeclaracionjuradacabeceraPorAnioCURP(date('Y'), $_SESSION['curp_predio']);
+	if (mysql_num_rows($existeDP) > 0) {
+		$existeDeclaracionAnual = 1;
+	} else {
+		$existeDeclaracionAnual = 0;
+	}
+} else {
+	$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerDeclaracionjuradacabeceraGrilla(),6);
+}
 
 
 if ($_SESSION['refroll_predio'] != 1) {
@@ -229,9 +239,15 @@ if ($_SESSION['refroll_predio'] != 1) {
             <div class="row">
                 <div class="col-md-12">
                 <ul class="list-inline" style="margin-top:15px;">
+                	<?php
+                		if ($existeDeclaracionAnual == 0) {
+                	?>
                     <li>
                         <button type="button" class="btn btn-primary" id="cargar" style="margin-left:0px;">Guardar</button>
                     </li>
+                    <?php
+                    	}
+                    ?>
                     <li>
                         <button type="button" class="btn btn-default volver" style="margin-left:0px;">Volver</button>
                     </li>
@@ -461,7 +477,8 @@ $(document).ready(function(){
 				processData: false,
 				//mientras enviamos el archivo
 				beforeSend: function(){
-					$("#load").html('<img src="../../imagenes/load13.gif" width="50" height="50" />');       
+					$("#load").html('<img src="../../imagenes/load13.gif" width="50" height="50" />');   
+					$('#cargar').hide();    
 				},
 				//una vez finalizado correctamente
 				success: function(data){

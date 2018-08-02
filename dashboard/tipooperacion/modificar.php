@@ -27,7 +27,7 @@ $resMenu = $serviciosHTML->menu(utf8_encode($_SESSION['nombre_predio']),"Tipo de
 
 $id = $_GET['id'];
 
-$resResultado = $serviciosReferencias->traerPoderPorId($id);
+$resResultado = $serviciosReferencias->traerTipooperacionPorId($id);
 
 
 /////////////////////// Opciones pagina ///////////////////////////////////////////////
