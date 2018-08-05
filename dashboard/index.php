@@ -279,17 +279,35 @@ if ($_SESSION['idroll_predio'] != 1) {
 											<span class="sr-only">Toggle Dropdown</span>
 										</button>
 										<ul class="dropdown-menu" role="menu">
-											<li>
-											<a href="javascript:void(0)" class="varmodificar" id="2"><span class="glyphicon glyphicon-pencil"></span> Modificar</a>
-											</li>		<li>
-											<a href="javascript:void(0)" class="vargastos" id="2"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
-											</li>		<li>
-											<a href="javascript:void(0)" class="varver" id="2"><span class="glyphicon glyphicon-search"></span> Ver</a>
-											</li>		<li>
-											<a href="javascript:void(0)" class="varimprmiracuse" id="2"><span class="glyphicon glyphicon-print"></span> Generar Acuse</a>
-											</li>		<li>
-											<a href="javascript:void(0)" class="varborrar" id="2"><span class="glyphicon glyphicon-remove"></span> Borrar</a>
-											</li>
+											<?php
+												switch ($row['refestados']) {
+													case 1:
+														echo '<li>
+																<a href="javascript:void(0)" class="varmodificar" id="2"><span class="glyphicon glyphicon-pencil"></span> Modificar</a>
+																</li>		<li>
+																<a href="javascript:void(0)" class="vargastos" id="2"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
+																</li>		<li>
+																<a href="javascript:void(0)" class="varver" id="2"><span class="glyphicon glyphicon-search"></span> Ver</a>
+																</li>		<li>
+																<a href="javascript:void(0)" class="varimprmiracuse" id="2"><span class="glyphicon glyphicon-print"></span> Generar Acuse</a>
+																</li>		<li>
+																<a href="javascript:void(0)" class="varborrar" id="2"><span class="glyphicon glyphicon-remove"></span> Borrar</a>
+																</li>';
+														break;
+													case 2:
+														echo '<li>
+																<a href="javascript:void(0)" class="vargastos" id="2"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
+																</li>		
+																<li>
+																';
+														break;
+													
+													default:
+														# code...
+														break;
+												}
+											?>
+											
 
 										</ul>
 									</div>
@@ -396,7 +414,9 @@ $(document).ready(function(){
 	$("#example").on("click",'.varimprmiracuse', function(){
 		  usersid =  $(this).attr("id");
 		  if (!isNaN(usersid)) {
-		  	window.open("../reportes/rptAcuse.php?id=" + usersid  ,'_blank');  
+		  	window.open("../reportes/rptAcuse.php?id=" + usersid  ,'_blank'); 
+		  	url = "index.php";
+			$(location).attr('href',url); 
 
 		  } else {
 			alert("Error, vuelva a realizar la acción.");	

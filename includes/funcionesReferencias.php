@@ -11,7 +11,7 @@ class ServiciosReferencias {
 
 
 function validoUsuarioDeclaraciones($idCabecera, $curp) {
-	$res = $this->traerDeclaracionanualinteresPorCabeceraCURP($idCabecera, $curp);
+	$res = $this->traerDeclaracionjuradacabeceraPorIdCURP($idCabecera, $curp);
 	if (mysql_num_rows($res) > 0) {
 		return 1;
 	}
