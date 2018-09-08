@@ -682,7 +682,7 @@ return $res;
 
 function insertarDeclaracionanualinteres($refdeclaracionjuradacabecera,$essecretario,$esauditor,$ejercicio,$espublico,$refpoder,$registrofederalcontribuyente,$fechadeclaracionanterior,$fechatomaposesion,$cargoactual,$cargoanterior,$areaadquisicion,$areaadquisicionanterior,$dependencia,$dependenciaanterior) { 
 	$sql = "insert into dbdeclaracionanualinteres(iddeclaracionanualinteres,refdeclaracionjuradacabecera,essecretario,esauditor,ejercicio,espublico,refpoder,registrofederalcontribuyente,fechadeclaracionanterior,fechatomaposesion,cargoactual,cargoanterior,areaadquisicion,areaadquisicionanterior,dependencia,dependenciaanterior) 
-	values ('',".$refdeclaracionjuradacabecera.",".$essecretario.",".$esauditor.",".$ejercicio.",".$espublico.",".$refpoder.",'".($registrofederalcontribuyente)."','".($fechadeclaracionanterior == '' ? 'NULL' : "'".$fechadeclaracionanterior."'")."','".($fechatomaposesion == '' ? 'NULL' : "'".$fechatomaposesion."'")."','".($cargoactual)."','".($cargoanterior)."','".($areaadquisicion)."','".($areaadquisicionanterior)."','".($dependencia)."','".($dependenciaanterior)."')"; 
+	values ('',".$refdeclaracionjuradacabecera.",".$essecretario.",".$esauditor.",".$ejercicio.",".$espublico.",".$refpoder.",'".($registrofederalcontribuyente)."',".($fechadeclaracionanterior == '' ? 'NULL' : "'".$fechadeclaracionanterior."'").",".($fechatomaposesion == '' ? 'NULL' : "'".$fechatomaposesion."'").",'".($cargoactual)."','".($cargoanterior)."','".($areaadquisicion)."','".($areaadquisicionanterior)."','".($dependencia)."','".($dependenciaanterior)."')"; 
 	$res = $this->query($sql,1); 
 	return $res; 
 	} 
@@ -800,6 +800,36 @@ function insertarDeclaracionanualinteres($refdeclaracionjuradacabecera,$essecret
 				inner join tbpoder pod ON pod.idpoder = d.refpoder 
 				inner join dbdeclaracionjuradacabecera dj on dj.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera
 				where dj.iddeclaracionjuradacabecera = ".$id."
+				order by 1"; 
+		$res = $this->query($sql,0); 
+		return $res; 
+	}
+
+
+	function traerDeclaracionanualinteresGridPorCabeceraYCURP($id, $curp) { 
+		$sql = "select 
+				d.iddeclaracionanualinteres,
+				concat(dj.primerapellido, ' ', segundoapellido, ' ', nombres) as declaracioncabecera,
+				(case when essecretario = 1 then 'Si' else 'No' end) as essecretario,
+				(case when esauditor = 1 then 'Si' else 'No' end) as esauditor,
+				d.ejercicio,
+				(case when espublico = 1 then 'Si' else 'No' end) as espublico,
+				pod.poder,
+				d.registrofederalcontribuyente,
+				d.fechadeclaracionanterior,
+				d.fechatomaposesion,
+				d.cargoactual,
+				d.cargoanterior,
+				d.areaadquisicion,
+				d.areaadquisicionanterior,
+				d.dependencia,
+				d.dependenciaanterior,
+				d.refdeclaracionjuradacabecera,
+				d.refpoder
+				from dbdeclaracionanualinteres d 
+				inner join tbpoder pod ON pod.idpoder = d.refpoder 
+				inner join dbdeclaracionjuradacabecera dj on dj.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera
+				where dj.iddeclaracionjuradacabecera = ".$id." and dj.curp = '".$curp."'
 				order by 1"; 
 		$res = $this->query($sql,0); 
 		return $res; 
@@ -963,7 +993,32 @@ function insertarDependienteseconomicos($refdeclaracionjuradacabecera,$tiene,$no
 	order by 1"; 
 	$res = $this->query($sql,0); 
 	return $res; 
-	} 
+	}
+	//se agrego nueva funcion
+	function traerDependienteseconomicosGrillaPorIDCURP($id, $curp) { 
+$sql = "select 
+d.iddependienteeconomico, 
+concat(dj.primerapellido, ' ', dj.segundoapellido, ' ', dj.nombres) as declaracioncabecera, 
+d.tiene, 
+d.nombre, 
+d.edad, 
+tip.tipoparentesco, 
+d.refdeclaracionjuradacabecera, 
+d.reftipoparentesco 
+from dbdependienteseconomicos d 
+inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = d.refdeclaracionjuradacabecera 
+inner join tbestadocivil es ON es.idestadocivil = dj.refestadocivil 
+inner join tbregimenmatrimonial re ON re.idregimenmatrimonial = dj.refregimenmatrimonial 
+inner join dbusuarios us ON us.idusuario = dj.refusuarios 
+inner join tbtipoparentesco tip ON tip.idtipoparentesco = d.reftipoparentesco 
+where dj.curp = '".$curp."' and dj.iddeclaracionjuradacabecera = ".$id." 
+order by 1"; 
+$res = $this->query($sql,0); 
+return $res; 
+} 
+
+
+	// 
 	
 	
 	function traerDependienteseconomicosPorId($id) { 

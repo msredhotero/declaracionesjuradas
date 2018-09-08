@@ -105,13 +105,7 @@ $cabeceras 		= "	<th>Decla. Patri. Cab.</th>
 					<th>Poder</th>
 					<th>Reg. Fed. Contrib.</th>
 					<th>Fecha Decla. anterior</th>
-					<th>Fecha Toma Posesión act.</th>
-					<th>Cargo act.</th>
-					<th>Cargo Ante.</th>
-					<th>Area adscripción</th>
-					<th>Area adscripción ultima</th>
-					<th>Dependencia</th>
-					<th>Dependencia ultima</th>";
+					<th>Fecha Toma Posesión act.</th>";
 
 //////////////////////////////////////////////  FIN de los opciones //////////////////////////
 
@@ -120,7 +114,7 @@ $cabeceras 		= "	<th>Decla. Patri. Cab.</th>
 
 $formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
-$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerDeclaracionanualinteresGridPorUsuario($_SESSION['idusuario']),14);
+$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerDeclaracionanualinteresGridPorCabeceraYCURP($id, $_SESSION['curp_predio']),8);
 
 
 $frmDeclaracionAnual = $serviciosReferencias->traerDeclaracionanualinteresPorCabeceraCURP($id, $_SESSION['curp_predio']);
@@ -431,7 +425,7 @@ $(document).ready(function(){
                                             $(".alert").removeClass("alert-danger");
 											$(".alert").removeClass("alert-info");
                                             $(".alert").addClass("alert-success");
-                                            $(".alert").html('<strong>Ok!</strong> Se cargo exitosamente el <strong><?php echo $singular; ?></strong>. ');
+                                            $(".alert").html('<strong>Ok!</strong> Se cargo exitosamente el <strong><?php echo $singular; ?></strong>. Debe actualizar la pagina para ver el registro cargado. ');
 											$(".alert").delay(3000).queue(function(){
 												/*aca lo que quiero hacer 
 												  después de los 2 segundos de retraso*/

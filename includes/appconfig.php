@@ -1,13 +1,13 @@
 <?php
 
-date_default_timezone_set('America/Buenos_Aires');
+date_default_timezone_set('America/Mexico_City');
 
 class appconfig {
 
 function conexion() {
 		
 		$hostname = "localhost";
-		$database = "declaracionjurada";
+		$database = "declaracionpatrimonial";
 		$username = "root";
 		$password = "";
 		

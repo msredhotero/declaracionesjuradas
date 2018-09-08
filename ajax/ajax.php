@@ -864,7 +864,7 @@ case 'traerArchivosPorCliente':
 		$razonsocial = $_POST['razonsocial']; 
 		$pais = $_POST['pais']; 
 		$fechaotorgamiento = $_POST['fechaotorgamiento']; 
-		$montooritginal = $_POST['montooritginal']; 
+		$montooriginal = $_POST['montooriginal']; 
 		$tipomoneda = $_POST['tipomoneda']; 
 		$montopagos = $_POST['montopagos']; 
 		$saldo = $_POST['saldo']; 
@@ -873,7 +873,7 @@ case 'traerArchivosPorCliente':
 		$registropublico = $_POST['registropublico']; 
 		$plazo = $_POST['plazo']; 
 		
-		$res = $serviciosReferencias->insertarAdeudos($refdeclaracionjuradacabecera,$reftipooperacion,$reftipoadeudo,$numerocuenta,$donde,$razonsocial,$pais,$fechaotorgamiento,$montooritginal,$tipomoneda,$montopagos,$saldo,$tipomonedasaldo,$reftitular, $registropublico, $plazo); 
+		$res = $serviciosReferencias->insertarAdeudos($refdeclaracionjuradacabecera,$reftipooperacion,$reftipoadeudo,$numerocuenta,$donde,$razonsocial,$pais,$fechaotorgamiento,$montooriginal,$tipomoneda,$montopagos,$saldo,$tipomonedasaldo,$reftitular, $registropublico, $plazo); 
 		
 		if ((integer)$res > 0) { 
 			echo ''; 
@@ -893,7 +893,7 @@ case 'traerArchivosPorCliente':
 		$razonsocial = $_POST['razonsocial']; 
 		$pais = $_POST['pais']; 
 		$fechaotorgamiento = $_POST['fechaotorgamiento']; 
-		$montooritginal = $_POST['montooritginal']; 
+		$montooriginal = $_POST['montooriginal']; 
 		$tipomoneda = $_POST['tipomoneda']; 
 		$montopagos = $_POST['montopagos']; 
 		$saldo = $_POST['saldo']; 
@@ -902,7 +902,7 @@ case 'traerArchivosPorCliente':
 		$registropublico = $_POST['registropublico']; 
 		$plazo = $_POST['plazo']; 
 		
-		$res = $serviciosReferencias->modificarAdeudos($id,$refdeclaracionjuradacabecera,$reftipooperacion,$reftipoadeudo,$numerocuenta,$donde,$razonsocial,$pais,$fechaotorgamiento,$montooritginal,$tipomoneda,$montopagos,$saldo,$tipomonedasaldo,$reftitular, $registropublico, $plazo); 
+		$res = $serviciosReferencias->modificarAdeudos($id,$refdeclaracionjuradacabecera,$reftipooperacion,$reftipoadeudo,$numerocuenta,$donde,$razonsocial,$pais,$fechaotorgamiento,$montooriginal,$tipomoneda,$montopagos,$saldo,$tipomonedasaldo,$reftitular, $registropublico, $plazo); 
 		
 		if ($res == true) { 
 			echo ''; 

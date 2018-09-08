@@ -197,15 +197,15 @@ if ($_SESSION['idroll_predio'] != 1) {
 										</button>
 										<ul class="dropdown-menu" role="menu">
 											<li>
-											<a href="javascript:void(0)" class="varmodificar" id="2"><span class="glyphicon glyphicon-pencil"></span> Modificar</a>
+											<a href="javascript:void(0)" class="varmodificar" id="<?php echo $row['iddeclaracionjuradacabecera']; ?>"><span class="glyphicon glyphicon-pencil"></span> Modificar</a>
 											</li>		<li>
-											<a href="javascript:void(0)" class="vargastos" id="2"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
+											<a href="javascript:void(0)" class="vargastos" id="<?php echo $row['iddeclaracionjuradacabecera']; ?>"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
 											</li>		<li>
-											<a href="javascript:void(0)" class="varver" id="2"><span class="glyphicon glyphicon-search"></span> Ver</a>
+											<a href="javascript:void(0)" class="varver" id="<?php echo $row['iddeclaracionjuradacabecera']; ?>"><span class="glyphicon glyphicon-search"></span> Ver</a>
 											</li>		<li>
-											<a href="javascript:void(0)" class="varimprmiracuse" id="2"><span class="glyphicon glyphicon-print"></span> Generar Acuse</a>
+											<a href="javascript:void(0)" class="varimprmiracuse" id="<?php echo $row['iddeclaracionjuradacabecera']; ?>"><span class="glyphicon glyphicon-print"></span> Generar Acuse</a>
 											</li>		<li>
-											<a href="javascript:void(0)" class="varborrar" id="2"><span class="glyphicon glyphicon-remove"></span> Borrar</a>
+											<a href="javascript:void(0)" class="varborrar" id="<?php echo $row['iddeclaracionjuradacabecera']; ?>"><span class="glyphicon glyphicon-remove"></span> Borrar</a>
 											</li>
 
 										</ul>
@@ -283,20 +283,20 @@ if ($_SESSION['idroll_predio'] != 1) {
 												switch ($row['refestados']) {
 													case 1:
 														echo '<li>
-																<a href="javascript:void(0)" class="varmodificar" id="2"><span class="glyphicon glyphicon-pencil"></span> Modificar</a>
+																<a href="javascript:void(0)" class="varmodificar" id="'.$row["iddeclaracionjuradacabecera"].'"><span class="glyphicon glyphicon-pencil"></span> Modificar</a>
 																</li>		<li>
-																<a href="javascript:void(0)" class="vargastos" id="2"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
+																<a href="javascript:void(0)" class="vargastos" id="'.$row["iddeclaracionjuradacabecera"].'"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
 																</li>		<li>
-																<a href="javascript:void(0)" class="varver" id="2"><span class="glyphicon glyphicon-search"></span> Ver</a>
+																<a href="javascript:void(0)" class="varver" id="'.$row["iddeclaracionjuradacabecera"].'"><span class="glyphicon glyphicon-search"></span> Ver</a>
 																</li>		<li>
-																<a href="javascript:void(0)" class="varimprmiracuse" id="2"><span class="glyphicon glyphicon-print"></span> Generar Acuse</a>
+																<a href="javascript:void(0)" class="varimprmiracuse" id="'.$row["iddeclaracionjuradacabecera"].'"><span class="glyphicon glyphicon-print"></span> Generar Acuse</a>
 																</li>		<li>
-																<a href="javascript:void(0)" class="varborrar" id="2"><span class="glyphicon glyphicon-remove"></span> Borrar</a>
+																<a href="javascript:void(0)" class="varborrar" id="'.$row["iddeclaracionjuradacabecera"].'"><span class="glyphicon glyphicon-remove"></span> Borrar</a>
 																</li>';
 														break;
 													case 2:
 														echo '<li>
-																<a href="javascript:void(0)" class="vargastos" id="2"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
+																<a href="javascript:void(0)" class="vargastos" id="'.$row["iddeclaracionjuradacabecera"].'"><span class="glyphicon glyphicon-print"></span> Imprimir</a>
 																</li>		
 																<li>
 																';

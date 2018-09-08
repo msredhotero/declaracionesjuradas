@@ -92,10 +92,12 @@ $cabeceras 		= "	<th>Declaracion Pat. Cabecera</th>
 
 
 $formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
+//se cambia la linea 96
+//$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerDependienteseconomicosGrilla(),5);
 
-$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerDependienteseconomicosGrilla(),5);
-
-
+//se agrega esta por la linea 96
+$lstCargados = $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerDependienteseconomicosGrillaPorIDCURP($id,$_SESSION['curp_predio'] ),5);
+//
 
 if ($_SESSION['refroll_predio'] != 1) {
 
