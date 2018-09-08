@@ -1179,8 +1179,14 @@ return $res;
 	function traerIngresosanualesPorCabeceraCURP($cabecera, $curp) { 
 		$sql = "select 
 					i.idingresoanual,
-					i.refdeclaracionjuradacabecera,
+					concat(dj.primerapellido, ' ', dj.segundoapellido, ' ', dj.nombres) as declaracioncabecera,
 					i.remuneracionanualneta,
+					i.remuneracionanualneta + i.actividadindustrial + i.actividadfinanciera + i.actividadprofesional + i.otros as neto,
+					i.ingresoanualconyuge,
+					i.remuneracionanualneta + i.actividadindustrial + i.actividadfinanciera + i.actividadprofesional + i.otros + i.ingresoanualconyuge as total,
+					(case when i.fueservidorpublico = 1 then 'Si' else 'No' end) as fueservidorpublico,
+					i.vigenciadesde,
+					i.vigenciahasta,
 					i.actividadindustrial,
 					i.razonsocialactividadindustrial,
 					i.actividadfinanciera,
@@ -1189,11 +1195,8 @@ return $res;
 					i.descripcionactividadprofesional,
 					i.otros,
 					i.especifiqueotros,
-					i.ingresoanualconyuge,
 					i.especifiqueingresosconyuge,
-					(case when i.fueservidorpublico = 1 then 'Si' else 'No' end) as fueservidorpublico,
-					i.vigenciadesde,
-					i.vigenciahasta
+					i.refdeclaracionjuradacabecera
 				from dbingresosanuales i 
 				inner join dbdeclaracionjuradacabecera dj ON dj.iddeclaracionjuradacabecera = i.refdeclaracionjuradacabecera 
 				where dj.curp = '".$curp."' and dj.iddeclaracionjuradacabecera = ".$cabecera."

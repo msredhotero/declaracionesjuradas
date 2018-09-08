@@ -114,7 +114,7 @@ $cabeceras 		= "	<th>Declaracion Pat. Cabecera</th>
 
 $formulario 	= $serviciosFunciones->camposTabla($insertar ,$tabla,$lblCambio,$lblreemplazo,$refdescripcion,$refCampo);
 
-$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerIngresosanualesGrilla(),8);
+$lstCargados 	= $serviciosFunciones->camposTablaView($cabeceras,$serviciosReferencias->traerIngresosanualesPorCabeceraCURP($id,$_SESSION['curp_predio'] ),8);
 
 $frmIngresosAnuales = $serviciosReferencias->traerIngresosanualesPorCabeceraCURP($id, $_SESSION['curp_predio']);
 

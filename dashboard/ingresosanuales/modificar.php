@@ -224,7 +224,7 @@ if ($_SESSION['refroll_predio'] != 1) {
                         <button type="button" class="btn btn-warning" id="cargar" style="margin-left:0px;">Modificar</button>
                     </li>
                     <li>
-                        <button type="button" class="btn btn-danger varborrar" id="<?php echo $id; ?>" style="margin-left:0px;">Eliminar</button>
+                        <button type="button" class="btn btn-danger varborrar" id="<?php echo mysql_result($resResultado, 0,'idingresoanual'); ?>" style="margin-left:0px;">Eliminar</button>
                     </li>
                     <li>
                         <button type="button" class="btn btn-default volver" style="margin-left:0px;">Volver</button>

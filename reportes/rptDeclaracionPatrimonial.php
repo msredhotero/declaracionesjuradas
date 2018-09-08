@@ -1080,9 +1080,9 @@ if ((mysql_num_rows($resResultado)>0) && (mysql_num_rows($publico)>0)) {
 			$pdf->SetX(15);
 			$pdf->Cell(60,5,$row5['responsable'],'RLTB',0,'C',0);
 			$pdf->Cell(95,5,$row5['descripcion'],'RLTB',0,'C',0);
-			$pdf->Cell(35,5,$row5['fecha'],'RLTB',0,'C',0);
-			$pdf->Cell(25,5,$row5['inscripcion'],'RLTB',0,'C',0);
-			$pdf->Cell(25,5,$row5['inscripcion'],'RLTB',0,'C',0);
+			$pdf->Cell(35,5,$row5['vinculo'],'RLTB',0,'C',0);
+			$pdf->Cell(25,5,$row5['antiguedad'],'RLTB',0,'C',0);
+			$pdf->Cell(25,5,$row5['frecuenciaanual'],'RLTB',0,'C',0);
 
 
 			$pdf->Ln();
